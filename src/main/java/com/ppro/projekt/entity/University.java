@@ -1,18 +1,18 @@
 package com.ppro.projekt.entity;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "UNIVERSITY")
 public class University {
     @Id
     @GeneratedValue
-    @Column(name = "ID")
     private int id;
-    @Column(name = "NAME")
     private String name;
     @OneToMany(mappedBy = "univerzita")
     private List<Student> studenti = new ArrayList<>();
