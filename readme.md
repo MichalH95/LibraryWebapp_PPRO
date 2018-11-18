@@ -6,7 +6,9 @@ Postup spuštění databáze:
 
 3. Počkat až naběhne Docker terminál (ukáže se velryba)
 
-4. Spustit v dockeru databázi příkazem:  docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql
+4. Spustit v dockeru databázi příkazem:
+	
+		docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql
 
 5. Nastavit si datasource v IntelliJ IDEA:
 
