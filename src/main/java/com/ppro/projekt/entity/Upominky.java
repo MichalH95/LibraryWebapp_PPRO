@@ -14,6 +14,9 @@ public class Upominky {
     @ManyToOne
     private Vypujcky vypujcky;
 
+    public Upominky() {
+    }
+
     public Upominky(String popis, int pokuta) {
         this.popis = popis;
         this.pokuta = pokuta;

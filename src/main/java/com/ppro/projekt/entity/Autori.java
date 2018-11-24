@@ -10,8 +10,14 @@ public class Autori {
     private String vztah_ke_knize;
     private String jmeno;
 
+
+
+
     @ManyToOne
+    @JoinColumn(name = "knihy_id", referencedColumnName = "id")
     private Knihy knihy;
+    public Autori() {
+    }
 
     public Autori(String vztah_ke_knize, String jmeno) {
         this.vztah_ke_knize = vztah_ke_knize;

@@ -27,7 +27,13 @@ public class Uzivatele {
     private List<Vypujcky> vypujcky;
 
     @OneToMany(mappedBy="uzivatele")
+    private List<Recenze> recenze;
+
+    @OneToMany(mappedBy="uzivatele")
     private List<Rezervace> rezervace;
+
+    public Uzivatele() {
+    }
 
     public void setVypujcky(List<Vypujcky> vypujcky) {
         this.vypujcky = vypujcky;

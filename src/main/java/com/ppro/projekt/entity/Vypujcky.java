@@ -22,6 +22,9 @@ public class Vypujcky {
     @ManyToOne
     private Uzivatele uzivatele;
 
+    public Vypujcky() {
+    }
+
     public void setUpominky(List<Upominky> upominky) {
         this.upominky = upominky;
     }

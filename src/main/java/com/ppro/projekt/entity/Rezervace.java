@@ -16,6 +16,9 @@ public class Rezervace {
     @ManyToOne
     private Uzivatele uzivatele;
 
+    public Rezervace() {
+    }
+
     public Knihy getKnihy() {
         return knihy;
     }

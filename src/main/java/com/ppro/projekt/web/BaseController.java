@@ -1,31 +1,37 @@
 package com.ppro.projekt.web;
 
+import com.ppro.projekt.entity.Autori;
+import com.ppro.projekt.entity.Knihy;
 import com.ppro.projekt.service.InitDbService;
-import com.ppro.projekt.service.UniversityService;
+import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class BaseController {
 
-    private UniversityService universityService;
+    private SpravaDb spravaDb;
     private InitDbService initDbService;
 
-    public BaseController(@Autowired UniversityService universityService,
+    public BaseController(@Autowired SpravaDb spravaDb,
                           @Autowired InitDbService initDbService) {
-        this.universityService = universityService;
+        this.spravaDb = spravaDb;
         this.initDbService = initDbService;
     }
 
+
     @RequestMapping("/")
-    @ResponseBody
-    public String zobrazeni() {
+    public String zobrazeni(Model model,Model model1) {
 
-        initDbService.initDb();
-
-        return "Univerzita v databazi: \n" + universityService.findAllUniversitys().get(0).toString();
+        List<Knihy> knihy=spravaDb.zobrazKnihy();
+        model.addAttribute("knihy", knihy);
+        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();
+        model1.addAttribute("autori", autori);
+        return "registrace";
     }
 
 }
