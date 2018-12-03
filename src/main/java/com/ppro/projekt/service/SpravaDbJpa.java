@@ -1,7 +1,6 @@
 package com.ppro.projekt.service;
 
-import com.ppro.projekt.entity.Autori;
-import com.ppro.projekt.entity.Knihy;
+import com.ppro.projekt.entity.Kniha;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,42 +15,23 @@ public class SpravaDbJpa implements SpravaDb{
     @PersistenceContext
     private EntityManager em;
 
-    public void VlozKnihu(Knihy Knihy) {
-        em.persist(Knihy);
+    public void vlozKnihu(Kniha Kniha) {
+        em.persist(Kniha);
     }
 
-
-
-    public Knihy findById(long id) { return em.find(Knihy.class, id);
+    public void odstranKnihu(int id) {
+        Kniha kniha = em.getReference(Kniha.class, id);
+        if(kniha != null) {
+            em.remove(kniha);
+        }
     }
 
-    public void OdstranKnihu(int id){
-        Knihy kniha = em.getReference(Knihy.class, id);
-         if(kniha != null) {
-             em.remove(kniha);
-         }
+    public Kniha najdiPodleId(long id) {
+        return em.find(Kniha.class, id);
     }
 
-
-
-    public List<Autori> NajdiAutoraByKnihaId(long id_knihy) {
-           return (List<Autori>) em.find(Autori.class,id_knihy);
-
+    public List<Kniha> najdiVsechnyKnihy() {
+        return em.createQuery("SELECT k FROM Kniha k", Kniha.class).getResultList();
     }
-
-
-    public List<Knihy> zobrazKnihy() {
-        return em.createQuery("SELECT k FROM Knihy k",Knihy.class).getResultList();
-    }
-
-    public List<Autori> NajdiAutoraByKnihaId() {
-        return em.createQuery("SELECT a FROM Autori a").getResultList();
-    }
-
-
-    public boolean isUniversityExist(Knihy Knihy) {
-        return false;
-    }
-
 
 }

@@ -1,7 +1,6 @@
 package com.ppro.projekt.web;
 
-import com.ppro.projekt.entity.Autori;
-import com.ppro.projekt.entity.Knihy;
+import com.ppro.projekt.entity.Kniha;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,15 @@ public class BaseController {
         this.initDbService = initDbService;
     }
 
-
     @RequestMapping("/")
-    public String zobrazeni(Model model,Model model1) {
+    public String zobrazeni(Model model, Model model1) {
 
-        List<Knihy> knihy=spravaDb.zobrazKnihy();
+        initDbService.initDb();
+
+        List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
-        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();
-        model1.addAttribute("autori", autori);
+//        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();
+//        model1.addAttribute("autori", autori);
         return "registrace";
     }
 

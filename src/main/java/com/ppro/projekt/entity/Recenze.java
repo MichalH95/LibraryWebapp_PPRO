@@ -14,7 +14,7 @@ public class Recenze {
     private int hodnoceni;
 
     @ManyToOne
-    private Knihy knihy;
+    private Kniha kniha;
 
     @ManyToOne
     private Uzivatele uzivatele;
@@ -47,8 +47,8 @@ public class Recenze {
         this.hodnoceni = hodnoceni;
     }
 
-    public void setKnihy(Knihy knihy) {
-        this.knihy = knihy;
+    public void setKniha(Kniha kniha) {
+        this.kniha = kniha;
     }
 
     public void setUzivatele(Uzivatele uzivatele) {
@@ -71,8 +71,8 @@ public class Recenze {
         return hodnoceni;
     }
 
-    public Knihy getKnihy() {
-        return knihy;
+    public Kniha getKniha() {
+        return kniha;
     }
 
     public Uzivatele getUzivatele() {
@@ -86,7 +86,7 @@ public class Recenze {
                 ", jmeno_autora='" + jmeno_autora + '\'' +
                 ", recenze='" + recenze + '\'' +
                 ", hodnoceni=" + hodnoceni +
-                ", knihy=" + knihy +
+                ", kniha=" + kniha +
                 ", uzivatele=" + uzivatele +
                 '}';
     }

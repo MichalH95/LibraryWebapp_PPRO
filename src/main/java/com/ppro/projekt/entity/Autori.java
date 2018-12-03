@@ -15,7 +15,7 @@ public class Autori {
 
     @ManyToOne
     @JoinColumn(name = "knihy_id", referencedColumnName = "id")
-    private Knihy knihy;
+    private Kniha kniha;
     public Autori() {
     }
 
@@ -28,12 +28,12 @@ public class Autori {
         Id = id;
     }
 
-    public void setKnihy(Knihy knihy) {
-        this.knihy = knihy;
+    public void setKniha(Kniha kniha) {
+        this.kniha = kniha;
     }
 
-    public Knihy getKnihy() {
-        return knihy;
+    public Kniha getKniha() {
+        return kniha;
     }
 
     public void setVztah_ke_knize(String vztah_ke_knize) {
@@ -62,7 +62,7 @@ public class Autori {
                 "Id=" + Id +
                 ", vztah_ke_knize='" + vztah_ke_knize + '\'' +
                 ", jmeno='" + jmeno + '\'' +
-                ", knihy=" + knihy +
+                ", kniha=" + kniha +
                 '}';
     }
 }

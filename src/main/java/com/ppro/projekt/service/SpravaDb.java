@@ -1,21 +1,17 @@
 package com.ppro.projekt.service;
 
-import com.ppro.projekt.entity.Autori;
-import com.ppro.projekt.entity.Knihy;
+import com.ppro.projekt.entity.Kniha;
 
 import java.util.List;
 
 public interface SpravaDb {
 
+    void vlozKnihu(Kniha Kniha);
 
-    void VlozKnihu(Knihy Knihy);
+    void odstranKnihu(int id);
 
-    void OdstranKnihu(int id);
+    Kniha najdiPodleId(long id);
 
-    List<Autori> NajdiAutoraByKnihaId();
-
-    List<Knihy> zobrazKnihy();
-
-    public boolean isUniversityExist(Knihy Knihy);
+    List<Kniha> najdiVsechnyKnihy();
 
 }

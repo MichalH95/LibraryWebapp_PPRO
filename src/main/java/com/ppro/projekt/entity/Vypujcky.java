@@ -1,7 +1,6 @@
 package com.ppro.projekt.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +16,7 @@ public class Vypujcky {
     private List<Upominky> upominky;
 
     @ManyToOne
-    private Knihy knihy;
+    private Kniha kniha;
 
     @ManyToOne
     private Uzivatele uzivatele;
@@ -29,8 +28,8 @@ public class Vypujcky {
         this.upominky = upominky;
     }
 
-    public void setKnihy(Knihy knihy) {
-        this.knihy = knihy;
+    public void setKniha(Kniha kniha) {
+        this.kniha = kniha;
     }
 
     public void setUzivatele(Uzivatele uzivatele) {
@@ -41,8 +40,8 @@ public class Vypujcky {
         return upominky;
     }
 
-    public Knihy getKnihy() {
-        return knihy;
+    public Kniha getKniha() {
+        return kniha;
     }
 
     public Uzivatele getUzivatele() {

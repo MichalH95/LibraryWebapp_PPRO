@@ -1,6 +1,9 @@
 package com.ppro.projekt.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Rezervace {
@@ -11,7 +14,7 @@ public class Rezervace {
     private String rezervace_do;
 
     @ManyToOne
-    private Knihy knihy;
+    private Kniha kniha;
 
     @ManyToOne
     private Uzivatele uzivatele;
@@ -19,13 +22,13 @@ public class Rezervace {
     public Rezervace() {
     }
 
-    public Knihy getKnihy() {
-        return knihy;
+    public Kniha getKniha() {
+        return kniha;
     }
 
 
-    public void setKnihy(Knihy knihy) {
-        this.knihy = knihy;
+    public void setKniha(Kniha kniha) {
+        this.kniha = kniha;
     }
 
     public void setUzivatele(Uzivatele uzivatele) {
@@ -71,7 +74,7 @@ public class Rezervace {
                 "Id=" + Id +
                 ", rezervace_od='" + rezervace_od + '\'' +
                 ", rezervace_do='" + rezervace_do + '\'' +
-                ", knihy=" + knihy +
+                ", kniha=" + kniha +
                 ", uzivatele=" + uzivatele +
                 '}';
     }

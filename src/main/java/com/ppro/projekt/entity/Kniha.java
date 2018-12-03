@@ -1,11 +1,12 @@
 package com.ppro.projekt.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
 @Entity
-public class Knihy {
+public class Kniha {
     @Id
     @GeneratedValue
     private int Id;
@@ -13,34 +14,45 @@ public class Knihy {
     @Column(length = 2550)
     private String popis;
     private String zanr;
-    private String Datum_vydani;
+    private Date datum_vydani;
     private int pocet_stran;
     private String nakladatelstvi;
     @Column(length = 2550)
     private String isbn;
     private String jazyk;
 
-    @OneToMany(mappedBy="knihy")
+    @OneToMany(mappedBy="kniha")
     private List<Recenze> recenze;
 
-    @OneToMany(mappedBy="knihy")
+    @OneToMany(mappedBy="kniha")
     private List<Vypujcky> vypujcky;
 
-    @OneToMany(mappedBy="knihy")
+    @OneToMany(mappedBy="kniha")
     private List<Rezervace> rezervace;
 
-    @OneToMany(mappedBy="knihy")
+    @OneToMany(mappedBy="kniha")
     private List<Autori> autori;
 
-    public Knihy(String nazev, String popis, String zanr, String datum_vydani, int pocet_stran, String nakladatelstvi, String isbn, String jazyk) {
+    public Kniha(String nazev, String popis, String zanr, Date datum_vydani, int pocet_stran, String nakladatelstvi, String isbn, String jazyk) {
         this.nazev = nazev;
         this.popis = popis;
         this.zanr = zanr;
-        Datum_vydani = datum_vydani;
+        this.datum_vydani = datum_vydani;
         this.pocet_stran = pocet_stran;
         this.nakladatelstvi = nakladatelstvi;
         this.isbn = isbn;
         this.jazyk = jazyk;
+    }
+
+    public Kniha(String nazev, String popis, String zanr, Date datum_vydani) {
+        this.nazev = nazev;
+        this.popis = popis;
+        this.zanr = zanr;
+        this.datum_vydani = datum_vydani;
+    }
+
+    public Kniha() {
+
     }
 
     public void setPocet_stran(int pocet_stran) {
@@ -99,17 +111,6 @@ public class Knihy {
         return autori;
     }
 
-    public Knihy(String nazev, String popis, String zanr, String datum_vydani) {
-        this.nazev = nazev;
-        this.popis = popis;
-        this.zanr = zanr;
-        Datum_vydani = datum_vydani;
-    }
-
-    public Knihy(){
-
-    }
-
     public void setId(int id) {
         Id = id;
     }
@@ -126,8 +127,8 @@ public class Knihy {
         this.zanr = zanr;
     }
 
-    public void setDatum_vydani(String datum_vydani) {
-        Datum_vydani = datum_vydani;
+    public void setDatum_vydani(Date datum_vydani) {
+        this.datum_vydani = datum_vydani;
     }
 
     public int getId() {
@@ -146,18 +147,18 @@ public class Knihy {
         return zanr;
     }
 
-    public String getDatum_vydani() {
-        return Datum_vydani;
+    public Date getDatum_vydani() {
+        return datum_vydani;
     }
 
     @Override
     public String toString() {
-        return "Knihy{" +
+        return "Kniha{" +
                 "Id=" + Id +
                 ", nazev='" + nazev + '\'' +
                 ", popis='" + popis + '\'' +
                 ", zanr='" + zanr + '\'' +
-                ", Datum_vydani='" + Datum_vydani + '\'' +
+                ", Datum_vydani='" + datum_vydani + '\'' +
                 ", vypujcky=" + vypujcky +
                 ", rezervace=" + rezervace +
                 ", autori=" + autori +
