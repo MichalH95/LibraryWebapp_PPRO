@@ -15,3 +15,5 @@ Postup spuštění databáze:
 		URL: 192.168.99.100:3306
 		Username: root
 		Password: my-secret-pw
+		
+	A v záložce Schemas zaškrtnout All schemas.
