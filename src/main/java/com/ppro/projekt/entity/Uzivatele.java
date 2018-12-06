@@ -1,12 +1,11 @@
 package com.ppro.projekt.entity;
 
-import sun.security.util.Password;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Uzivatele {
@@ -17,7 +16,7 @@ public class Uzivatele {
     private String prijmeni;
     private String mesto;
     private String ulice;
-    private int c_popisne;
+    private String c_popisne;
     private int psc;
     private String email;
     private String heslo;
@@ -71,7 +70,7 @@ public class Uzivatele {
         this.ulice = ulice;
     }
 
-    public void setC_popisne(int c_popisne) {
+    public void setC_popisne(String c_popisne) {
         this.c_popisne = c_popisne;
     }
 
@@ -111,7 +110,7 @@ public class Uzivatele {
         return ulice;
     }
 
-    public int getC_popisne() {
+    public String getC_popisne() {
         return c_popisne;
     }
 
@@ -131,7 +130,7 @@ public class Uzivatele {
         return blokace;
     }
 
-    public Uzivatele(String jmeno, String prijmeni, String mesto, String ulice, int c_popisne, int psc, String email, String heslo, boolean blokace) {
+    public Uzivatele(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace) {
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
         this.mesto = mesto;

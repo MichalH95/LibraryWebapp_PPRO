@@ -138,7 +138,7 @@ table{
 }
 
         input[type=email], select, textarea {
-            width: 100%;
+            width: 50%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -146,7 +146,7 @@ table{
         }
 
         input[type=password], select, textarea {
-            width: 100%;
+            width: 50%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -154,7 +154,7 @@ table{
         }
 
         input[type=text], select, textarea {
-            width: 100%;
+            width: 50%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -164,11 +164,13 @@ table{
         input[type=submit] {
             background-color: #4CAF50;
             color: white;
+            width:30%;
             padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            float: right;
+            margin-left: 27%;
+
         }
 
         input[type=submit]:hover {
@@ -182,31 +184,6 @@ table{
         }
 
     </style>
-
-        <script language="JavaScript">
-            function onlyNumbers(evt)
-            {
-                var e = event || evt; // for trans-browser compatibility
-                var charCode = e.which || e.keyCode;
-                if (charCode > 31 && (charCode < 48 || charCode > 57))
-                    return false;
-                return true;
-            }
-
-            var check = function() {
-                if (document.getElementById('pw1').value ==
-                    document.getElementById('pw2').value) {
-                    document.getElementById('message').style.color = 'green';
-                    document.getElementById('message').innerHTML = 'Hesla se shodují';
-                } else {
-                    document.getElementById('message').style.color = 'red';
-                    document.getElementById('message').innerHTML = 'Hesla se neshodují';
-                }
-            }
-
-
-        </script>
-
 
 </head>
 <body>
@@ -236,20 +213,35 @@ table{
             <div class="container">
 
 
-                <h2>Registrace uživatele</h2>
+                <%
 
-<form:form action="/vlozituzivatele" autocomplete="on">
-                <table>
-                    <tr><td class="tabulkatd" >Jméno: </td><td><input required type="text" name="jmeno" placeholder="Karel" maxlength="20"></td><td class="tabulkatd" >Příjmení:</td><td><input required maxlength="20" type="text" name="prijmeni" placeholder="Vomáčka"></td></tr>
-                    <tr><td class="tabulkatd" >Heslo: </td><td><input required type="password" id="pw1" maxlength="40" name="heslo1" onkeyup='check();' placeholder="tajné heslo"></td><td class="tabulkatd" >Heslo znovu:</td><td><input onkeyup='check();' required id="pw2" maxlength="40" type="password" name="heslo2" placeholder="heslo znovu" ></td></tr>
-                    <tr><td class="tabulkatd" >Email: </td><td><input  required type="email" maxlength="40" name="email" placeholder="KarelVomacka@email.cz"></td><td></td><td colspan="2"><span id='message'></span></td></tr>
-                    <tr><td><h3>Bydliště</h3></td></tr>
-                    <tr><td class="tabulkatd" >Město: </td><td><input  required maxlength="30" type="text" name="mesto" placeholder="Praha"></td></tr>
-                    <tr><td class="tabulkatd" >Ulice: </td><td><input required maxlength="40" type="text" name="ulice" placeholder="Hradčanská"></td><td class="tabulkatd" >Č. popisné:</td><td><input required maxlength="10" type="text" name="cpp" placeholder="255"></td></tr>
-                    <tr><td class="tabulkatd" >PSČ: </td><td><input required type="text" maxlength="5" onkeypress="return onlyNumbers();" name="psc" placeholder="50901"></td></tr>
-                    <tr><td colspan="3"><input onclick="comparePass()" type="submit" name="registrovat" value="Registrovat"></td></tr>
-                </table>
+                    if (session.getAttribute("email") == null) {
+                        %>
+                <h2>Přihlášní do knihovny</h2>
+
+
+                <form:form action="/overlogin" autocomplete="on">
+                    <table>
+                        <tr><td class="tabulkatd" >Email: </td><td><input required type="email" name="email" maxlength="50"></td></tr>
+                        <tr><td class="tabulkatd" >Heslo: </td><td><input required type="password" maxlength="40" name="heslo" ></td></tr>
+                        <tr><td colspan="3"><input type="submit" name="login" value="Login"></td></tr>
+                    </table>
+                </form:form>
+         <%
+                    }else
+                    {%>
+<form:form action="/logout">
+                      Vítej <%
+    String name=(String)session.getAttribute("email");
+    out.print(name);
+
+%>! jsi přihlášen.
+                <input type="submit" name="login" value="Logout">
 </form:form>
+                    <%}
+                %>
+
+
 
             </div>
         </div>

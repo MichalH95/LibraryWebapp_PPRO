@@ -24,14 +24,12 @@ public class BaseController {
 
     @RequestMapping("/")
     public String zobrazeni(Model model, Model model1) {
-
         initDbService.initDb();
-
         List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
 //        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();
 //        model1.addAttribute("autori", autori);
-        return "registrace";
+        return "view";
     }
 
 }

@@ -18,14 +18,14 @@ public class InitDbServiceJpa implements InitDbService {
     @Override
     public void initDb() {
 
-        Kniha k = new Kniha("Maly princ", "Kniha o malem princi", "Sci-fi", new Date(),
+        /*Kniha k = new Kniha("Maly princ", "Kniha o malem princi", "Sci-fi", new Date(),
                 232, "Albatros", "4564562456", "Cestina");
 
         em.persist(k);
 
 
 
-        /*    University u = new University("UHK");
+            University u = new University("UHK");
               Student s = new Student("Krátký", "Radim");
               Project p = new Project("PPRO");
 
