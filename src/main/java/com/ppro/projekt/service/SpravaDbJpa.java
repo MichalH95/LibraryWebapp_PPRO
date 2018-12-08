@@ -47,6 +47,14 @@ public class SpravaDbJpa implements SpravaDb{
         {return false;}else{return true;}
     }
 
+
+    public List<Kniha> filtrace(String zanr, String jazyk, String nakladatelstvi)
+    {
+        return em.createQuery("SELECT k FROM Kniha k where k.zanr like :zanr and k.jazyk like :jazyk and k.nakladatelstvi like :nakladatelstvi", Kniha.class)
+                .setParameter("zanr","%"+zanr+"%").setParameter("jazyk","%"+jazyk+"%").setParameter("nakladatelstvi","%"+nakladatelstvi+"%").getResultList();
+
+    }
+
     public Kniha najdiPodleId(long id) {
         return em.find(Kniha.class, id);
     }

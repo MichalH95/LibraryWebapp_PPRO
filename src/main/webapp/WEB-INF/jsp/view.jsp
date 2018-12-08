@@ -5,6 +5,7 @@
              pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Knihy</title>
 
@@ -128,6 +129,62 @@
         td{
             padding-left: 5px;
         }
+
+
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            background-color: #4CAF50;
+
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content option {
+            color: white;
+            border:none;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            background-color:#4CAF50;
+
+        }
+        select{
+            overflow-y: auto;
+        }
+
+        selected {
+            background-color:#2d7eff;
+        }
+        .dropdown-content option:hover {background-color: #28a5df; cursor:pointer;}
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .button{
+            background: #2d7eff;
+        }
+        .button:hover{
+            background-color: #3e8e41;
+        }
+
     </style>
 </head>
 <body>
@@ -153,6 +210,56 @@
 <div class="row">
     <div class="leftcolumn">
 
+<br/>
+        <form:form action="/vyhledavani">
+        <table><tr>
+            <div class="dropdown">
+                <button style="width:117px" class="dropbtn" type="button">Žánr</button>
+                <div class="dropdown-content">
+
+                    <select  name="zanr" size="6">
+                        <option value="" selected>-</option>
+                        <option value="Sci-fi">Sci-fi</option>
+                        <option value="Horor">Horor</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Detektivky">Detektivky</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Poezie">Poezie</option>
+                        <option value="Odborné">Odborné</option>
+                        <option value="Pohádka">Pohádka</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button style="width:113px" class="dropbtn" type="button">Jazyk</button>
+                <div class="dropdown-content">
+                    <select  name="jazyk" size="3">
+                        <option value="" selected>-</option>
+                        <option value="Čeština">Čeština</option>
+                        <option value="Angličtina">Angličtina</option>
+                        <option value="Němčina">Němčina</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button style="width:150px" class="dropbtn" type="button">Nakladatelství</button>
+                <div class="dropdown-content">
+                    <select  style="width: 150px"name="nakladatelstvi" size="3">
+                        <option value="" selected>-</option>
+                        <option value="albatros">Albatros</option>
+                        <option value="prometheus">Prometheus</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <button class="dropbtn button" type="submit" name="druhvyhledavani" value="1">Filtrovat</button>
+            <button class="dropbtn button" type="submit" name="druhvyhledavani" value="0">Zobrazit vše</button>
+
+        </tr></table>
+        </form:form>
 
         <c:forEach var="k" items="${knihy}">
             <div class="card">

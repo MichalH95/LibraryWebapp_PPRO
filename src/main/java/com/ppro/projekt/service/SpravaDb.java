@@ -18,6 +18,7 @@ public interface SpravaDb {
 
     Kniha najdiPodleId(long id);
 
+    List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi);
     List<Kniha> najdiVsechnyKnihy();
 
 }
