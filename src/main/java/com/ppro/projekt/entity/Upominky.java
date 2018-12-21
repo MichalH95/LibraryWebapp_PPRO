@@ -12,6 +12,7 @@ public class Upominky {
 
 
     @ManyToOne
+    @JoinColumn(name="vypujcky_id",referencedColumnName = "id")
     private Vypujcky vypujcky;
 
     public Upominky() {

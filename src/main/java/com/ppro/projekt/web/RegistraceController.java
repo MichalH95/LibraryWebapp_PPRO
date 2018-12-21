@@ -42,14 +42,14 @@ public class RegistraceController {
     ,@RequestParam int psc,@RequestParam String email,@RequestParam String heslo1,@RequestParam String heslo2)
     {
         boolean uzivatelexist = spravaDb.existujeuzivatel(email);
-        if(uzivatelexist == true)
+        if(uzivatelexist)
         {
            // TODO HASH CODING
             return "<script>alert('Email je již registrován');window.history.back();</script>";
         }else
         {
     if(heslo1.equals(heslo2)) {
-        Uzivatele uzivatel = new Uzivatele(jmeno, prijmeni, mesto, ulice, cpp, psc, email, heslo1, false);
+        Uzivatele uzivatel = new Uzivatele(jmeno, prijmeni, mesto, ulice, cpp, psc, email, heslo1, false,0);
         spravaDb.vlozUzivatele(uzivatel);
         return "<script>alert('Uživatel vložen');window.location.replace('/login');</script>";
     }

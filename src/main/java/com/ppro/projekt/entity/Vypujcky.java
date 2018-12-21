@@ -16,9 +16,11 @@ public class Vypujcky {
     private List<Upominky> upominky;
 
     @ManyToOne
+    @JoinColumn(name="kniha_id",referencedColumnName = "id")
     private Kniha kniha;
 
     @ManyToOne
+    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
     private Uzivatele uzivatele;
 
     public Vypujcky() {

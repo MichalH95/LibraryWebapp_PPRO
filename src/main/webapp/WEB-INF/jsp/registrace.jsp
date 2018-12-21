@@ -219,12 +219,11 @@ table{
 </div>
 
 <div class="topnav">
-    <a href="#">Knihy</a>
+    <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
-    <a href="#">Rezervace</a>
-    <a href="#">Něco1</a>
-    <a href="#">Něco2</a>
+    <a href="/rezervace">Rezervace</a>
+    <a href="/sprava">Správa</a>
 
     <a href="/" style="float:right">Domů</a>
 </div>

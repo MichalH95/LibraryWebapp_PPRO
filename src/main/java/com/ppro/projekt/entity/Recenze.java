@@ -14,9 +14,11 @@ public class Recenze {
     private int hodnoceni;
 
     @ManyToOne
+    @JoinColumn(name="kniha_id",referencedColumnName = "id")
     private Kniha kniha;
 
     @ManyToOne
+    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
     private Uzivatele uzivatele;
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,8 +24,9 @@ public class BaseController {
     }
 
     @RequestMapping("/")
-    public String zobrazeni(Model model, Model model1) {
+    public String zobrazeni(Model model, HttpSession session) {
         initDbService.initDb();
+
         List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
 //        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();

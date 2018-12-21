@@ -128,16 +128,16 @@
         .btn-group .button:hover {
             background-color: #3e8e41;
         }
-td{
-    padding-left: 5px;
+        td{
+            padding-left: 5px;
 
-}
+        }
 
-table{
-    width: 90%;
-    padding: 5px;
+        table{
+            width: 90%;
+            padding: 5px;
 
-}
+        }
 
         input[type=email], select, textarea {
             width: 50%;
@@ -169,20 +169,20 @@ table{
             border: 1px solid #ccc;
             border-radius: 4px;
             resize: vertical;
-        resize: none;
+            resize: none;
         }
 
         input[type=submit] {
-             background-color: #4CAF50;
-             color: white;
-             width:30%;
-             padding: 12px 20px;
-             border: none;
-             border-radius: 4px;
-             cursor: pointer;
-             margin-left: 27%;
+            background-color: #4CAF50;
+            color: white;
+            width:30%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 27%;
 
-         }
+        }
 
         input[type=button] {
             background-color: #4CAF50;
@@ -210,18 +210,145 @@ table{
             resize: none;
         }
 
+        .adminButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
     </style>
 
     <script>
 
         function skryt()
         {
-            var x = document.getElementById("myDIV");
+            var x = document.getElementById("vlozknihu");
+            var y = document.getElementById("spravarezer");
+            var z = document.getElementById("spravavypujcek");
+            var zz = document.getElementById("spravaupominek");
+            var xy = document.getElementById("spravauzivatele");
+            var xz = document.getElementById("spravovatknihy");
+
             if (x.style.display === "none") {
                 x.style.display = "block";
             }else{
                 x.style.display = "none"
             }
+            y.style.display="none";
+            z.style.display="none";
+            zz.style.display="none";
+            xy.style.display="none";
+            xz.style.display="none";
+        }
+
+        function skryt1()
+        {
+            var x = document.getElementById("vlozknihu");
+            var y = document.getElementById("spravarezer");
+            var z = document.getElementById("spravavypujcek");
+            var zz = document.getElementById("spravaupominek");
+            var xy = document.getElementById("spravauzivatele");
+            var xz = document.getElementById("spravovatknihy");
+
+            if (y.style.display === "none") {
+                y.style.display = "block";
+            }else{
+                y.style.display = "none"
+            }
+            x.style.display="none";
+            z.style.display="none";
+            zz.style.display="none";
+            xy.style.display="none";
+            xz.style.display="none";
+
+        }
+
+        function skryt2()
+        {
+            var x = document.getElementById("vlozknihu");
+            var y = document.getElementById("spravarezer");
+            var z = document.getElementById("spravavypujcek");
+            var zz = document.getElementById("spravaupominek");
+            var xy = document.getElementById("spravauzivatele");
+            var xz = document.getElementById("spravovatknihy");
+
+            if (z.style.display === "none") {
+                z.style.display = "block";
+            }else{
+                z.style.display = "none"
+            }
+            y.style.display="none";
+            x.style.display="none";
+            zz.style.display="none";
+            xy.style.display="none";
+            xz.style.display="none";
+
+        }
+
+        function skryt3()
+        {
+            var x = document.getElementById("vlozknihu");
+            var y = document.getElementById("spravarezer");
+            var z = document.getElementById("spravavypujcek");
+            var zz = document.getElementById("spravaupominek");
+            var xy = document.getElementById("spravauzivatele");
+            var xz = document.getElementById("spravovatknihy");
+
+            if (zz.style.display === "none") {
+                zz.style.display = "block";
+            }else{
+                zz.style.display = "none"
+            }
+            y.style.display="none";
+            z.style.display="none";
+            x.style.display="none";
+            xy.style.display="none";
+            xz.style.display="none";
+        }
+
+        function skryt4()
+        {
+            var x = document.getElementById("vlozknihu");
+            var y = document.getElementById("spravarezer");
+            var z = document.getElementById("spravavypujcek");
+            var zz = document.getElementById("spravaupominek");
+            var xy = document.getElementById("spravauzivatele");
+            var xz = document.getElementById("spravovatknihy");
+
+            if (xy.style.display === "none") {
+                xy.style.display = "block";
+            }else{
+                xy.style.display = "none"
+            }
+            y.style.display="none";
+            z.style.display="none";
+            x.style.display="none";
+            zz.style.display="none";
+            xz.style.display="none";
+        }
+
+        function skryt5()
+        {
+            var x = document.getElementById("vlozknihu");
+            var y = document.getElementById("spravarezer");
+            var z = document.getElementById("spravavypujcek");
+            var zz = document.getElementById("spravaupominek");
+            var xy = document.getElementById("spravauzivatele");
+            var xz = document.getElementById("spravovatknihy");
+
+            if (xz.style.display === "none") {
+                xz.style.display = "block";
+            }else{
+                xz.style.display = "none"
+            }
+            y.style.display="none";
+            z.style.display="none";
+            x.style.display="none";
+            xy.style.display="none";
+            zz.style.display="none";
         }
 
         function onlyNumbers(evt)
@@ -240,7 +367,7 @@ table{
 
 <div class="header">
     <img src="https://image.ibb.co/iPXvAV/header.png"
-    width="100%" height="270">
+         width="100%" height="270">
 
 </div>
 
@@ -258,117 +385,27 @@ table{
 
         <div class="card">
             <div class="container">
-
-
-                <%
-
-                    if (session.getAttribute("email") == null) {
-                        %>
-                <h2>Přihlášní do knihovny</h2>
-
-
-                <form:form action="/overlogin" autocomplete="on">
-                    <table>
-                        <tr><td class="tabulkatd" >Email: </td><td><input required type="email" name="email" maxlength="50"></td></tr>
-                        <tr><td class="tabulkatd" >Heslo: </td><td><input required type="password" maxlength="40" name="heslo" ></td></tr>
-                        <tr><td colspan="3"><input type="submit" name="login" value="Login"></td></tr>
-                    </table>
-                </form:form>
-         <%
-                    }else
-                    {%>
-
-                      Vítej <%
-    String name=(String)session.getAttribute("email");
-    int priv=(int)session.getAttribute("privilegium");
-    out.print(name);
-
-%>! jsi přihlášen.
-    <% if(priv==1){%>
-
-            <br>
-            <h2>Funkce admina</h2>
-            <input type="button" onclick="skryt()" value="Vložit knihu">
-                <div id="myDIV" style="display: none;">
-
-
-                    <h1>Vložení knihy</h1>
-
-                    <form:form action="/vlozitknihu" autocomplete="on">
+                <h2>Editace rezervace</h2>
+                <c:forEach var="r" items="${rezervace}">
+                    <form action="/upravrezervaci">
                         <table>
-                            <tr><td class="tabulkatd">Název knihy: </td><td><input required type="text" name="nazev"></td></tr>
-                            <tr><td class="tabulkatd">Jazyk:</td><td> <select style="width: 150px"  name="jazyk">
-                                <option value="Čeština" selected>Čeština</option>
-                                <option value="Angličtina">Angličtina</option>
-                                <option value="Němčina">Němčina</option>
-                            </select></td></tr>
 
-                            <tr><td class="tabulkatd">Žánr: </td><td><select style="width: 150px" name="zanr">
-                                <option value="Sci-fi" selected>Sci-fi</option>
-                                <option value="Horor">Horor</option>
-                                <option value="Fantasy">Fantasy</option>
-                                <option value="Detektivky">Detektivky</option>
-                                <option value="Drama">Drama</option>
-                                <option value="Poezie">Poezie</option>
-                                <option value="Odborné">Odborné</option>
-                                <option value="Pohádka">Pohádka</option>
-                            </select></td></tr>
+                            <tr>
+                                <td>Rezervace od:</td>
+                                <td><input type="text" required name="rezervace_od" value="${r.rezervace_od}"></td>
+                                <input type="hidden" name="idecko" value="${r.id}">
+                            </tr>
+                            <tr>
+                                <td>Rezervace do:</td>
+                                <td><input type="text" required name="rezervace_do" value="${r.rezervace_do}"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Editovat"></td>
+                            </tr>
 
-                            <tr><td class="tabulkatd">Nakladatelství:</td><td> <select style="width: 150px"  name="nakladatelstvi">
-                                <option value="Albatros" selected>Albatros</option>
-                                <option value="Prometheus">Prometheus</option>
-                            </select></td></tr>
-                            <tr><td class="tabulkatd">Datum vydání:</td><td><input  required type="date" name="datum_vydani" value="2018-07-22" min="1900-01-01" required max="2019-12-31"></td></tr>
-                            <tr><td class="tabulkatd">ISBN: </td><td><input required type="text" name="isbn"></td></tr>
-                            <tr><td class="tabulkatd">Počet stran: </td><td><input required type="text" onkeypress="return onlyNumbers();" name="pocet_stran"></td></tr>
-                            <tr><td class="tabulkatd">Popis: </td><td><textarea required name="popis" maxlength="2550" rows="7" cols="30"></textarea></td></tr>
-                            <tr><td colspan="2"><input type="submit" value="Vložit knihu"></td></tr>
                         </table>
-                    </form:form>
-
-                </div>
-      <% }%>
-
-
-
-                <h1>Vaše výpůjčky</h1>
-                <table border="2">
-                    <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td></tr>
-
-
-
-
-
-                <c:forEach var="v" items="${vypujcky}">
-
-                    <tr>
-                        <td>    <c:out value="${v.datum_vypujceni }" /></td>
-                        <td>    <c:out value="${v.vypujceno_do }" /></td>
-
-                        <c:choose>
-                            <c:when test="${v.vraceno==true}">
-                                <td>Ano</td>
-                                <br />
-                            </c:when>
-                            <c:otherwise>
-                                <td>Ne</td>
-                                <br />
-                            </c:otherwise>
-                        </c:choose>
-                        <td>${v.kniha.nazev}</td>
-
-                    </tr>
-                </table>
+                    </form>
                 </c:forEach>
-
-                <form:form action="/logout">
-                    <input type="submit" name="login" value="Logout">
-                </form:form>
-
-                    <%}
-                %>
-
-
 
             </div>
         </div>
@@ -380,7 +417,7 @@ table{
             <h3>Nejnovější knihy</h3>
             <p><a href="#">Harry Potter a Kámen mudrců</a> - 21.11.2018</p>
             <p><a href="#">Dívka ve vlaku</a> - 20.11.2018</p>
-          </div>
+        </div>
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
@@ -392,7 +429,7 @@ table{
 <div class="footer">
 
 
-<p>Univerzita Hradec Králové - FIM UHK</p>
+    <p>Univerzita Hradec Králové - FIM UHK</p>
 
 </div>
 

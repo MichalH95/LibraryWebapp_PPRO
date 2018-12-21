@@ -21,6 +21,7 @@ public class Uzivatele {
     private String email;
     private String heslo;
     private boolean blokace;
+    private int privilegia;
 
     @OneToMany(mappedBy="uzivatele")
     private List<Vypujcky> vypujcky;
@@ -32,6 +33,14 @@ public class Uzivatele {
     private List<Rezervace> rezervace;
 
     public Uzivatele() {
+    }
+
+    public int getPrivilegia() {
+        return privilegia;
+    }
+
+    public void setPrivilegia(int privilegia) {
+        this.privilegia = privilegia;
     }
 
     public void setVypujcky(List<Vypujcky> vypujcky) {
@@ -76,6 +85,19 @@ public class Uzivatele {
 
     public void setPsc(int psc) {
         this.psc = psc;
+    }
+
+    public Uzivatele(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace, int privilegia) {
+        this.jmeno = jmeno;
+        this.prijmeni = prijmeni;
+        this.mesto = mesto;
+        this.ulice = ulice;
+        this.c_popisne = c_popisne;
+        this.psc = psc;
+        this.email = email;
+        this.heslo = heslo;
+        this.blokace = blokace;
+        this.privilegia = privilegia;
     }
 
     public void setEmail(String email) {

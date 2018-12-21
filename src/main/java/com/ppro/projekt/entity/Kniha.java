@@ -14,7 +14,7 @@ public class Kniha {
     @Column(length = 2550)
     private String popis;
     private String zanr;
-    private Date datum_vydani;
+    private String datum_vydani;
     private int pocet_stran;
     private String nakladatelstvi;
     @Column(length = 2550)
@@ -33,7 +33,7 @@ public class Kniha {
     @OneToMany(mappedBy="kniha")
     private List<Autori> autori;
 
-    public Kniha(String nazev, String popis, String zanr, Date datum_vydani, int pocet_stran, String nakladatelstvi, String isbn, String jazyk) {
+    public Kniha(String nazev, String popis, String zanr, String datum_vydani, int pocet_stran, String nakladatelstvi, String isbn, String jazyk) {
         this.nazev = nazev;
         this.popis = popis;
         this.zanr = zanr;
@@ -44,7 +44,7 @@ public class Kniha {
         this.jazyk = jazyk;
     }
 
-    public Kniha(String nazev, String popis, String zanr, Date datum_vydani) {
+    public Kniha(String nazev, String popis, String zanr, String datum_vydani) {
         this.nazev = nazev;
         this.popis = popis;
         this.zanr = zanr;
@@ -127,7 +127,11 @@ public class Kniha {
         this.zanr = zanr;
     }
 
-    public void setDatum_vydani(Date datum_vydani) {
+    public String getDatum_vydani() {
+        return datum_vydani;
+    }
+
+    public void setDatum_vydani(String datum_vydani) {
         this.datum_vydani = datum_vydani;
     }
 
@@ -147,9 +151,7 @@ public class Kniha {
         return zanr;
     }
 
-    public Date getDatum_vydani() {
-        return datum_vydani;
-    }
+
 
     @Override
     public String toString() {

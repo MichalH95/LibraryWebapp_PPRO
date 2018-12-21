@@ -1,9 +1,6 @@
 package com.ppro.projekt.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Rezervace {
@@ -14,9 +11,11 @@ public class Rezervace {
     private String rezervace_do;
 
     @ManyToOne
+    @JoinColumn(name="kniha_id",referencedColumnName = "id")
     private Kniha kniha;
 
     @ManyToOne
+    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
     private Uzivatele uzivatele;
 
     public Rezervace() {

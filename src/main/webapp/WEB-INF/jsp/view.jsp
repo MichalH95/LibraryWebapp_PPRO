@@ -197,12 +197,11 @@
 </div>
 
 <div class="topnav">
-    <a href="#">Knihy</a>
+    <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
-    <a href="#">Rezervace</a>
-    <a href="#">Něco1</a>
-    <a href="#">Něco2</a>
+    <a href="/rezervace">Rezervace</a>
+    <a href="/sprava">Správa</a>
 
     <a href="/" style="float:right">Domů</a>
 </div>
@@ -259,13 +258,32 @@
             <button class="dropbtn button" type="submit" name="druhvyhledavani" value="0">Zobrazit vše</button>
 
         </tr></table>
+
+
         </form:form>
+
+
+        <%
+            int priv=0;
+            if (session.getAttribute("email") != null) {
+                priv=(int)session.getAttribute("privilegium");
+            }
+        %>
 
         <c:forEach var="k" items="${knihy}">
             <div class="card">
                 <div class="btn-group">
                     <button class="button">Rezervovat</button>
                     <button class="button">Vypůjčit</button>
+                    <%
+                    if(priv==1){
+                    %>
+                    <form action="/smazatknihu">
+                    <button style="color: red" class="button">X</button>
+                        <input type="hidden" name="idknihy" value="${k.id }" />
+                    </form>
+
+                                <% }%>
                 </div>
                 <h2><c:out value="${k.nazev }" /></h2>
                 <table>
