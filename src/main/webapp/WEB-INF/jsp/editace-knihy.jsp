@@ -220,7 +220,9 @@
         }
 
     </style>
-        <script>
+
+    <script>
+
         function onlyNumbers(evt)
         {
             var e = event || evt; // for trans-browser compatibility
@@ -255,19 +257,43 @@
         <div class="card">
             <div class="container">
                 <h2>Editace rezervace</h2>
-                <c:forEach var="r" items="${rezervace}">
-                    <form action="/upravrezervaci">
+                <c:forEach var="k" items="${kniha}">
+                    <form action="/upravknihu">
                         <table>
+                            <table>
+                                <tr><td class="tabulkatd">Název knihy: </td><td><input required value="${k.nazev}" type="text" name="nazev"></td></tr>
+                                <tr><td class="tabulkatd">Jazyk:</td><td> <select style="width: 150px"  name="jazyk">
+                                    <option value="${k.jazyk}" selected>${k.jazyk}</option>
+                                    <option value="Čeština">Čeština</option>
+                                    <option value="Angličtina">Angličtina</option>
+                                    <option value="Němčina">Němčina</option>
+                                </select></td></tr>
+                                <input type="hidden" name="idecko" value="${k.id}">
+                                <tr><td class="tabulkatd">Žánr: </td><td><select style="width: 150px" name="zanr">
+                                    <option value="${k.zanr}" selected>${k.zanr}</option>
+                                    <option value="Sci-fi">Sci-fi</option>
+                                    <option value="Horor">Horor</option>
+                                    <option value="Fantasy">Fantasy</option>
+                                    <option value="Detektivky">Detektivky</option>
+                                    <option value="Drama">Drama</option>
+                                    <option value="Poezie">Poezie</option>
+                                    <option value="Odborné">Odborné</option>
+                                    <option value="Pohádka">Pohádka</option>
+                                </select></td></tr>
 
-                            <tr>
-                                <td>Rezervace od:</td>
-                                <td><input type="text" required name="rezervace_od" value="${r.rezervace_od}"></td>
-                                <input type="hidden" name="idecko" value="${r.id}">
-                            </tr>
-                            <tr>
-                                <td>Rezervace do:</td>
-                                <td><input type="text" required name="rezervace_do" value="${r.rezervace_do}"></td>
-                            </tr>
+                                <tr><td class="tabulkatd">Nakladatelství:</td><td> <select style="width: 150px"  name="nakladatelstvi">
+                                    <option value="${k.nakladatelstvi}" selected>${k.nakladatelstvi}</option>
+                                    <option value="Albatros">Albatros</option>
+                                    <option value="Prometheus">Prometheus</option>
+                                </select></td></tr>
+                                <tr><td class="tabulkatd">Datum vydání:</td><td><input  value="${k.datum_vydani}" required type="date" name="datum_vydani" value="2018-07-22" min="1900-01-01" required max="2019-12-31"></td></tr>
+                                <tr><td class="tabulkatd">ISBN: </td><td><input required value="${k.isbn}" type="text" name="isbn"></td></tr>
+                                <tr><td class="tabulkatd">Počet kusů: </td><td><input required value="${k.pocet_kusu}" type="text" onkeypress="return onlyNumbers();" name="pocet_kusu"></td></tr>
+                                <tr><td class="tabulkatd">Počet stran: </td><td><input required value="${k.pocet_stran}" type="text" onkeypress="return onlyNumbers();" name="pocet_stran"></td></tr>
+                                <tr><td class="tabulkatd">Popis: </td><td><textarea required name="popis" maxlength="2550" rows="7" cols="30">${k.popis}</textarea></td></tr>
+                            </table>
+
+
                             <tr>
                                 <td><input type="submit" value="Editovat"></td>
                             </tr>

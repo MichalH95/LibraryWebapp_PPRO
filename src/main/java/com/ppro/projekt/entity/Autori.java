@@ -11,11 +11,10 @@ public class Autori {
     private String jmeno;
 
 
-
-
     @ManyToOne
-    @JoinColumn(name = "knihy_id", referencedColumnName = "id")
+    @JoinColumn(name = "kniha_id", referencedColumnName = "id")
     private Kniha kniha;
+
     public Autori() {
     }
 

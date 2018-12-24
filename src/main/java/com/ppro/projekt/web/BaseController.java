@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -23,14 +24,19 @@ public class BaseController {
         this.initDbService = initDbService;
     }
 
-    @RequestMapping("/")
-    public String zobrazeni(Model model, HttpSession session) {
+    @RequestMapping("/nahratdata")
+    @ResponseBody
+    public String nahratdata(Model model, HttpSession session) {
         initDbService.initDb();
+    return "<script>alert('Data úspěšně nahrána');window.location.replace('/');</script>";
+    }
 
+    @RequestMapping("/")
+    public String zobrazeni(Model model) {
+
+        //TODO výpis autora ke knize
         List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
-//        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();
-//        model1.addAttribute("autori", autori);
         return "view";
     }
 

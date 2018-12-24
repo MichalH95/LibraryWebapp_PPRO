@@ -223,134 +223,6 @@
 
     <script>
 
-        function skryt()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            }else{
-                x.style.display = "none"
-            }
-            y.style.display="none";
-            z.style.display="none";
-            zz.style.display="none";
-            xy.style.display="none";
-            xz.style.display="none";
-        }
-
-        function skryt1()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (y.style.display === "none") {
-                y.style.display = "block";
-            }else{
-                y.style.display = "none"
-            }
-            x.style.display="none";
-            z.style.display="none";
-            zz.style.display="none";
-            xy.style.display="none";
-            xz.style.display="none";
-
-        }
-
-        function skryt2()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (z.style.display === "none") {
-                z.style.display = "block";
-            }else{
-                z.style.display = "none"
-            }
-            y.style.display="none";
-            x.style.display="none";
-            zz.style.display="none";
-            xy.style.display="none";
-            xz.style.display="none";
-
-        }
-
-        function skryt3()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (zz.style.display === "none") {
-                zz.style.display = "block";
-            }else{
-                zz.style.display = "none"
-            }
-            y.style.display="none";
-            z.style.display="none";
-            x.style.display="none";
-            xy.style.display="none";
-            xz.style.display="none";
-        }
-
-        function skryt4()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (xy.style.display === "none") {
-                xy.style.display = "block";
-            }else{
-                xy.style.display = "none"
-            }
-            y.style.display="none";
-            z.style.display="none";
-            x.style.display="none";
-            zz.style.display="none";
-            xz.style.display="none";
-        }
-
-        function skryt5()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (xz.style.display === "none") {
-                xz.style.display = "block";
-            }else{
-                xz.style.display = "none"
-            }
-            y.style.display="none";
-            z.style.display="none";
-            x.style.display="none";
-            xy.style.display="none";
-            zz.style.display="none";
-        }
-
         function onlyNumbers(evt)
         {
             var e = event || evt; // for trans-browser compatibility
@@ -375,7 +247,6 @@
     <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
-    <a href="/rezervace">Rezervace</a>
     <a href="/sprava">Správa</a>
     <a href="/" style="float:right">Domů</a>
 </div>
@@ -441,16 +312,32 @@
 
     </div>
     <div class="rightcolumn">
+        <div class="card">
+            <h2>Adresa knihovny</h2>
+            <p>Hrad I. nádvoří č. p. 1
+                <br/>Hradčany
+                <br/>  119 08 Praha 1,</p>
+        </div>
+
 
         <div class="card">
-            <h3>Nejnovější knihy</h3>
-            <p><a href="#">Harry Potter a Kámen mudrců</a> - 21.11.2018</p>
-            <p><a href="#">Dívka ve vlaku</a> - 20.11.2018</p>
+            <h3>Kontakty: </h3>
+            <p>Telefon:	221 663 111 (ústředna)</p>
+            <p>Elektronická podatelna: posta@uhk.cz</p>
+            <p>Datová  schránka:	5qt8sy8</p>
+            <p>IČO:	00023221</p>
+            <p>DIČ:CZ00023221</p>
+            <p>Facebook: www.facebook.com/knihovna</p>
         </div>
+
+
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
             <p>Michael Húževka</p>
+            <form action="/nahratdata">
+                <input class="data" type="submit" value="Nahrát data DB">
+            </form>
         </div>
     </div>
 </div>

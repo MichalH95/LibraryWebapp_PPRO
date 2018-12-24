@@ -15,6 +15,22 @@ public class Upominky {
     @JoinColumn(name="vypujcky_id",referencedColumnName = "id")
     private Vypujcky vypujcky;
 
+    @ManyToOne
+    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
+    private Uzivatele uzivatele;
+
+    @ManyToOne
+    @JoinColumn(name="kniha_id",referencedColumnName = "id")
+    private Kniha kniha;
+
+    public Kniha getKniha() {
+        return kniha;
+    }
+
+    public void setKniha(Kniha kniha) {
+        this.kniha = kniha;
+    }
+
     public Upominky() {
     }
 
@@ -23,7 +39,13 @@ public class Upominky {
         this.pokuta = pokuta;
     }
 
+    public void setUzivatele(Uzivatele uzivatele) {
+        this.uzivatele = uzivatele;
+    }
 
+    public Uzivatele getUzivatele() {
+        return uzivatele;
+    }
 
     public int getId() {
         return Id;

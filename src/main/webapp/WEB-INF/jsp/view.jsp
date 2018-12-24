@@ -200,7 +200,6 @@
     <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
-    <a href="/rezervace">Rezervace</a>
     <a href="/sprava">Správa</a>
 
     <a href="/" style="float:right">Domů</a>
@@ -273,11 +272,23 @@
         <c:forEach var="k" items="${knihy}">
             <div class="card">
                 <div class="btn-group">
+
                     <button class="button">Rezervovat</button>
-                    <button class="button">Vypůjčit</button>
+                    <c:choose>
+                        <c:when test="${k.pocet_kusu>0}">
+                            <button class="button">Vypůjčit</button>
+                        </c:when>
+                    </c:choose>
+
+
+
                     <%
                     if(priv==1){
                     %>
+                    <form action="/editovatknihu">
+                        <button style="color: red" class="button">Editovat</button>
+                        <input type="hidden" name="idecko" value="${k.id }" />
+                    </form>
                     <form action="/smazatknihu">
                     <button style="color: red" class="button">X</button>
                         <input type="hidden" name="idknihy" value="${k.id }" />
@@ -286,6 +297,20 @@
                                 <% }%>
                 </div>
                 <h2><c:out value="${k.nazev }" /></h2>
+
+
+                <c:choose>
+                    <c:when test="${k.pocet_kusu>0}">
+                     <span style="color: green"> Počet kusů: <c:out value="${k.pocet_kusu }" /></span>
+                    </c:when>
+                    <c:otherwise>
+                        <span style="color: red"> Počet kusů: <c:out value="${k.pocet_kusu }" /></span>
+                    </c:otherwise>
+                </c:choose>
+
+
+
+
                 <table>
                     <tr>
                         <h5><td><b>Datum vydání: </b><c:out value="${k.datum_vydani }" /></td></h5>
@@ -302,7 +327,7 @@
 
                 <c:forEach var="a" items="${autori}">
                     <tr>
-                        <td>    Autori: <c:out value="${a.jmeno }" /></td>
+                        <td>    Autori: <c:out value="${a.autori.jmeno }" /></td>
 
                     </tr>
 
@@ -315,6 +340,15 @@
 
 
     </div>
+
+    <style>
+        .data
+        {
+            width: 100%;
+            height: 10%;
+            background-color: red;
+        }
+    </style>
     <div class="rightcolumn">
         <div class="card">
             <h2>Adresa knihovny</h2>
@@ -322,15 +356,26 @@
                 <br/>Hradčany
                 <br/>  119 08 Praha 1,</p>
         </div>
+
+
         <div class="card">
-            <h3>Nejnovější knihy</h3>
-            <p><a href="#">Harry Potter a Kámen mudrců</a> - 21.11.2018</p>
-            <p><a href="#">Dívka ve vlaku</a> - 20.11.2018</p>
+            <h3>Kontakty: </h3>
+            <p>Telefon:	221 663 111 (ústředna)</p>
+            <p>Elektronická podatelna: posta@uhk.cz</p>
+            <p>Datová  schránka:	5qt8sy8</p>
+            <p>IČO:	00023221</p>
+            <p>DIČ:CZ00023221</p>
+            <p>Facebook: www.facebook.com/knihovna</p>
         </div>
+
+
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
             <p>Michael Húževka</p>
+            <form action="/nahratdata">
+            <input class="data" type="submit" value="Nahrát data DB">
+            </form>
         </div>
     </div>
 </div>

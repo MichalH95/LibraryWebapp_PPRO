@@ -32,7 +32,26 @@ public class Uzivatele {
     @OneToMany(mappedBy="uzivatele")
     private List<Rezervace> rezervace;
 
+    @OneToMany(mappedBy="uzivatele")
+    private List<Rezervace> upominky;
+
     public Uzivatele() {
+    }
+
+    public List<Recenze> getRecenze() {
+        return recenze;
+    }
+
+    public List<Rezervace> getUpominky() {
+        return upominky;
+    }
+
+    public void setRecenze(List<Recenze> recenze) {
+        this.recenze = recenze;
+    }
+
+    public void setUpominky(List<Rezervace> upominky) {
+        this.upominky = upominky;
     }
 
     public int getPrivilegia() {

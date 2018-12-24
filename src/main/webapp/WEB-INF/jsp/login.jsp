@@ -248,7 +248,6 @@ table{
     <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
-    <a href="/rezervace">Rezervace</a>
     <a href="/sprava">Správa</a>
     <a href="/" style="float:right">Domů</a>
 </div>
@@ -278,56 +277,12 @@ table{
                     }else
                     {%>
 
-                      Vítej <%
-    String name=(String)session.getAttribute("email");
-    int priv=(int)session.getAttribute("privilegium");
-    out.print(name);
+                Vítej <%
+                String name=(String)session.getAttribute("email");
+                int priv=(int)session.getAttribute("privilegium");
+                out.print(name);
 
-%>! jsi přihlášen.
-    <% if(priv==1){%>
-
-            <br>
-            <h2>Funkce admina</h2>
-            <input type="button" onclick="skryt()" value="Vložit knihu">
-                <div id="myDIV" style="display: none;">
-
-
-                    <h1>Vložení knihy</h1>
-
-                    <form:form action="/vlozitknihu" autocomplete="on">
-                        <table>
-                            <tr><td class="tabulkatd">Název knihy: </td><td><input required type="text" name="nazev"></td></tr>
-                            <tr><td class="tabulkatd">Jazyk:</td><td> <select style="width: 150px"  name="jazyk">
-                                <option value="Čeština" selected>Čeština</option>
-                                <option value="Angličtina">Angličtina</option>
-                                <option value="Němčina">Němčina</option>
-                            </select></td></tr>
-
-                            <tr><td class="tabulkatd">Žánr: </td><td><select style="width: 150px" name="zanr">
-                                <option value="Sci-fi" selected>Sci-fi</option>
-                                <option value="Horor">Horor</option>
-                                <option value="Fantasy">Fantasy</option>
-                                <option value="Detektivky">Detektivky</option>
-                                <option value="Drama">Drama</option>
-                                <option value="Poezie">Poezie</option>
-                                <option value="Odborné">Odborné</option>
-                                <option value="Pohádka">Pohádka</option>
-                            </select></td></tr>
-
-                            <tr><td class="tabulkatd">Nakladatelství:</td><td> <select style="width: 150px"  name="nakladatelstvi">
-                                <option value="Albatros" selected>Albatros</option>
-                                <option value="Prometheus">Prometheus</option>
-                            </select></td></tr>
-                            <tr><td class="tabulkatd">Datum vydání:</td><td><input  required type="date" name="datum_vydani" value="2018-07-22" min="1900-01-01" required max="2019-12-31"></td></tr>
-                            <tr><td class="tabulkatd">ISBN: </td><td><input required type="text" name="isbn"></td></tr>
-                            <tr><td class="tabulkatd">Počet stran: </td><td><input required type="text" onkeypress="return onlyNumbers();" name="pocet_stran"></td></tr>
-                            <tr><td class="tabulkatd">Popis: </td><td><textarea required name="popis" maxlength="2550" rows="7" cols="30"></textarea></td></tr>
-                            <tr><td colspan="2"><input type="submit" value="Vložit knihu"></td></tr>
-                        </table>
-                    </form:form>
-
-                </div>
-      <% }%>
+            %>! jsi přihlášen.
 
 
 
@@ -335,11 +290,7 @@ table{
                 <table border="2">
                     <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td></tr>
 
-
-
-
-
-                <c:forEach var="v" items="${vypujcky}">
+                    <c:forEach var="v" items="${vypujcky}">
 
                     <tr>
                         <td>    <c:out value="${v.datum_vypujceni }" /></td>
@@ -359,7 +310,41 @@ table{
 
                     </tr>
                 </table>
+
                 </c:forEach>
+
+                <h1>Vaše upomínky</h1>
+                <table border="2">
+
+                    <c:forEach var="u" items="${upominky}">
+            <tr><td>Pokuta</td><td>Popis</td><td>Název knihy</td><td>Datum vrácení</td></tr>
+                    <tr>
+
+                        <td>    <c:out value="${u.pokuta }" /> Kč</td>
+                        <td>    <c:out value="${u.popis }" /></td>
+                        <td>    <c:out value="${u.kniha.nazev }" /></td>
+                        <td>    <c:out value="${u.vypujcky.vypujceno_do }" /></td>
+                    </tr>
+
+
+                </c:forEach>
+                </table>
+
+                <h1>Vaše rezervace</h1>
+                <table border="2">
+
+                    <c:forEach var="r" items="${rezervace}">
+
+                        <tr><td>Rezervace do</td><td>Název knihy</td></tr>
+                        <tr>
+
+                            <td>    <c:out value="${r.rezervace_do }" /></td>
+                            <td>    <c:out value="${r.kniha.nazev }" /></td>
+                           </tr>
+
+
+                    </c:forEach>
+                </table>
 
                 <form:form action="/logout">
                     <input type="submit" name="login" value="Logout">
@@ -375,16 +360,32 @@ table{
 
     </div>
     <div class="rightcolumn">
+        <div class="card">
+            <h2>Adresa knihovny</h2>
+            <p>Hrad I. nádvoří č. p. 1
+                <br/>Hradčany
+                <br/>  119 08 Praha 1,</p>
+        </div>
+
 
         <div class="card">
-            <h3>Nejnovější knihy</h3>
-            <p><a href="#">Harry Potter a Kámen mudrců</a> - 21.11.2018</p>
-            <p><a href="#">Dívka ve vlaku</a> - 20.11.2018</p>
-          </div>
+            <h3>Kontakty: </h3>
+            <p>Telefon:	221 663 111 (ústředna)</p>
+            <p>Elektronická podatelna: posta@uhk.cz</p>
+            <p>Datová  schránka:	5qt8sy8</p>
+            <p>IČO:	00023221</p>
+            <p>DIČ:CZ00023221</p>
+            <p>Facebook: www.facebook.com/knihovna</p>
+        </div>
+
+
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
             <p>Michael Húževka</p>
+            <form action="/nahratdata">
+                <input class="data" type="submit" value="Nahrát data DB">
+            </form>
         </div>
     </div>
 </div>

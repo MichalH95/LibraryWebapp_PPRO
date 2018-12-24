@@ -1,9 +1,7 @@
 package com.ppro.projekt.web;
 
 
-import com.ppro.projekt.entity.Kniha;
-import com.ppro.projekt.entity.Uzivatele;
-import com.ppro.projekt.entity.Vypujcky;
+import com.ppro.projekt.entity.*;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +21,30 @@ import java.util.List;
 public class LoginController {
 
 
-    private SpravaDb spravaDb;
+       private SpravaDb spravaDb;
 
     public LoginController(@Autowired SpravaDb spravaDb) {
         this.spravaDb = spravaDb;
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String showForm(Model model,Model model1,HttpSession session)
+    public String showForm(Model model,HttpSession session)
     {
         if(null==session.getAttribute("email"))
         {
             return "login";
         }else
-            {
-                String email=session.getAttribute("email").toString();
-                //TODO výpis názvu knihy, podle selectnuté výpůjčky
-                List<Vypujcky> vypujcky = spravaDb.najdiVypujcky(email);
-                model.addAttribute("vypujcky", vypujcky);
-                return "login";
-            }
+        {
+            String email=session.getAttribute("email").toString();
+            List<Vypujcky> vypujcky = spravaDb.najdiVypujcky(email);
+            model.addAttribute("vypujcky", vypujcky);
+            List<Upominky> upominky = spravaDb.vypisUpominkyProUzivatele(email);
+            model.addAttribute("upominky", upominky);
+            List<Rezervace> rezervace = spravaDb.vypisRezervaceProUzivatele(email);
+            model.addAttribute("rezervace", rezervace);
+            return "login";
         }
+    }
 
 
     //TODO PASS HASHING
@@ -53,6 +54,7 @@ public class LoginController {
 
             if(spravaDb.overlogin(email,heslo))
             {
+
                 int priv;
                 if(spravaDb.privilegium(email))
                 {priv = 1;} else { priv=0;}
@@ -62,7 +64,7 @@ public class LoginController {
             }
             else
             {
-                return "<script>alert('Špatný email nebo heslo');window.history.back();</script>";
+                return "<script>alert('Špatný email nebo heslo, pokud vše zadáváte správně, váš účet je blokován');window.history.back();</script>";
             }
     }
 

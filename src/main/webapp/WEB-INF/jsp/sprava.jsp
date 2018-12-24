@@ -230,7 +230,6 @@ table{
             var z = document.getElementById("spravavypujcek");
             var zz = document.getElementById("spravaupominek");
             var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
 
             if (x.style.display === "none") {
                 x.style.display = "block";
@@ -241,7 +240,6 @@ table{
             z.style.display="none";
             zz.style.display="none";
             xy.style.display="none";
-            xz.style.display="none";
         }
 
         function skryt1()
@@ -251,7 +249,6 @@ table{
             var z = document.getElementById("spravavypujcek");
             var zz = document.getElementById("spravaupominek");
             var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
 
             if (y.style.display === "none") {
                 y.style.display = "block";
@@ -262,7 +259,6 @@ table{
             z.style.display="none";
             zz.style.display="none";
             xy.style.display="none";
-            xz.style.display="none";
 
         }
 
@@ -273,7 +269,6 @@ table{
             var z = document.getElementById("spravavypujcek");
             var zz = document.getElementById("spravaupominek");
             var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
 
             if (z.style.display === "none") {
                 z.style.display = "block";
@@ -284,7 +279,6 @@ table{
             x.style.display="none";
             zz.style.display="none";
             xy.style.display="none";
-            xz.style.display="none";
 
         }
 
@@ -295,7 +289,6 @@ table{
             var z = document.getElementById("spravavypujcek");
             var zz = document.getElementById("spravaupominek");
             var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
 
             if (zz.style.display === "none") {
                 zz.style.display = "block";
@@ -306,7 +299,6 @@ table{
             z.style.display="none";
             x.style.display="none";
             xy.style.display="none";
-            xz.style.display="none";
         }
 
         function skryt4()
@@ -316,7 +308,6 @@ table{
             var z = document.getElementById("spravavypujcek");
             var zz = document.getElementById("spravaupominek");
             var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
 
             if (xy.style.display === "none") {
                 xy.style.display = "block";
@@ -326,28 +317,6 @@ table{
             y.style.display="none";
             z.style.display="none";
             x.style.display="none";
-            zz.style.display="none";
-            xz.style.display="none";
-        }
-
-        function skryt5()
-        {
-            var x = document.getElementById("vlozknihu");
-            var y = document.getElementById("spravarezer");
-            var z = document.getElementById("spravavypujcek");
-            var zz = document.getElementById("spravaupominek");
-            var xy = document.getElementById("spravauzivatele");
-            var xz = document.getElementById("spravovatknihy");
-
-            if (xz.style.display === "none") {
-                xz.style.display = "block";
-            }else{
-                xz.style.display = "none"
-            }
-            y.style.display="none";
-            z.style.display="none";
-            x.style.display="none";
-            xy.style.display="none";
             zz.style.display="none";
         }
 
@@ -375,7 +344,6 @@ table{
     <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
-    <a href="/rezervace">Rezervace</a>
     <a href="/sprava">Správa</a>
     <a href="/" style="float:right">Domů</a>
 </div>
@@ -394,7 +362,7 @@ table{
                 <button class="adminButton" onclick="skryt2()">Spravovat výpujčky</button>
                 <button class="adminButton" onclick="skryt3()">Spravovat upomínky</button>
                 <button class="adminButton" onclick="skryt4()">Spravovat uživatele</button>
-                <button class="adminButton" onclick="skryt5()">Spravovat knihy</button>
+
 
                 <div id="vlozknihu" style="display: none;">
                     <h2>Vložení knihy</h2>
@@ -424,6 +392,7 @@ table{
                             </select></td></tr>
                             <tr><td class="tabulkatd">Datum vydání:</td><td><input  required type="date" name="datum_vydani" value="2018-07-22" min="1900-01-01" required max="2019-12-31"></td></tr>
                             <tr><td class="tabulkatd">ISBN: </td><td><input required type="text" name="isbn"></td></tr>
+                            <tr><td class="tabulkatd">Počet kusů: </td><td><input required type="text" onkeypress="return onlyNumbers();" name="pocet_kusu"></td></tr>
                             <tr><td class="tabulkatd">Počet stran: </td><td><input required type="text" onkeypress="return onlyNumbers();" name="pocet_stran"></td></tr>
                             <tr><td class="tabulkatd">Popis: </td><td><textarea required name="popis" maxlength="2550" rows="7" cols="30"></textarea></td></tr>
                             <tr><td colspan="2"><input type="submit" value="Vložit knihu"></td></tr>
@@ -472,18 +441,47 @@ table{
                 </div>
 
                 <div id="spravaupominek" style="display: none;">
+                    <h2>Sprava upomínek</h2>
+                    <table border="1">
+                        <tr><td>Pokuta</td><td>Uživatel</td><td>Datum vrácení</td><td>Popis</td><td colspan="2">Akce</td></tr>
+                        <c:forEach var="u" items="${upominky}">
+                            <br>
+                            <tr>
+                                <td>   <c:out value="${u.pokuta }" /> Kč</td>
+                                <td>${u.uzivatele.email}</td>
+                                <td>${u.vypujcky.vypujceno_do}</td>
+                                <td><c:out value="${u.popis }" /></td>
 
-                    <h1>Sprava upomínek</h1>
+
+
+                                <td><form action="/smazatupominku"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0; color: red" value="X" type="submit"></form></td>
+
+                                <td><form action="/editaceupominky"><input type="hidden" name="idecko" value="${u.id}" /><input style="width: 100%; margin-left: 0;" value="Editovat" type="submit"></form> </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </div>
 
                 <div id="spravauzivatele" style="display: none;">
+                    <h2>Sprava uživatelů</h2>
 
-                    <h1>Sprava uživatelů</h1>
-                </div>
+                        <table border="1">
+                        <tr><td>Uživatel</td><td>blokace</td><td colspan="3">Akce</td></tr>
+                        <c:forEach var="u" items="${uzivatele}">
 
-                <div id="spravovatknihy" style="display: none;">
+                            <tr>
+                                <td>   <c:out value="${u.email }" /></td>
+                                                          <td>${u.blokace}</td>
 
-                    <h1>Sprava knih</h1>
+                                <td><form action="/smazatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0; color: red" value="X" type="submit"></form></td>
+                                <td><form action="/blokovatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Blokovat" type="submit"></form></td>
+                                <td><form action="/odblokovatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Odblokovat" type="submit"></form></td>
+
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+
                 </div>
 
 
@@ -499,16 +497,32 @@ table{
 
     </div>
     <div class="rightcolumn">
+        <div class="card">
+            <h2>Adresa knihovny</h2>
+            <p>Hrad I. nádvoří č. p. 1
+                <br/>Hradčany
+                <br/>  119 08 Praha 1,</p>
+        </div>
+
 
         <div class="card">
-            <h3>Nejnovější knihy</h3>
-            <p><a href="#">Harry Potter a Kámen mudrců</a> - 21.11.2018</p>
-            <p><a href="#">Dívka ve vlaku</a> - 20.11.2018</p>
-          </div>
+            <h3>Kontakty: </h3>
+            <p>Telefon:	221 663 111 (ústředna)</p>
+            <p>Elektronická podatelna: posta@uhk.cz</p>
+            <p>Datová  schránka:	5qt8sy8</p>
+            <p>IČO:	00023221</p>
+            <p>DIČ:CZ00023221</p>
+            <p>Facebook: www.facebook.com/knihovna</p>
+        </div>
+
+
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
             <p>Michael Húževka</p>
+            <form action="/nahratdata">
+                <input class="data" type="submit" value="Nahrát data DB">
+            </form>
         </div>
     </div>
 </div>

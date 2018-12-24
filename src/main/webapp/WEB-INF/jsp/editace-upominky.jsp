@@ -220,7 +220,9 @@
         }
 
     </style>
-        <script>
+
+    <script>
+
         function onlyNumbers(evt)
         {
             var e = event || evt; // for trans-browser compatibility
@@ -254,20 +256,23 @@
 
         <div class="card">
             <div class="container">
-                <h2>Editace rezervace</h2>
-                <c:forEach var="r" items="${rezervace}">
-                    <form action="/upravrezervaci">
+                <h2>Editace upomínky</h2>
+                <c:forEach var="u" items="${upominky}">
+                    <form action="/upravupominku">
                         <table>
 
                             <tr>
-                                <td>Rezervace od:</td>
-                                <td><input type="text" required name="rezervace_od" value="${r.rezervace_od}"></td>
-                                <input type="hidden" name="idecko" value="${r.id}">
+                                <td>Pokuta:</td>
+                                <td><input type="text" onkeypress="return onlyNumbers();" required name="pokuta" value="${u.pokuta}"></td>
+                                <input type="hidden" name="idecko" value="${u.id}">
                             </tr>
+
                             <tr>
-                                <td>Rezervace do:</td>
-                                <td><input type="text" required name="rezervace_do" value="${r.rezervace_do}"></td>
+                                <td>Popis:</td>
+                            <td><textarea required name="popis" maxlength="2550" rows="7" cols="30">${u.popis}</textarea></td>
+
                             </tr>
+
                             <tr>
                                 <td><input type="submit" value="Editovat"></td>
                             </tr>

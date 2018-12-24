@@ -19,7 +19,30 @@ public class Kniha {
     private String nakladatelstvi;
     @Column(length = 2550)
     private String isbn;
+    private int pocet_kusu;
     private String jazyk;
+
+
+    public Kniha(String nazev, String popis, String zanr, String datum_vydani, int pocet_stran, String nakladatelstvi, String isbn, int pocet_kusu, String jazyk) {
+        this.nazev = nazev;
+        this.popis = popis;
+        this.zanr = zanr;
+        this.datum_vydani = datum_vydani;
+        this.pocet_stran = pocet_stran;
+        this.nakladatelstvi = nakladatelstvi;
+        this.isbn = isbn;
+        this.pocet_kusu = pocet_kusu;
+        this.jazyk = jazyk;
+    }
+
+    public int getPocet_kusu() {
+        return pocet_kusu;
+    }
+
+    public void setPocet_kusu(int pocet_kusu) {
+        this.pocet_kusu = pocet_kusu;
+    }
+
 
     @OneToMany(mappedBy="kniha")
     private List<Recenze> recenze;
@@ -32,6 +55,26 @@ public class Kniha {
 
     @OneToMany(mappedBy="kniha")
     private List<Autori> autori;
+
+    @OneToMany(mappedBy="kniha")
+    private List<Autori> upominky;
+
+    public List<Autori> getUpominky() {
+        return upominky;
+    }
+
+    public void setUpominky(List<Autori> upominky) {
+        this.upominky = upominky;
+    }
+
+    public List<Recenze> getRecenze() {
+        return recenze;
+    }
+
+    public void setRecenze(List<Recenze> recenze) {
+        this.recenze = recenze;
+    }
+
 
     public Kniha(String nazev, String popis, String zanr, String datum_vydani, int pocet_stran, String nakladatelstvi, String isbn, String jazyk) {
         this.nazev = nazev;
