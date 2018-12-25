@@ -1,12 +1,14 @@
 package com.ppro.projekt.service;
 
 import com.ppro.projekt.entity.Kniha;
+import com.ppro.projekt.entity.Uzivatele;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -18,26 +20,21 @@ public class InitDbServiceJpa implements InitDbService {
     @Override
     public void initDb() {
 
-        /*Kniha k = new Kniha("Maly princ", "Kniha o malem princi", "Sci-fi", new Date(),
-                232, "Albatros", "4564562456", "Cestina");
+        em.createQuery("select k from Kniha k").getResultList().forEach(kniha -> em.remove(kniha));
 
-        em.persist(k);
+        List<Kniha> knihy = new ArrayList<>();
+        knihy.add(new Kniha("Maly princ", "Kniha o malem princi", "Sci-fi", "26.11.2005",
+                232, "Albatros", "4564562456", 2, "Cestina"));
+        knihy.add(new Kniha("Karkulka", "Pohadka o Karkulce", "Pohadka", "3.1.2002",
+                104, "Albatros", "3564583115", 3, "Cestina"));
+        knihy.forEach(kniha -> em.persist(kniha));
 
+        em.createQuery("select u from Uzivatele u").getResultList().forEach(u -> em.remove(u));
 
-
-            University u = new University("UHK");
-              Student s = new Student("Krátký", "Radim");
-              Project p = new Project("PPRO");
-
-              u.getStudenti().add(s);
-              s.setUniverzita(u);
-              p.getStudenti().add(s);
-              s.getProjekty().add(p);
-
-              em.persist(u);
-              em.persist(s);
-              em.persist(p);
-        */
+        //   email: asd@gmail.com   heslo: asd
+        Uzivatele uzivatel = new Uzivatele("Honza", "Admin", "Praha", "Prazska", "52", 10010, "asd@gmail.com",
+                "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6", false);
+        em.persist(uzivatel);
     }
 
 }

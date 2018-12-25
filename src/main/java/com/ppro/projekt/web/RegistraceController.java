@@ -1,19 +1,17 @@
 package com.ppro.projekt.web;
 
+import com.ppro.projekt.ProjektTools;
 import com.ppro.projekt.entity.Uzivatele;
-import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class RegistraceController {
@@ -44,12 +42,23 @@ public class RegistraceController {
         boolean uzivatelexist = spravaDb.existujeuzivatel(email);
         if(uzivatelexist)
         {
-           // TODO HASH CODING
             return "<script>alert('Email je již registrován');window.history.back();</script>";
         }else
         {
     if(heslo1.equals(heslo2)) {
-        Uzivatele uzivatel = new Uzivatele(jmeno, prijmeni, mesto, ulice, cpp, psc, email, heslo1, false,0);
+        String hesloHash;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            md.update(heslo1.getBytes());
+
+            hesloHash = ProjektTools.bytesToHex(md.digest());
+        } catch ( NoSuchAlgorithmException e ) {
+            System.out.println("SHA-256 neni k dispozici");
+            hesloHash = heslo1;
+        }
+
+        Uzivatele uzivatel = new Uzivatele(jmeno, prijmeni, mesto, ulice, cpp, psc, email, hesloHash, false,0);
         spravaDb.vlozUzivatele(uzivatel);
         return "<script>alert('Uživatel vložen');window.location.replace('/login');</script>";
     }
