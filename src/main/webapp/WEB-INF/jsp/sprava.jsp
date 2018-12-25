@@ -1,5 +1,3 @@
-<%@ page import="com.ppro.projekt.web.LoginController" %>
-<%@ page import="com.ppro.projekt.service.SpravaDb" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -519,7 +517,7 @@ table{
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
-            <p>Michael Húževka</p>
+            <p>Michal Húževka</p>
             <form action="/nahratdata">
                 <input class="data" type="submit" value="Nahrát data DB">
             </form>

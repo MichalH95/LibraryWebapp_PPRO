@@ -372,7 +372,7 @@
         <div class="card">
             <h3>Vytvořil</h3>
             <p>Dominik Špinka</p>
-            <p>Michael Húževka</p>
+            <p>Michal Húževka</p>
             <form action="/nahratdata">
             <input class="data" type="submit" value="Nahrát data DB">
             </form>
