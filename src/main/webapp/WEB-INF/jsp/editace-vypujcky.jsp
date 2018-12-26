@@ -255,7 +255,7 @@
         <div class="card">
             <div class="container">
                 <h2>Editace výpůjčky</h2>
-                <c:forEach var="v" items="${vypujcky}">
+                <c:forEach var="v" items="${vypujcka}">
                     <form action="/upravvypujcku">
                         <table>
 

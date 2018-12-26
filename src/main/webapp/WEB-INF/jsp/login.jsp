@@ -288,7 +288,7 @@ table{
                 <table border="2">
                     <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td></tr>
 
-                    <c:forEach var="v" items="${vypujcky}">
+                    <c:forEach var="v" items="${vypujcka}">
 
                     <tr>
                         <td>    <c:out value="${v.datum_vypujceni }" /></td>
@@ -321,7 +321,7 @@ table{
                         <td>    <c:out value="${u.pokuta }" /> Kč</td>
                         <td>    <c:out value="${u.popis }" /></td>
                         <td>    <c:out value="${u.kniha.nazev }" /></td>
-                        <td>    <c:out value="${u.vypujcky.vypujceno_do }" /></td>
+                        <td>    <c:out value="${u.vypujcka.vypujceno_do }" /></td>
                     </tr>
 
 

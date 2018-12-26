@@ -3,10 +3,10 @@ package com.ppro.projekt.entity;
 import javax.persistence.*;
 
 @Entity
-public class Autori {
+public class Autor {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String vztah_ke_knize;
     private String jmeno;
 
@@ -15,16 +15,16 @@ public class Autori {
     @JoinColumn(name = "kniha_id", referencedColumnName = "id")
     private Kniha kniha;
 
-    public Autori() {
+    public Autor() {
     }
 
-    public Autori(String vztah_ke_knize, String jmeno) {
+    public Autor(String vztah_ke_knize, String jmeno) {
         this.vztah_ke_knize = vztah_ke_knize;
         this.jmeno = jmeno;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setKniha(Kniha kniha) {
@@ -44,7 +44,7 @@ public class Autori {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getVztah_ke_knize() {
@@ -57,8 +57,8 @@ public class Autori {
 
     @Override
     public String toString() {
-        return "Autori{" +
-                "Id=" + Id +
+        return "Autor{" +
+                "id=" + id +
                 ", vztah_ke_knize='" + vztah_ke_knize + '\'' +
                 ", jmeno='" + jmeno + '\'' +
                 ", kniha=" + kniha +

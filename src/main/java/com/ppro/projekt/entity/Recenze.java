@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Recenze {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String jmeno_autora;
     @Column(length = 2550)
     private String recenze;
@@ -18,8 +18,8 @@ public class Recenze {
     private Kniha kniha;
 
     @ManyToOne
-    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
-    private Uzivatele uzivatele;
+    @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
+    private Uzivatel uzivatel;
 
 
 
@@ -34,7 +34,7 @@ public class Recenze {
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setJmeno_autora(String jmeno_autora) {
@@ -53,12 +53,12 @@ public class Recenze {
         this.kniha = kniha;
     }
 
-    public void setUzivatele(Uzivatele uzivatele) {
-        this.uzivatele = uzivatele;
+    public void setUzivatel(Uzivatel uzivatel) {
+        this.uzivatel = uzivatel;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getJmeno_autora() {
@@ -77,19 +77,19 @@ public class Recenze {
         return kniha;
     }
 
-    public Uzivatele getUzivatele() {
-        return uzivatele;
+    public Uzivatel getUzivatel() {
+        return uzivatel;
     }
 
     @Override
     public String toString() {
         return "Recenze{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", jmeno_autora='" + jmeno_autora + '\'' +
                 ", recenze='" + recenze + '\'' +
                 ", hodnoceni=" + hodnoceni +
                 ", kniha=" + kniha +
-                ", uzivatele=" + uzivatele +
+                ", uzivatel=" + uzivatel +
                 '}';
     }
 }

@@ -6,7 +6,9 @@ import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class VyhledavacController {
             List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
             model.addAttribute("knihy", knihy);
 
-//        List<Autori> autori=spravaDb.NajdiAutoraByKnihaId();
+//        List<Autor> autori=spravaDb.NajdiAutoraByKnihaId();
 //        model1.addAttribute("autori", autori);
             return "view";
         }else

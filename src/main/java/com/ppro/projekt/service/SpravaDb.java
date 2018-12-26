@@ -8,7 +8,7 @@ public interface SpravaDb {
 
     void vlozKnihu(Kniha Kniha);
 
-    void vlozUzivatele(Uzivatele Uzivatele);
+    void vlozUzivatele(Uzivatel Uzivatel);
 
     void odstranVypujcku(int id);
     void odstranKnihu(int id);
@@ -26,18 +26,18 @@ public interface SpravaDb {
 
     boolean privilegium(String email);
 
-    List<Upominky> najdiUpoPodleId(int id);
+    List<Upominka> najdiUpoPodleId(int id);
     List<Rezervace> najdiRezPodleId(int id);
-    List<Vypujcky> najdiVypPodleId(int id);
+    List<Vypujcka> najdiVypPodleId(int id);
     List<Kniha> najdiKniPodleId(int id);
 
     List<Rezervace>  vypisRezervaceProUzivatele(String email);
-    List<Upominky>  vypisUpominkyProUzivatele(String email);
-    List<Upominky> vypisUpominky();
-    List<Uzivatele> vypisUzivatele();
+    List<Upominka>  vypisUpominkyProUzivatele(String email);
+    List<Upominka> vypisUpominky();
+    List<Uzivatel> vypisUzivatele();
     List<Rezervace> vypisrezervace();
-    List<Vypujcky> najdiVypujcky(String email);
-    List<Vypujcky> najdiVypujckyProSpravu();
+    List<Vypujcka> najdiVypujcky(String email);
+    List<Vypujcka> najdiVypujckyProSpravu();
     List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi);
     List<Kniha> najdiVsechnyKnihy();
 

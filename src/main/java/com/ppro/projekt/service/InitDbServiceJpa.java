@@ -1,7 +1,7 @@
 package com.ppro.projekt.service;
 
 import com.ppro.projekt.entity.Kniha;
-import com.ppro.projekt.entity.Uzivatele;
+import com.ppro.projekt.entity.Uzivatel;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,10 +29,10 @@ public class InitDbServiceJpa implements InitDbService {
                 104, "Albatros", "3564583115", 3, "Cestina"));
         knihy.forEach(kniha -> em.persist(kniha));
 
-        em.createQuery("select u from Uzivatele u").getResultList().forEach(u -> em.remove(u));
+        em.createQuery("select u from Uzivatel u").getResultList().forEach(u -> em.remove(u));
 
         //   email: asd@gmail.com   heslo: asd
-        Uzivatele uzivatel = new Uzivatele("Honza", "Admin", "Praha", "Prazska", "52", 10010, "asd@gmail.com",
+        Uzivatel uzivatel = new Uzivatel("Honza", "Admin", "Praha", "Prazska", "52", 10010, "asd@gmail.com",
                 "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6", false);
         em.persist(uzivatel);
     }

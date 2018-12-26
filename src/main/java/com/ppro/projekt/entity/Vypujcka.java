@@ -4,29 +4,29 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Vypujcky {
+public class Vypujcka {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String datum_vypujceni;
     private String vypujceno_do;
     private boolean vraceno;
 
-    @OneToMany(mappedBy="vypujcky")
-    private List<Upominky> upominky;
+    @OneToMany(mappedBy="vypujcka")
+    private List<Upominka> upominky;
 
     @ManyToOne
     @JoinColumn(name="kniha_id",referencedColumnName = "id")
     private Kniha kniha;
 
     @ManyToOne
-    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
-    private Uzivatele uzivatele;
+    @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
+    private Uzivatel uzivatel;
 
-    public Vypujcky() {
+    public Vypujcka() {
     }
 
-    public void setUpominky(List<Upominky> upominky) {
+    public void setUpominky(List<Upominka> upominky) {
         this.upominky = upominky;
     }
 
@@ -34,11 +34,11 @@ public class Vypujcky {
         this.kniha = kniha;
     }
 
-    public void setUzivatele(Uzivatele uzivatele) {
-        this.uzivatele = uzivatele;
+    public void setUzivatel(Uzivatel uzivatel) {
+        this.uzivatel = uzivatel;
     }
 
-    public List<Upominky> getUpominky() {
+    public List<Upominka> getUpominky() {
         return upominky;
     }
 
@@ -46,18 +46,18 @@ public class Vypujcky {
         return kniha;
     }
 
-    public Uzivatele getUzivatele() {
-        return uzivatele;
+    public Uzivatel getUzivatel() {
+        return uzivatel;
     }
 
-    public Vypujcky(String datum_vypujceni, String vypujceno_do, boolean vraceno) {
+    public Vypujcka(String datum_vypujceni, String vypujceno_do, boolean vraceno) {
         this.datum_vypujceni = datum_vypujceni;
         this.vypujceno_do = vypujceno_do;
         this.vraceno = vraceno;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
 
@@ -74,7 +74,7 @@ public class Vypujcky {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
 

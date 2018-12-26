@@ -1,7 +1,6 @@
 package com.ppro.projekt.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 
@@ -9,7 +8,7 @@ import java.util.List;
 public class Kniha {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String nazev;
     @Column(length = 2550)
     private String popis;
@@ -48,22 +47,22 @@ public class Kniha {
     private List<Recenze> recenze;
 
     @OneToMany(mappedBy="kniha")
-    private List<Vypujcky> vypujcky;
+    private List<Vypujcka> vypujcky;
 
     @OneToMany(mappedBy="kniha")
     private List<Rezervace> rezervace;
 
     @OneToMany(mappedBy="kniha")
-    private List<Autori> autori;
+    private List<Autor> autori;
 
     @OneToMany(mappedBy="kniha")
-    private List<Autori> upominky;
+    private List<Autor> upominky;
 
-    public List<Autori> getUpominky() {
+    public List<Autor> getUpominky() {
         return upominky;
     }
 
-    public void setUpominky(List<Autori> upominky) {
+    public void setUpominky(List<Autor> upominky) {
         this.upominky = upominky;
     }
 
@@ -130,7 +129,7 @@ public class Kniha {
         return jazyk;
     }
 
-    public void setVypujcky(List<Vypujcky> vypujcky) {
+    public void setVypujcky(List<Vypujcka> vypujcky) {
         this.vypujcky = vypujcky;
     }
 
@@ -138,11 +137,11 @@ public class Kniha {
         this.rezervace = rezervace;
     }
 
-    public void setAutori(List<Autori> autori) {
+    public void setAutori(List<Autor> autori) {
         this.autori = autori;
     }
 
-    public List<Vypujcky> getVypujcky() {
+    public List<Vypujcka> getVypujcky() {
         return vypujcky;
     }
 
@@ -150,12 +149,12 @@ public class Kniha {
         return rezervace;
     }
 
-    public List<Autori> getAutori() {
+    public List<Autor> getAutori() {
         return autori;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setNazev(String nazev) {
@@ -179,7 +178,7 @@ public class Kniha {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getNazev() {
@@ -199,7 +198,7 @@ public class Kniha {
     @Override
     public String toString() {
         return "Kniha{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", nazev='" + nazev + '\'' +
                 ", popis='" + popis + '\'' +
                 ", zanr='" + zanr + '\'' +

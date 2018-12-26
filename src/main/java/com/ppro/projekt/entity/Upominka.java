@@ -3,21 +3,21 @@ package com.ppro.projekt.entity;
 import javax.persistence.*;
 
 @Entity
-public class Upominky {
+public class Upominka {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String popis;
     private int pokuta;
 
 
     @ManyToOne
-    @JoinColumn(name="vypujcky_id",referencedColumnName = "id")
-    private Vypujcky vypujcky;
+    @JoinColumn(name="vypujcka_id",referencedColumnName = "id")
+    private Vypujcka vypujcka;
 
     @ManyToOne
-    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
-    private Uzivatele uzivatele;
+    @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
+    private Uzivatel uzivatel;
 
     @ManyToOne
     @JoinColumn(name="kniha_id",referencedColumnName = "id")
@@ -31,24 +31,24 @@ public class Upominky {
         this.kniha = kniha;
     }
 
-    public Upominky() {
+    public Upominka() {
     }
 
-    public Upominky(String popis, int pokuta) {
+    public Upominka(String popis, int pokuta) {
         this.popis = popis;
         this.pokuta = pokuta;
     }
 
-    public void setUzivatele(Uzivatele uzivatele) {
-        this.uzivatele = uzivatele;
+    public void setUzivatel(Uzivatel uzivatel) {
+        this.uzivatel = uzivatel;
     }
 
-    public Uzivatele getUzivatele() {
-        return uzivatele;
+    public Uzivatel getUzivatel() {
+        return uzivatel;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getPopis() {
@@ -60,7 +60,7 @@ public class Upominky {
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setPopis(String popis) {
@@ -71,21 +71,21 @@ public class Upominky {
         this.pokuta = pokuta;
     }
 
-    public void setVypujcky(Vypujcky vypujcky) {
-        this.vypujcky = vypujcky;
+    public void setVypujcka(Vypujcka vypujcka) {
+        this.vypujcka = vypujcka;
     }
 
-    public Vypujcky getVypujcky() {
-        return vypujcky;
+    public Vypujcka getVypujcka() {
+        return vypujcka;
     }
 
     @Override
     public String toString() {
-        return "Upominky{" +
-                "Id=" + Id +
+        return "Upominka{" +
+                "id=" + id +
                 ", popis='" + popis + '\'' +
                 ", pokuta=" + pokuta +
-                ", vypujcky=" + vypujcky +
+                ", vypujcka=" + vypujcka +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package com.ppro.projekt.web;
 
 import com.ppro.projekt.ProjektTools;
-import com.ppro.projekt.entity.Uzivatele;
+import com.ppro.projekt.entity.Uzivatel;
 import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +58,7 @@ public class RegistraceController {
             hesloHash = heslo1;
         }
 
-        Uzivatele uzivatel = new Uzivatele(jmeno, prijmeni, mesto, ulice, cpp, psc, email, hesloHash, false,0);
+        Uzivatel uzivatel = new Uzivatel(jmeno, prijmeni, mesto, ulice, cpp, psc, email, hesloHash, false,0);
         spravaDb.vlozUzivatele(uzivatel);
         return "<script>alert('Uživatel vložen');window.location.replace('/login');</script>";
     }

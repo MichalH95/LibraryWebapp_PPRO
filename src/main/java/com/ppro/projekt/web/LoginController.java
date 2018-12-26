@@ -3,8 +3,8 @@ package com.ppro.projekt.web;
 
 import com.ppro.projekt.ProjektTools;
 import com.ppro.projekt.entity.Rezervace;
-import com.ppro.projekt.entity.Upominky;
-import com.ppro.projekt.entity.Vypujcky;
+import com.ppro.projekt.entity.Upominka;
+import com.ppro.projekt.entity.Vypujcka;
 import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,20 +31,16 @@ public class LoginController {
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String showForm(Model model,HttpSession session)
     {
-        if(null==session.getAttribute("email"))
-        {
-            return "login";
-        }else
-        {
+        if(session.getAttribute("email") != null) {
             String email=session.getAttribute("email").toString();
-            List<Vypujcky> vypujcky = spravaDb.najdiVypujcky(email);
+            List<Vypujcka> vypujcky = spravaDb.najdiVypujcky(email);
             model.addAttribute("vypujcky", vypujcky);
-            List<Upominky> upominky = spravaDb.vypisUpominkyProUzivatele(email);
+            List<Upominka> upominky = spravaDb.vypisUpominkyProUzivatele(email);
             model.addAttribute("upominky", upominky);
             List<Rezervace> rezervace = spravaDb.vypisRezervaceProUzivatele(email);
             model.addAttribute("rezervace", rezervace);
-            return "login";
         }
+        return "login";
     }
 
     @RequestMapping(value = "/overlogin", method=RequestMethod.POST)

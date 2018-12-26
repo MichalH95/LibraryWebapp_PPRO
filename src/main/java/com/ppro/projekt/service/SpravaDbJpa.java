@@ -19,8 +19,8 @@ public class SpravaDbJpa implements SpravaDb{
         em.persist(Kniha);
     }
 
-    public void vlozUzivatele(Uzivatele uzivatele) {
-        em.persist(uzivatele);
+    public void vlozUzivatele(Uzivatel uzivatel) {
+        em.persist(uzivatel);
     }
 
     public void odstranKnihu(int id) {
@@ -38,38 +38,38 @@ public class SpravaDbJpa implements SpravaDb{
     }
 
     public void odstranVypujcku(int id) {
-        Vypujcky vypujcky = em.getReference(Vypujcky.class, id);
-        if(vypujcky != null) {
-            em.remove(vypujcky);
+        Vypujcka vypujcka = em.getReference(Vypujcka.class, id);
+        if(vypujcka != null) {
+            em.remove(vypujcka);
         }
     }
 
     public void odstranUpominku(int id) {
-        Upominky upominky = em.getReference(Upominky.class, id);
-        if(upominky != null) {
-            em.remove(upominky);
+        Upominka upominka = em.getReference(Upominka.class, id);
+        if(upominka != null) {
+            em.remove(upominka);
         }
     }
 
     public void odstranUzivatele(int id) {
-        Uzivatele uzivatele = em.getReference(Uzivatele.class, id);
-        if(uzivatele != null) {
-            em.remove(uzivatele);
+        Uzivatel uzivatel = em.getReference(Uzivatel.class, id);
+        if(uzivatel != null) {
+            em.remove(uzivatel);
         }
     }
 
     public boolean existujeuzivatel(String email)
     {
-        String query = "Select u from Uzivatele u where u.email =:email";
-        List<Uzivatele> u = em.createQuery(query).setParameter("email",email).getResultList();
+        String query = "Select u from Uzivatel u where u.email =:email";
+        List<Uzivatel> u = em.createQuery(query).setParameter("email",email).getResultList();
         if(u.isEmpty())
         {return false;}else{return true;}
     }
 
     public boolean overlogin(String email, String heslo)
     {
-        String query = "Select u from Uzivatele u where u.email =:email AND u.heslo =:heslo AND u.blokace=false";
-        List<Uzivatele> u = em.createQuery(query).setParameter("email",email).setParameter("heslo",heslo).getResultList();
+        String query = "Select u from Uzivatel u where u.email =:email AND u.heslo =:heslo AND u.blokace=false";
+        List<Uzivatel> u = em.createQuery(query).setParameter("email",email).setParameter("heslo",heslo).getResultList();
         if(u.isEmpty())
         {return false;}else{return true;}
     }
@@ -77,8 +77,8 @@ public class SpravaDbJpa implements SpravaDb{
     public boolean privilegium(String email)
     {
 
-        String query = "Select u.privilegia from Uzivatele u where u.email =:email AND privilegia='1'";
-        List<Uzivatele> u = em.createQuery(query).setParameter("email",email).getResultList();
+        String query = "Select u.privilegia from Uzivatel u where u.email =:email AND u.privilegia=1";
+        List<Uzivatel> u = em.createQuery(query).setParameter("email",email).getResultList();
         if(u.isEmpty())
         {return false;}else{return true;}
 
@@ -87,12 +87,12 @@ public class SpravaDbJpa implements SpravaDb{
 
     public List<Rezervace> vypisRezervaceProUzivatele(String email)
     {
-        return em.createQuery("select r from Rezervace r inner join Uzivatele u on r.uzivatele.id=u.id inner join Kniha k on r.kniha.id=k.id where u.email=:email").setParameter("email",email).getResultList();
+        return em.createQuery("select r from Rezervace r inner join Uzivatel u on r.uzivatel.id=u.id inner join Kniha k on r.kniha.id=k.id where u.email=:email").setParameter("email",email).getResultList();
     }
 
-    public List<Upominky> vypisUpominkyProUzivatele(String email)
+    public List<Upominka> vypisUpominkyProUzivatele(String email)
     {
-        return em.createQuery("select u from Upominky u inner join Kniha k on u.kniha.id=k.id inner join Uzivatele uz on u.uzivatele.id=uz.id inner join Vypujcky v on u.vypujcky.id=v.id where uz.email=:email").setParameter("email",email).getResultList();
+        return em.createQuery("select u from Upominka u inner join Kniha k on u.kniha.id=k.id inner join Uzivatel uz on u.uzivatel.id=uz.id inner join Vypujcka v on u.vypujcka.id=v.id where uz.email=:email").setParameter("email",email).getResultList();
     }
 
     public List<Rezervace> vypisrezervace()
@@ -100,24 +100,24 @@ public class SpravaDbJpa implements SpravaDb{
         return em.createQuery("select r from Rezervace r inner join Kniha k on r.kniha.id=k.id").getResultList();
     }
 
-    public List<Upominky> vypisUpominky()
+    public List<Upominka> vypisUpominky()
     {
-        return em.createQuery("select u from Upominky u inner join Vypujcky v on u.vypujcky.id=v.id inner join Uzivatele uz on u.uzivatele.id=uz.id").getResultList();
+        return em.createQuery("select u from Upominka u inner join Vypujcka v on u.vypujcka.id=v.id inner join Uzivatel uz on u.uzivatel.id=uz.id").getResultList();
     }
 
-    public List<Uzivatele> vypisUzivatele()
+    public List<Uzivatel> vypisUzivatele()
     {
-        return em.createQuery("select u from Uzivatele u").getResultList();
+        return em.createQuery("select u from Uzivatel u").getResultList();
     }
 
-    public List<Vypujcky> najdiVypujcky(String email)
+    public List<Vypujcka> najdiVypujcky(String email)
     {
-        return em.createQuery("select v from Vypujcky v inner join Uzivatele u on v.uzivatele.id=u.id inner join Kniha k on v.kniha.id=k.id where u.email=:email",Vypujcky.class).setParameter("email",email).getResultList();
+        return em.createQuery("select v from Vypujcka v inner join Uzivatel u on v.uzivatel.id=u.id inner join Kniha k on v.kniha.id=k.id where u.email=:email", Vypujcka.class).setParameter("email",email).getResultList();
     }
 
-    public List<Vypujcky> najdiVypujckyProSpravu()
+    public List<Vypujcka> najdiVypujckyProSpravu()
     {
-        return em.createQuery("select v from Vypujcky v inner join Uzivatele u on v.uzivatele.id=u.id inner join Kniha k on v.kniha.id=k.id",Vypujcky.class).getResultList();
+        return em.createQuery("select v from Vypujcka v inner join Uzivatel u on v.uzivatel.id=u.id inner join Kniha k on v.kniha.id=k.id", Vypujcka.class).getResultList();
     }
 
 
@@ -128,9 +128,9 @@ public class SpravaDbJpa implements SpravaDb{
 
     }
 
-    public List<Upominky> najdiUpoPodleId(int id) {
-        String query = "Select u from Upominky u where u.id =:idecko";
-        List<Upominky> u = em.createQuery(query).setParameter("idecko",id).getResultList();
+    public List<Upominka> najdiUpoPodleId(int id) {
+        String query = "Select u from Upominka u where u.id =:idecko";
+        List<Upominka> u = em.createQuery(query).setParameter("idecko",id).getResultList();
         return u;
     }
 
@@ -146,9 +146,9 @@ public class SpravaDbJpa implements SpravaDb{
         return u;
     }
 
-    public List<Vypujcky> najdiVypPodleId(int id) {
-        String query = "Select v from Vypujcky v where v.id =:idecko";
-        List<Vypujcky> u = em.createQuery(query).setParameter("idecko",id).getResultList();
+    public List<Vypujcka> najdiVypPodleId(int id) {
+        String query = "Select v from Vypujcka v where v.id =:idecko";
+        List<Vypujcka> u = em.createQuery(query).setParameter("idecko",id).getResultList();
         return u;
     }
 
@@ -165,22 +165,22 @@ public class SpravaDbJpa implements SpravaDb{
 
     public void upravUpominku (int idecko,int pokuta,String popis)
     {
-        em.createQuery("UPDATE Upominky u SET u.pokuta =:pokuta, u.popis =:popis where u.id=:idecko").setParameter("idecko",idecko).setParameter("pokuta",pokuta).setParameter("popis",popis).executeUpdate();
+        em.createQuery("UPDATE Upominka u SET u.pokuta =:pokuta, u.popis =:popis where u.id=:idecko").setParameter("idecko",idecko).setParameter("pokuta",pokuta).setParameter("popis",popis).executeUpdate();
     }
 
     public void blokovatuzivatele (int idecko)
     {
-        em.createQuery("UPDATE Uzivatele u SET u.blokace =true where u.id=:idecko").setParameter("idecko",idecko).executeUpdate();
+        em.createQuery("UPDATE Uzivatel u SET u.blokace =true where u.id=:idecko").setParameter("idecko",idecko).executeUpdate();
     }
 
     public void odblokovatuzivatele (int idecko)
     {
-        em.createQuery("UPDATE Uzivatele u SET u.blokace =false where u.id=:idecko").setParameter("idecko",idecko).executeUpdate();
+        em.createQuery("UPDATE Uzivatel u SET u.blokace =false where u.id=:idecko").setParameter("idecko",idecko).executeUpdate();
     }
 
     public void upravVypujcku (int idecko,String datum_vypujceni,String vypujceno_do,Boolean vraceno)
     {
-        em.createQuery("UPDATE Vypujcky v SET v.datum_vypujceni =:datum_vypujceni, v.vypujceno_do =:vypujceno_do, v.vraceno=:vraceno where v.id=:idecko").setParameter("idecko",idecko).setParameter("datum_vypujceni",datum_vypujceni).setParameter("vypujceno_do",vypujceno_do).setParameter("vraceno",vraceno).executeUpdate();
+        em.createQuery("UPDATE Vypujcka v SET v.datum_vypujceni =:datum_vypujceni, v.vypujceno_do =:vypujceno_do, v.vraceno=:vraceno where v.id=:idecko").setParameter("idecko",idecko).setParameter("datum_vypujceni",datum_vypujceni).setParameter("vypujceno_do",vypujceno_do).setParameter("vraceno",vraceno).executeUpdate();
     }
 
 

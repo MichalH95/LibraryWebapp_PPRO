@@ -5,13 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-public class Uzivatele {
+public class Uzivatel {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String jmeno;
     private String prijmeni;
     private String mesto;
@@ -23,19 +22,19 @@ public class Uzivatele {
     private boolean blokace;
     private int privilegia;
 
-    @OneToMany(mappedBy="uzivatele")
-    private List<Vypujcky> vypujcky;
+    @OneToMany(mappedBy="uzivatel")
+    private List<Vypujcka> vypujcky;
 
-    @OneToMany(mappedBy="uzivatele")
+    @OneToMany(mappedBy="uzivatel")
     private List<Recenze> recenze;
 
-    @OneToMany(mappedBy="uzivatele")
+    @OneToMany(mappedBy="uzivatel")
     private List<Rezervace> rezervace;
 
-    @OneToMany(mappedBy="uzivatele")
+    @OneToMany(mappedBy="uzivatel")
     private List<Rezervace> upominky;
 
-    public Uzivatele() {
+    public Uzivatel() {
     }
 
     public List<Recenze> getRecenze() {
@@ -62,7 +61,7 @@ public class Uzivatele {
         this.privilegia = privilegia;
     }
 
-    public void setVypujcky(List<Vypujcky> vypujcky) {
+    public void setVypujcky(List<Vypujcka> vypujcky) {
         this.vypujcky = vypujcky;
     }
 
@@ -70,7 +69,7 @@ public class Uzivatele {
         this.rezervace = rezervace;
     }
 
-    public List<Vypujcky> getVypujcky() {
+    public List<Vypujcka> getVypujcky() {
         return vypujcky;
     }
 
@@ -79,7 +78,7 @@ public class Uzivatele {
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setJmeno(String jmeno) {
@@ -106,7 +105,7 @@ public class Uzivatele {
         this.psc = psc;
     }
 
-    public Uzivatele(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace, int privilegia) {
+    public Uzivatel(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace, int privilegia) {
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
         this.mesto = mesto;
@@ -132,7 +131,7 @@ public class Uzivatele {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getJmeno() {
@@ -171,7 +170,7 @@ public class Uzivatele {
         return blokace;
     }
 
-    public Uzivatele(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace) {
+    public Uzivatel(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace) {
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
         this.mesto = mesto;
@@ -185,8 +184,8 @@ public class Uzivatele {
 
     @Override
     public String toString() {
-        return "Uzivatele{" +
-                "Id=" + Id +
+        return "Uzivatel{" +
+                "id=" + id +
                 ", jmeno='" + jmeno + '\'' +
                 ", prijmeni='" + prijmeni + '\'' +
                 ", mesto='" + mesto + '\'' +

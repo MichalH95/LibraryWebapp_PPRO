@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Rezervace {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String rezervace_od;
     private String rezervace_do;
 
@@ -15,8 +15,8 @@ public class Rezervace {
     private Kniha kniha;
 
     @ManyToOne
-    @JoinColumn(name="uzivatele_id",referencedColumnName = "id")
-    private Uzivatele uzivatele;
+    @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
+    private Uzivatel uzivatel;
 
     public Rezervace() {
     }
@@ -30,12 +30,12 @@ public class Rezervace {
         this.kniha = kniha;
     }
 
-    public void setUzivatele(Uzivatele uzivatele) {
-        this.uzivatele = uzivatele;
+    public void setUzivatel(Uzivatel uzivatel) {
+        this.uzivatel = uzivatel;
     }
 
-    public Uzivatele getUzivatele() {
-        return uzivatele;
+    public Uzivatel getUzivatel() {
+        return uzivatel;
     }
 
     public Rezervace(String rezervace_od, String rezervace_do) {
@@ -44,7 +44,7 @@ public class Rezervace {
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setRezervace_od(String rezervace_od) {
@@ -56,7 +56,7 @@ public class Rezervace {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getRezervace_od() {
@@ -70,11 +70,11 @@ public class Rezervace {
     @Override
     public String toString() {
         return "Rezervace{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", rezervace_od='" + rezervace_od + '\'' +
                 ", rezervace_do='" + rezervace_do + '\'' +
                 ", kniha=" + kniha +
-                ", uzivatele=" + uzivatele +
+                ", uzivatel=" + uzivatel +
                 '}';
     }
 }

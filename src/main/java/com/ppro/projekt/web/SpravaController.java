@@ -3,7 +3,6 @@ package com.ppro.projekt.web;
 import com.ppro.projekt.entity.*;
 import com.ppro.projekt.service.SpravaDb;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -37,11 +35,11 @@ public class SpravaController {
             {
                 List<Rezervace> rezervace = spravaDb.vypisrezervace();
                 model.addAttribute("rezervace", rezervace);
-                List<Vypujcky> vypujcky = spravaDb.najdiVypujckyProSpravu();
+                List<Vypujcka> vypujcky = spravaDb.najdiVypujckyProSpravu();
                 model.addAttribute("vypujcky", vypujcky);
-                List<Upominky> upominky = spravaDb.vypisUpominky();
+                List<Upominka> upominky = spravaDb.vypisUpominky();
                 model.addAttribute("upominky", upominky);
-                List<Uzivatele> uzivatele = spravaDb.vypisUzivatele();
+                List<Uzivatel> uzivatele = spravaDb.vypisUzivatele();
                 model.addAttribute("uzivatele", uzivatele);
                 return "/sprava";
             }else
@@ -119,14 +117,14 @@ public class SpravaController {
 
     @RequestMapping(value = "/editacevypujcky", method=RequestMethod.GET)
     protected String editvypujcky(@RequestParam int idecko, Model model) {
-        List<Vypujcky> vypujcky = spravaDb.najdiVypPodleId(idecko);
+        List<Vypujcka> vypujcky = spravaDb.najdiVypPodleId(idecko);
         model.addAttribute("vypujcky", vypujcky);
         return "editace-vypujcky";
     }
 
     @RequestMapping(value = "/editaceupominky", method=RequestMethod.GET)
     protected String editupominku(@RequestParam int idecko, Model model) {
-        List<Upominky> upominky = spravaDb.najdiUpoPodleId(idecko);
+        List<Upominka> upominky = spravaDb.najdiUpoPodleId(idecko);
         model.addAttribute("upominky", upominky);
         return "editace-upominky";
     }

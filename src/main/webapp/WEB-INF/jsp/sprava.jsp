@@ -422,14 +422,14 @@ table{
                     <h2>Správa výpůjček</h2>
                     <table border="1">
                         <tr><td>Datum vypůjčení</td><td>Vypůjčeno do</td><td>Vráceno</td><td>Název knihy</td><td>Uživatel</td><td colspan="2">Akce</td></tr>
-                        <c:forEach var="v" items="${vypujcky}">
+                        <c:forEach var="v" items="${vypujcka}">
                             <br>
                             <tr>
                                 <td>   <c:out value="${v.datum_vypujceni }" /></td>
                                 <td>    <c:out value="${v.vypujceno_do }" /></td>
                                 <td>    <c:out value="${v.vraceno }" /></td>
                                 <td>${v.kniha.nazev}</td>
-                                <td>${v.uzivatele.email}</td>
+                                <td>${v.uzivatel.email}</td>
                                 <td><form action="/smazatvypujcku"><input type="hidden" name="idecko" value="${v.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0; color: red" value="X" type="submit"></form></td>
 
                                 <td><form action="/editacevypujcky"><input type="hidden" name="idecko" value="${v.id}" /><input style="width: 100%; margin-left: 0;" value="Editovat" type="submit"></form> </td>
@@ -446,8 +446,8 @@ table{
                             <br>
                             <tr>
                                 <td>   <c:out value="${u.pokuta }" /> Kč</td>
-                                <td>${u.uzivatele.email}</td>
-                                <td>${u.vypujcky.vypujceno_do}</td>
+                                <td>${u.uzivatel.email}</td>
+                                <td>${u.vypujcka.vypujceno_do}</td>
                                 <td><c:out value="${u.popis }" /></td>
 
 
@@ -465,7 +465,7 @@ table{
 
                         <table border="1">
                         <tr><td>Uživatel</td><td>blokace</td><td colspan="3">Akce</td></tr>
-                        <c:forEach var="u" items="${uzivatele}">
+                        <c:forEach var="u" items="${uzivatel}">
 
                             <tr>
                                 <td>   <c:out value="${u.email }" /></td>
