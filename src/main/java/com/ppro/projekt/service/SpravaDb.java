@@ -19,6 +19,7 @@ public interface SpravaDb {
     void upravKnihu (int idecko,String nazev,String jazyk,String zanr,String nakladatelstvi,String datum_vydani,String isbn,int pocet_kusu, int pocet_stran,String popis);
     void odstranUpominku(int idecko);
     void odstranUzivatele(int idecko);
+    void odstranRecenzi(int idecko);
     void odblokovatuzivatele(int idecko);
     void blokovatuzivatele(int idecko);
     void nastavitVypujcku(int idecko,String email);
@@ -38,6 +39,7 @@ public interface SpravaDb {
     List<Upominka> vypisUpominky();
     List<Uzivatel> vypisUzivatele();
     List<Rezervace> vypisrezervace();
+    List<Recenze> vypisrecenze();
     List<Vypujcka> najdiVypujcky(String email);
     List<Vypujcka> najdiVypujckyProSpravu();
     List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi);

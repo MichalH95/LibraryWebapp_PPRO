@@ -41,12 +41,23 @@ public class SpravaController {
                 model.addAttribute("upominky", upominky);
                 List<Uzivatel> uzivatele = spravaDb.vypisUzivatele();
                 model.addAttribute("uzivatele", uzivatele);
+                List<Recenze> recenze = spravaDb.vypisrecenze();
+                model.addAttribute("recenze", recenze);
                 return "/sprava";
             }else
             {
                 return "/view";
             }
         }
+    }
+
+
+    @RequestMapping(value = "/smazatrecenzi", method=RequestMethod.GET)
+    @ResponseBody
+    protected String smazatrecenzi(@RequestParam int idecko)
+    {
+        spravaDb.odstranRecenzi(idecko);
+        return "<script>alert('Recenze smazána');window.location.replace('/sprava');</script>";
     }
 
     @RequestMapping(value = "/smazatrezervaci", method=RequestMethod.GET)

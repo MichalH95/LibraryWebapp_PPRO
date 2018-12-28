@@ -21,6 +21,7 @@ public class Recenze {
     @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
     private Uzivatel uzivatel;
 
+    public Recenze(){}
 
 
     public Recenze(String jmeno_autora, String recenze, int hodnoceni) {
@@ -29,9 +30,7 @@ public class Recenze {
         this.hodnoceni = hodnoceni;
     }
 
-    public Recenze(String s, String h, int i, int i1, int i2){
 
-    }
 
     public void setId(int id) {
         this.id = id;

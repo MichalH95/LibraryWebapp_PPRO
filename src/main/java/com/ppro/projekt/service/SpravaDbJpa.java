@@ -31,6 +31,13 @@ public class SpravaDbJpa implements SpravaDb{
         }
     }
 
+    public void odstranRecenzi(int id) {
+        Recenze recenze = em.getReference(Recenze.class, id);
+        if(recenze != null) {
+            em.remove(recenze);
+        }
+    }
+
     public void odstranRezervaci(int id) {
         Rezervace rezervace = em.getReference(Rezervace.class, id);
         if(rezervace != null) {
@@ -109,7 +116,10 @@ public class SpravaDbJpa implements SpravaDb{
         return em.createQuery("select r from Rezervace r inner join Kniha k on r.kniha.id=k.id").getResultList();
     }
 
-
+    public List<Recenze> vypisrecenze()
+    {
+        return em.createQuery("select r from Recenze r inner join Kniha k on r.kniha.id=k.id").getResultList();
+    }
 
     public List<Upominka> vypisUpominky()
     {
