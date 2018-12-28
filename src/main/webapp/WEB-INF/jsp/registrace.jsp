@@ -211,20 +211,7 @@ table{
 </head>
 <body>
 
-
-<div class="header">
-    <img src="https://image.ibb.co/iPXvAV/header.png"
-    width="100%" height="270">
-
-</div>
-
-<div class="topnav">
-    <a href="/">Knihy</a>
-    <a href="/registrace">Registrace</a>
-    <a href="/login">Login</a>
-    <a href="/sprava">Správa</a>
-    <a href="/" style="float:right">Domů</a>
-</div>
+<jsp:include page="common/headermenu.jsp"/>
 
 <div class="row">
     <div class="leftcolumn">
@@ -255,12 +242,7 @@ table{
     <jsp:include page="common/rightcolumn.jsp"/>
 </div>
 
-<div class="footer">
-
-
-<p>Univerzita Hradec Králové - FIM UHK</p>
-
-</div>
+<jsp:include page="common/footer.jsp"/>
 
 </body>
 </html>
