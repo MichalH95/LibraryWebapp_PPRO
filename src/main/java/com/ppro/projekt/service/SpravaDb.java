@@ -21,8 +21,10 @@ public interface SpravaDb {
     void odstranUzivatele(int idecko);
     void odblokovatuzivatele(int idecko);
     void blokovatuzivatele(int idecko);
+    void nastavitVypujcku(int idecko,String email);
     boolean existujeuzivatel(String email);
     boolean overlogin(String email,String heslo);
+    boolean dostupnost(int idecko);
 
     boolean privilegium(String email);
 

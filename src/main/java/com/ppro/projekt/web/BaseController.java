@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -24,9 +25,30 @@ public class BaseController {
         this.initDbService = initDbService;
     }
 
+    @RequestMapping("/vypujcit")
+    @ResponseBody
+    public String vypujcka(@RequestParam int idecko,HttpSession session)
+    {
+
+        if(null==session.getAttribute("email"))
+        {
+            return "<script>alert('Pro vytvoření výpůjčky je nutné se přihlásit');window.location.replace('/login');</script>";
+        }
+        else{
+            String email = session.getAttribute("email").toString();
+            if (spravaDb.dostupnost(idecko)) {
+                spravaDb.nastavitVypujcku(idecko,email);
+                return "<script>alert('Právě jste si vypůjčil knihu');window.location.replace('/login');</script>";
+            } else {
+                return "<script>alert('Litujeme, knihu si někdo právě vypůjčil');window.location.replace('/');</script>";
+            }
+        }
+
+    }
+
     @RequestMapping("/nahratdata")
     @ResponseBody
-    public String nahratdata(Model model, HttpSession session) {
+    public String nahratdata() {
         initDbService.initDb();
     return "<script>alert('Data úspěšně nahrána');window.location.replace('/');</script>";
     }

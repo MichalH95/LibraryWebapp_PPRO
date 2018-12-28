@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -74,6 +75,14 @@ public class SpravaDbJpa implements SpravaDb{
         {return false;}else{return true;}
     }
 
+    public boolean dostupnost(int idecko)
+    {
+        String query = "Select k from Kniha k where k.id =:idecko AND k.pocet_kusu>0";
+        List<Kniha> u = em.createQuery(query).setParameter("idecko",idecko).getResultList();
+        if(u.isEmpty())
+        {return false;}else{return true;}
+    }
+
     public boolean privilegium(String email)
     {
 
@@ -99,6 +108,8 @@ public class SpravaDbJpa implements SpravaDb{
     {
         return em.createQuery("select r from Rezervace r inner join Kniha k on r.kniha.id=k.id").getResultList();
     }
+
+
 
     public List<Upominka> vypisUpominky()
     {
@@ -172,6 +183,22 @@ public class SpravaDbJpa implements SpravaDb{
     {
         em.createQuery("UPDATE Uzivatel u SET u.blokace =true where u.id=:idecko").setParameter("idecko",idecko).executeUpdate();
     }
+
+    public Object uzivatelid(String email)
+    {
+      return em.createQuery("Select u.id from Uzivatel u where u.email=:email").setParameter("email",email).getResultList();
+    }
+
+    //TODO dodělat
+    public void nastavitVypujcku (int idecko,String email)
+    {
+        em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idecko").setParameter("idecko",idecko).executeUpdate();
+         Vypujcka vypujcka = new Vypujcka(new Date(),new Date().getTime()+30*24*60*60*1000,false);
+         vypujcka.setUzivatel((Uzivatel) uzivatelid(email));
+         vypujcka.setKniha(em.find(Kniha.class,idecko));
+         em.persist(vypujcka);
+    }
+
 
     public void odblokovatuzivatele (int idecko)
     {

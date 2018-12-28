@@ -29,7 +29,7 @@ public class Recenze {
         this.hodnoceni = hodnoceni;
     }
 
-    public Recenze(){
+    public Recenze(String s, String h, int i, int i1, int i2){
 
     }
 

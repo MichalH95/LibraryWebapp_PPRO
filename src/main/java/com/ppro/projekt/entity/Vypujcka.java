@@ -1,6 +1,7 @@
 package com.ppro.projekt.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -8,8 +9,8 @@ public class Vypujcka {
     @Id
     @GeneratedValue
     private int id;
-    private String datum_vypujceni;
-    private String vypujceno_do;
+    private Date datum_vypujceni;
+    private long vypujceno_do;
     private boolean vraceno;
 
     @OneToMany(mappedBy="vypujcka")
@@ -23,7 +24,7 @@ public class Vypujcka {
     @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
     private Uzivatel uzivatel;
 
-    public Vypujcka() {
+    public Vypujcka(Date s, long s1, boolean b, int i, int i1) {
     }
 
     public void setUpominky(List<Upominka> upominky) {
@@ -50,7 +51,7 @@ public class Vypujcka {
         return uzivatel;
     }
 
-    public Vypujcka(String datum_vypujceni, String vypujceno_do, boolean vraceno) {
+    public Vypujcka(Date datum_vypujceni, long vypujceno_do, boolean vraceno) {
         this.datum_vypujceni = datum_vypujceni;
         this.vypujceno_do = vypujceno_do;
         this.vraceno = vraceno;
@@ -61,11 +62,11 @@ public class Vypujcka {
     }
 
 
-    public void setDatum_vypujceni(String datum_vypujceni) {
+    public void setDatum_vypujceni(Date datum_vypujceni) {
         this.datum_vypujceni = datum_vypujceni;
     }
 
-    public void setVypujceno_do(String vypujceno_do) {
+    public void setVypujceno_do(long vypujceno_do) {
         this.vypujceno_do = vypujceno_do;
     }
 
@@ -78,11 +79,11 @@ public class Vypujcka {
     }
 
 
-    public String getDatum_vypujceni() {
+    public Date getDatum_vypujceni() {
         return datum_vypujceni;
     }
 
-    public String getVypujceno_do() {
+    public long getVypujceno_do() {
         return vypujceno_do;
     }
 
