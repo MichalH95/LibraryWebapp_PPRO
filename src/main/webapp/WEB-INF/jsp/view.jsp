@@ -24,7 +24,6 @@
             <div class="dropdown">
                 <button style="width:117px" class="dropbtn" type="button">Žánr</button>
                 <div class="dropdown-content">
-
                     <select style="padding: 0;" name="zanr" size="6">
                         <option value="" selected>-</option>
                         <option value="Sci-fi">Sci-fi</option>
@@ -136,15 +135,17 @@
                 </table>
 
                 <p><b>Popis: </b> <c:out value="${k.popis }" /></p>
-
-
-                <c:forEach var="a" items="${autori}">
-                    <tr>
-                        <td>    Autori: <c:out value="${a.autori.jmeno }" /></td>
-
-                    </tr>
-
-                </c:forEach>
+                <c:choose>
+                    <c:when test="${k.autori != null}">
+                    <p>
+                    <b>Autoři: </b>
+                    <c:forEach var="a" items="${k.autori}" varStatus="loop">
+                            <c:out value="${a.jmeno} (${a.vztah_ke_knize})"/>
+                            <c:if test="${!loop.last}">,</c:if>
+                    </c:forEach>
+                    </p>
+                    </c:when>
+                </c:choose>
 
 
             </div>
