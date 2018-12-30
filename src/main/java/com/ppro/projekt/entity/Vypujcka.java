@@ -24,7 +24,7 @@ public class Vypujcka {
     @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
     private Uzivatel uzivatel;
 
-    public Vypujcka(Date s, long s1, boolean b, int i, int i1) {
+    public Vypujcka() {
     }
 
     public void setUpominky(List<Upominka> upominky) {

@@ -20,10 +20,10 @@ public interface SpravaDb {
     void odstranUpominku(int idecko);
     void odstranUzivatele(int idecko);
     void odstranRecenzi(int idecko);
-    void odblokovatuzivatele(int idecko);
-    void blokovatuzivatele(int idecko);
+    void odblokovatUzivatele(int idecko);
+    void blokovatUzivatele(int idecko);
     void nastavitVypujcku(int idecko,String email);
-    boolean existujeuzivatel(String email);
+    boolean existujeUzivatel(String email);
     boolean overlogin(String email,String heslo);
     boolean dostupnost(int idecko);
 

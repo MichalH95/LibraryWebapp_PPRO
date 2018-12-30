@@ -107,7 +107,7 @@ public class SpravaController {
     @ResponseBody
     protected String blokovatuzivatele(@RequestParam int idecko)
     {
-        spravaDb.blokovatuzivatele(idecko);
+        spravaDb.blokovatUzivatele(idecko);
         return "<script>alert('Uživatel blokován');window.location.replace('/sprava');</script>";
     }
 
@@ -115,7 +115,7 @@ public class SpravaController {
     @ResponseBody
     protected String odblokovatuzivatele(@RequestParam int idecko)
     {
-        spravaDb.odblokovatuzivatele(idecko);
+        spravaDb.odblokovatUzivatele(idecko);
         return "<script>alert('Uživatel odblokován');window.location.replace('/sprava');</script>";
     }
 

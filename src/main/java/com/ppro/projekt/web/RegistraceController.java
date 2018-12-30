@@ -39,7 +39,7 @@ public class RegistraceController {
     protected String editace(@RequestParam String jmeno, @RequestParam String prijmeni, @RequestParam String mesto, @RequestParam String ulice, @RequestParam String cpp
     ,@RequestParam int psc,@RequestParam String email,@RequestParam String heslo1,@RequestParam String heslo2)
     {
-        boolean uzivatelexist = spravaDb.existujeuzivatel(email);
+        boolean uzivatelexist = spravaDb.existujeUzivatel(email);
         if(uzivatelexist)
         {
             return "<script>alert('Email je již registrován');window.history.back();</script>";
