@@ -2,6 +2,7 @@ package com.ppro.projekt.web;
 
 import com.ppro.projekt.entity.*;
 import com.ppro.projekt.service.SpravaDb;
+import com.ppro.projekt.service.UzivatelDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +19,11 @@ public class SpravaController {
 
     private SpravaDb spravaDb;
 
-    public SpravaController(@Autowired SpravaDb spravaDb) {
+    private UzivatelDb uzivatelDb;
+
+    public SpravaController(@Autowired SpravaDb spravaDb, @Autowired UzivatelDb uzivatelDb) {
         this.spravaDb = spravaDb;
+        this.uzivatelDb = uzivatelDb;
     }
 
     @RequestMapping(value = "/sprava",method = RequestMethod.GET)
@@ -33,15 +37,15 @@ public class SpravaController {
             int priv = Integer.parseInt(session.getAttribute("privilegium").toString());
             if(priv==1)
             {
-                List<Rezervace> rezervace = spravaDb.vypisrezervace();
+                List<Rezervace> rezervace = spravaDb.vypisRezervace();
                 model.addAttribute("rezervace", rezervace);
                 List<Vypujcka> vypujcky = spravaDb.najdiVypujckyProSpravu();
                 model.addAttribute("vypujcky", vypujcky);
                 List<Upominka> upominky = spravaDb.vypisUpominky();
                 model.addAttribute("upominky", upominky);
-                List<Uzivatel> uzivatele = spravaDb.vypisUzivatele();
+                List<Uzivatel> uzivatele = uzivatelDb.vypisUzivatele();
                 model.addAttribute("uzivatele", uzivatele);
-                List<Recenze> recenze = spravaDb.vypisrecenze();
+                List<Recenze> recenze = spravaDb.vypisRecenze();
                 model.addAttribute("recenze", recenze);
                 return "/sprava";
             }else
@@ -73,7 +77,7 @@ public class SpravaController {
     @ResponseBody
     protected String smazatuzivatele(@RequestParam int idecko)
     {
-        spravaDb.odstranUzivatele(idecko);
+        uzivatelDb.odstranUzivatele(idecko);
         return "<script>alert('Uživatel smazán');window.location.replace('/sprava');</script>";
     }
 
@@ -107,7 +111,7 @@ public class SpravaController {
     @ResponseBody
     protected String blokovatuzivatele(@RequestParam int idecko)
     {
-        spravaDb.blokovatUzivatele(idecko);
+        uzivatelDb.blokovatUzivatele(idecko);
         return "<script>alert('Uživatel blokován');window.location.replace('/sprava');</script>";
     }
 
@@ -115,7 +119,7 @@ public class SpravaController {
     @ResponseBody
     protected String odblokovatuzivatele(@RequestParam int idecko)
     {
-        spravaDb.odblokovatUzivatele(idecko);
+        uzivatelDb.odblokovatUzivatele(idecko);
         return "<script>alert('Uživatel odblokován');window.location.replace('/sprava');</script>";
     }
 

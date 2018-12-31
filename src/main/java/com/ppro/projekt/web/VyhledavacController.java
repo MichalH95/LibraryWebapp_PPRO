@@ -21,29 +21,16 @@ public class VyhledavacController {
         this.spravaDb = spravaDb;
     }
 
-
-
     @RequestMapping(value = "/vyhledavani", method = RequestMethod.POST)
-    protected String vyhledavani(Model model, @RequestParam (value = "druhvyhledavani",required = true) int druhvyhledavani, @RequestParam (value = "zanr",required = false) String zanr, @RequestParam (value = "jazyk",required = false) String jazyk, @RequestParam (value = "nakladatelstvi",required = false) String nakladatelstvi)
-    {
-        if(druhvyhledavani==0) {
-            List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
-            model.addAttribute("knihy", knihy);
-
-//        List<Autor> autori=spravaDb.NajdiAutoraByKnihaId();
-//        model1.addAttribute("autori", autori);
-            return "view";
-        }else
-            {
-
-                List<Kniha> knihy = spravaDb.filtrace(zanr,jazyk,nakladatelstvi);
-                model.addAttribute("knihy", knihy);
-                return "view";
-
-            //TODO dodělat autory
-            }
-
-
+    protected String vyhledavani(Model model, @RequestParam(value = "druhvyhledavani", required = true) int druhvyhledavani, @RequestParam(value = "zanr", required = false) String zanr, @RequestParam(value = "jazyk", required = false) String jazyk, @RequestParam(value = "nakladatelstvi", required = false) String nakladatelstvi) {
+        List<Kniha> knihy;
+        if (druhvyhledavani == 0) {
+            knihy = spravaDb.najdiVsechnyKnihy();
+        } else {
+            knihy = spravaDb.filtrace(zanr, jazyk, nakladatelstvi);
+        }
+        model.addAttribute("knihy", knihy);
+        return "view";
     }
 
 }

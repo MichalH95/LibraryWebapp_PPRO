@@ -6,6 +6,7 @@ import com.ppro.projekt.entity.Rezervace;
 import com.ppro.projekt.entity.Upominka;
 import com.ppro.projekt.entity.Vypujcka;
 import com.ppro.projekt.service.SpravaDb;
+import com.ppro.projekt.service.UzivatelDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,12 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-   private SpravaDb spravaDb;
+    private SpravaDb spravaDb;
+    private UzivatelDb uzivatelDb;
 
-    public LoginController(@Autowired SpravaDb spravaDb) {
+    public LoginController(@Autowired SpravaDb spravaDb, @Autowired UzivatelDb uzivatelDb) {
         this.spravaDb = spravaDb;
+        this.uzivatelDb = uzivatelDb;
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
@@ -35,9 +38,9 @@ public class LoginController {
             String email=session.getAttribute("email").toString();
             List<Vypujcka> vypujcky = spravaDb.najdiVypujcky(email);
             model.addAttribute("vypujcky", vypujcky);
-            List<Upominka> upominky = spravaDb.vypisUpominkyProUzivatele(email);
+            List<Upominka> upominky = uzivatelDb.vypisUpominkyProUzivatele(email);
             model.addAttribute("upominky", upominky);
-            List<Rezervace> rezervace = spravaDb.vypisRezervaceProUzivatele(email);
+            List<Rezervace> rezervace = uzivatelDb.vypisRezervaceProUzivatele(email);
             model.addAttribute("rezervace", rezervace);
         }
         return "login";
@@ -59,10 +62,10 @@ public class LoginController {
         }
 
 
-        if(spravaDb.overlogin(email,hesloHash))
+        if(uzivatelDb.overlogin(email,hesloHash))
         {
             int priv;
-            if(spravaDb.privilegium(email))
+            if(uzivatelDb.privilegium(email))
             {priv = 1;} else { priv=0;}
             session.setAttribute("email", email);
             session.setAttribute("privilegium",priv);

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -18,10 +17,6 @@ public class SpravaDbJpa implements SpravaDb {
 
     public void vlozKnihu(Kniha Kniha) {
         em.persist(Kniha);
-    }
-
-    public void vlozUzivatele(Uzivatel uzivatel) {
-        em.persist(uzivatel);
     }
 
     public void odstranKnihu(int id) {
@@ -61,33 +56,6 @@ public class SpravaDbJpa implements SpravaDb {
         }
     }
 
-    public void odstranUzivatele(int id) {
-        Uzivatel uzivatel = em.getReference(Uzivatel.class, id);
-        if (uzivatel != null) {
-            em.remove(uzivatel);
-        }
-    }
-
-    public boolean existujeUzivatel(String email) {
-        String query = "Select u from Uzivatel u where u.email =:email";
-        List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
-        if (u.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public boolean overlogin(String email, String heslo) {
-        String query = "Select u from Uzivatel u where u.email =:email AND u.heslo =:heslo AND u.blokace=false";
-        List<Uzivatel> u = em.createQuery(query).setParameter("email", email).setParameter("heslo", heslo).getResultList();
-        if (u.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public boolean dostupnost(int idecko) {
         String query = "Select k from Kniha k where k.id =:idecko AND k.pocet_kusu>0";
         List<Kniha> u = em.createQuery(query).setParameter("idecko", idecko).getResultList();
@@ -98,41 +66,16 @@ public class SpravaDbJpa implements SpravaDb {
         }
     }
 
-    public boolean privilegium(String email) {
-
-        String query = "Select u.privilegia from Uzivatel u where u.email =:email AND u.privilegia=1";
-        List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
-        if (u.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-
-
-    }
-
-    public List<Rezervace> vypisRezervaceProUzivatele(String email) {
-        return em.createQuery("select r from Rezervace r inner join Uzivatel u on r.uzivatel.id=u.id inner join Kniha k on r.kniha.id=k.id where u.email=:email").setParameter("email", email).getResultList();
-    }
-
-    public List<Upominka> vypisUpominkyProUzivatele(String email) {
-        return em.createQuery("select u from Upominka u inner join Kniha k on u.kniha.id=k.id inner join Uzivatel uz on u.uzivatel.id=uz.id inner join Vypujcka v on u.vypujcka.id=v.id where uz.email=:email").setParameter("email", email).getResultList();
-    }
-
-    public List<Rezervace> vypisrezervace() {
+    public List<Rezervace> vypisRezervace() {
         return em.createQuery("select r from Rezervace r inner join Kniha k on r.kniha.id=k.id").getResultList();
     }
 
-    public List<Recenze> vypisrecenze() {
+    public List<Recenze> vypisRecenze() {
         return em.createQuery("select r from Recenze r inner join Kniha k on r.kniha.id=k.id").getResultList();
     }
 
     public List<Upominka> vypisUpominky() {
         return em.createQuery("select u from Upominka u inner join Vypujcka v on u.vypujcka.id=v.id inner join Uzivatel uz on u.uzivatel.id=uz.id").getResultList();
-    }
-
-    public List<Uzivatel> vypisUzivatele() {
-        return em.createQuery("select u from Uzivatel u").getResultList();
     }
 
     public List<Vypujcka> najdiVypujcky(String email) {
@@ -185,27 +128,6 @@ public class SpravaDbJpa implements SpravaDb {
 
     public void upravUpominku(int idecko, int pokuta, String popis) {
         em.createQuery("UPDATE Upominka u SET u.pokuta =:pokuta, u.popis =:popis where u.id=:idecko").setParameter("idecko", idecko).setParameter("pokuta", pokuta).setParameter("popis", popis).executeUpdate();
-    }
-
-    public void blokovatUzivatele(int idecko) {
-        em.createQuery("UPDATE Uzivatel u SET u.blokace =true where u.id=:idecko").setParameter("idecko", idecko).executeUpdate();
-    }
-
-    public Uzivatel najdiUzivatele(String email) {
-        return (Uzivatel) em.createQuery("Select u from Uzivatel u where u.email=:email").setParameter("email", email).getSingleResult();
-    }
-
-    public void nastavitVypujcku(int idKnihy, String email) {
-        em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
-        Vypujcka vypujcka = new Vypujcka(new Date(), new Date().getTime() + 30 * 24 * 60 * 60 * 1000, false);
-        vypujcka.setUzivatel(najdiUzivatele(email));
-        vypujcka.setKniha(em.find(Kniha.class, idKnihy));
-        em.persist(vypujcka);
-    }
-
-
-    public void odblokovatUzivatele(int idecko) {
-        em.createQuery("UPDATE Uzivatel u SET u.blokace =false where u.id=:idecko").setParameter("idecko", idecko).executeUpdate();
     }
 
     public void upravVypujcku(int idecko, String datum_vypujceni, String vypujceno_do, Boolean vraceno) {
