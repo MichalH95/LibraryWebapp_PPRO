@@ -85,7 +85,7 @@ public class SpravaController {
     @ResponseBody
     protected String smazatvypujcku(@RequestParam int idecko)
     {
-        spravaDb.odstranVypujcku(idecko);
+        spravaDb.vratVypujcku(idecko);
         return "<script>alert('Výpůjčka smazána');window.location.replace('/sprava');</script>";
     }
 
@@ -121,6 +121,14 @@ public class SpravaController {
     {
         uzivatelDb.odblokovatUzivatele(idecko);
         return "<script>alert('Uživatel odblokován');window.location.replace('/sprava');</script>";
+    }
+
+    @RequestMapping(value = "/rezervacinavypujcku", method=RequestMethod.GET)
+    @ResponseBody
+    protected String rezervacinavypujcku(@RequestParam int idecko)
+    {
+        spravaDb.prevedRezervaciNaVypujcku(idecko);
+        return "<script>alert('Rezervace převedena na výpůjčku');window.location.replace('/sprava');</script>";
     }
 
     @RequestMapping(value = "/editacerezervace", method=RequestMethod.GET)

@@ -1,6 +1,8 @@
 package com.ppro.projekt.service;
 
 import com.ppro.projekt.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,8 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
+import static com.ppro.projekt.ProjektTools.datePlusDays;
+
 @Repository
 @Transactional
 public class UzivatelDbJpa implements UzivatelDb {
@@ -16,12 +20,22 @@ public class UzivatelDbJpa implements UzivatelDb {
     @PersistenceContext
     private EntityManager em;
 
+    @Autowired
+    @Lazy
+    private SpravaDb spravaDb;
+
     public void vlozUzivatele(Uzivatel uzivatel) {
         em.persist(uzivatel);
     }
 
     public void odstranUzivatele(int id) {
         Uzivatel uzivatel = em.getReference(Uzivatel.class, id);
+        // pokud ma vypujcene knihy, vratit je
+        List<Vypujcka> vypujcky = em.createQuery("SELECT v from Vypujcka v where v.uzivatel=:uziv").setParameter("uziv", uzivatel).getResultList();
+        vypujcky.forEach(v -> {
+            spravaDb.vratVypujcku(v.getId());
+        });
+
         if (uzivatel != null) {
             em.remove(uzivatel);
         }
@@ -48,7 +62,6 @@ public class UzivatelDbJpa implements UzivatelDb {
     }
 
     public boolean privilegium(String email) {
-
         String query = "Select u.privilegia from Uzivatel u where u.email =:email AND u.privilegia=1";
         List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
         if (u.isEmpty()) {
@@ -56,8 +69,6 @@ public class UzivatelDbJpa implements UzivatelDb {
         } else {
             return true;
         }
-
-
     }
 
     public List<Rezervace> vypisRezervaceProUzivatele(String email) {
@@ -78,10 +89,18 @@ public class UzivatelDbJpa implements UzivatelDb {
 
     public void nastavitVypujcku(int idKnihy, String email) {
         em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
-        Vypujcka vypujcka = new Vypujcka(new Date(), new Date().getTime() + 30 * 24 * 60 * 60 * 1000, false);
+        Vypujcka vypujcka = new Vypujcka(new Date(), datePlusDays(new Date(), 30), false);
         vypujcka.setUzivatel(najdiUzivatele(email));
         vypujcka.setKniha(em.find(Kniha.class, idKnihy));
         em.persist(vypujcka);
+    }
+
+    public void nastavitRezervaci(int idKnihy, String email) {
+        em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
+        Rezervace rezervace = new Rezervace(new Date().toString(), datePlusDays(new Date(), 7).toString());
+        rezervace.setUzivatel(najdiUzivatele(email));
+        rezervace.setKniha(em.find(Kniha.class, idKnihy));
+        em.persist(rezervace);
     }
 
     public void blokovatUzivatele(int idecko) {

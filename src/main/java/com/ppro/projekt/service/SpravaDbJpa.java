@@ -1,12 +1,16 @@
 package com.ppro.projekt.service;
 
 import com.ppro.projekt.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
+
+import static com.ppro.projekt.ProjektTools.datePlusDays;
 
 @Repository
 @Transactional
@@ -14,6 +18,9 @@ public class SpravaDbJpa implements SpravaDb {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    private UzivatelDb uzivatelDb;
 
     public void vlozKnihu(Kniha Kniha) {
         em.persist(Kniha);
@@ -36,11 +43,13 @@ public class SpravaDbJpa implements SpravaDb {
     public void odstranRezervaci(int id) {
         Rezervace rezervace = em.getReference(Rezervace.class, id);
         if (rezervace != null) {
+            int idKnihy = rezervace.getKniha().getId();
+            em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu+1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
             em.remove(rezervace);
         }
     }
 
-    public void odstranVypujcku(int id) {
+    public void vratVypujcku(int id) {
         Vypujcka vypujcka = em.getReference(Vypujcka.class, id);
         if (vypujcka != null) {
             int idKnihy = vypujcka.getKniha().getId();
@@ -119,6 +128,19 @@ public class SpravaDbJpa implements SpravaDb {
 
     public void upravRezervaci(int idecko, String rezer_od, String rezer_do) {
         em.createQuery("UPDATE Rezervace r SET r.rezervace_od =:rezer_od, r.rezervace_do =:rezer_do where r.id=:idecko").setParameter("idecko", idecko).setParameter("rezer_od", rezer_od).setParameter("rezer_do", rezer_do).executeUpdate();
+    }
+
+    public void prevedRezervaciNaVypujcku(int idecko) {
+        Rezervace rezervace = em.getReference(Rezervace.class, idecko);
+        if (rezervace != null) {
+            Kniha k = rezervace.getKniha();
+            Uzivatel u = rezervace.getUzivatel();
+            Vypujcka vypujcka = new Vypujcka(new Date(), datePlusDays(new Date(), 30), false);
+            vypujcka.setUzivatel(u);
+            vypujcka.setKniha(k);
+            em.persist(vypujcka);
+            em.remove(rezervace);
+        }
     }
 
     public void upravKnihu(int idecko, String nazev, String jazyk, String zanr, String nakladatelstvi, String datum_vydani, String isbn, int pocet_kusu, int pocet_stran, String popis) {

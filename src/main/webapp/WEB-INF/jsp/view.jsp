@@ -82,7 +82,9 @@
             <div class="card">
                 <div class="btn-group">
 
-                    <button class="button">Rezervovat</button>
+                    <form action="/rezervovat">
+                    <button class="button" value="${k.id}" name="idecko">Rezervovat</button>
+                    </form>
                     <c:choose>
                         <c:when test="${k.pocet_kusu>0}">
                             <form action="/vypujcit">

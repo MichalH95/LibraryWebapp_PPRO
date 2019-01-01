@@ -32,7 +32,6 @@ public class BaseController {
     @RequestMapping("/vypujcit")
     @ResponseBody
     public String vypujcka(@RequestParam int idecko, HttpSession session) {
-
         if (null == session.getAttribute("email")) {
             return "<script>alert('Pro vytvoření výpůjčky je nutné se přihlásit');window.location.replace('/login');</script>";
         } else {
@@ -44,7 +43,18 @@ public class BaseController {
                 return "<script>alert('Litujeme, knihu si někdo právě vypůjčil');window.location.replace('/');</script>";
             }
         }
+    }
 
+    @RequestMapping("/rezervovat")
+    @ResponseBody
+    public String rezervace(@RequestParam int idecko, HttpSession session) {
+        if (null == session.getAttribute("email")) {
+            return "<script>alert('Pro vytvoření rezervace je nutné se přihlásit');window.location.replace('/login');</script>";
+        } else {
+            String email = session.getAttribute("email").toString();
+            uzivatelDb.nastavitRezervaci(idecko, email);
+            return "<script>alert('Právě jste si rezervoval knihu');window.location.replace('/login');</script>";
+        }
     }
 
     @RequestMapping("/nahratdata")

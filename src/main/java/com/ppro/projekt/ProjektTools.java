@@ -1,5 +1,8 @@
 package com.ppro.projekt;
 
+import java.time.ZoneId;
+import java.util.Date;
+
 public class ProjektTools {
 
     public static String bytesToHex(byte[] bytes) {
@@ -8,5 +11,8 @@ public class ProjektTools {
         return result.toString();
     }
 
+    public static Date datePlusDays(Date date, int days) {
+        return Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(days).atZone(ZoneId.systemDefault()).toInstant());
+    }
 
 }

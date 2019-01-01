@@ -10,7 +10,7 @@ public class Vypujcka {
     @GeneratedValue
     private int id;
     private Date datum_vypujceni;
-    private long vypujceno_do;
+    private Date vypujceno_do;
     private boolean vraceno;
 
     @OneToMany(mappedBy="vypujcka")
@@ -51,7 +51,7 @@ public class Vypujcka {
         return uzivatel;
     }
 
-    public Vypujcka(Date datum_vypujceni, long vypujceno_do, boolean vraceno) {
+    public Vypujcka(Date datum_vypujceni, Date vypujceno_do, boolean vraceno) {
         this.datum_vypujceni = datum_vypujceni;
         this.vypujceno_do = vypujceno_do;
         this.vraceno = vraceno;
@@ -66,7 +66,7 @@ public class Vypujcka {
         this.datum_vypujceni = datum_vypujceni;
     }
 
-    public void setVypujceno_do(long vypujceno_do) {
+    public void setVypujceno_do(Date vypujceno_do) {
         this.vypujceno_do = vypujceno_do;
     }
 
@@ -83,7 +83,7 @@ public class Vypujcka {
         return datum_vypujceni;
     }
 
-    public long getVypujceno_do() {
+    public Date getVypujceno_do() {
         return vypujceno_do;
     }
 

@@ -74,7 +74,7 @@
                 <div id="spravarezer" style="display: none;">
                     <h2>Správa rezervací</h2>
                     <table border="1">
-                        <tr><td>Rezervováno od</td><td>Rezervováno do</td><td>Název knihy</td><td colspan="2">Akce</td></tr>
+                        <tr><td>Rezervováno od</td><td>Rezervováno do</td><td>Název knihy</td><td colspan="3">Akce</td></tr>
                     <c:forEach var="r" items="${rezervace}">
                         <br>
                             <tr>
@@ -83,7 +83,7 @@
 
                                 <td>${r.kniha.nazev}</td>
                                 <td><form action="/smazatrezervaci"><input type="hidden" name="idecko" value="${r.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0; color: red" value="X" type="submit"></form></td>
-
+                                <td><form action="/rezervacinavypujcku"><input type="hidden" name="idecko" value="${r.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Převést na výpůjčku" type="submit"></form></td>
                                 <td><form action="/editacerezervace"><input type="hidden" name="idecko" value="${r.id}" /><input style="width: 100%; margin-left: 0;" value="Editovat" type="submit"></form> </td>
                         </tr>
                     </c:forEach>

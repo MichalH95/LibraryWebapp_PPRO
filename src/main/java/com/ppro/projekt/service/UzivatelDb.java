@@ -17,6 +17,7 @@ public interface UzivatelDb {
     Uzivatel najdiUzivatele(String email);
 
     void nastavitVypujcku(int idKnihy, String email);
+    void nastavitRezervaci(int idKnihy, String email);
     void odblokovatUzivatele(int idecko);
     void blokovatUzivatele(int idecko);
     boolean overlogin(String email, String heslo);
