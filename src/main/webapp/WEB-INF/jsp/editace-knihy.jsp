@@ -23,6 +23,9 @@
 
         <div class="card">
             <div class="container">
+
+                <jsp:include page="common/message.jsp"/>
+
                 <h2>Editace rezervace</h2>
                 <c:forEach var="k" items="${kniha}">
                     <form action="/upravknihu">

@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
@@ -31,24 +31,8 @@ public class LoginController {
         this.uzivatelDb = uzivatelDb;
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String showForm(Model model,HttpSession session)
-    {
-        if(session.getAttribute("email") != null) {
-            String email=session.getAttribute("email").toString();
-            List<Vypujcka> vypujcky = spravaDb.najdiVypujcky(email);
-            model.addAttribute("vypujcky", vypujcky);
-            List<Upominka> upominky = uzivatelDb.vypisUpominkyProUzivatele(email);
-            model.addAttribute("upominky", upominky);
-            List<Rezervace> rezervace = uzivatelDb.vypisRezervaceProUzivatele(email);
-            model.addAttribute("rezervace", rezervace);
-        }
-        return "login";
-    }
-
     @RequestMapping(value = "/overlogin", method=RequestMethod.POST)
-    @ResponseBody
-    protected String login(HttpSession session,@RequestParam String email, @RequestParam String heslo) {
+    protected String login(HttpSession session, @RequestParam String email, @RequestParam String heslo, RedirectAttributes redirectAttributes) {
         String hesloHash;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -69,11 +53,13 @@ public class LoginController {
             {priv = 1;} else { priv=0;}
             session.setAttribute("email", email);
             session.setAttribute("privilegium",priv);
-            return "<script>window.location.replace('/login')</script>";
+
+            return "redirect:/login";
         }
         else
         {
-            return "<script>alert('Špatný email nebo heslo, pokud vše zadáváte správně, váš účet je blokován');window.history.back();</script>";
+            redirectAttributes.addFlashAttribute("message", "Špatný email nebo heslo, pokud vše zadáváte správně, váš účet je blokován");
+            return "redirect:/login";
         }
     }
 
@@ -83,6 +69,21 @@ public class LoginController {
         session.removeAttribute("email");
         session.removeAttribute("privilegium");
         return "/login";
+    }
+
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String showForm(Model model,HttpSession session)
+    {
+        if(session.getAttribute("email") != null) {
+            String email=session.getAttribute("email").toString();
+            List<Vypujcka> vypujcky = spravaDb.najdiVypujcky(email);
+            model.addAttribute("vypujcky", vypujcky);
+            List<Upominka> upominky = uzivatelDb.vypisUpominkyProUzivatele(email);
+            model.addAttribute("upominky", upominky);
+            List<Rezervace> rezervace = uzivatelDb.vypisRezervaceProUzivatele(email);
+            model.addAttribute("rezervace", rezervace);
+        }
+        return "login";
     }
 
 }

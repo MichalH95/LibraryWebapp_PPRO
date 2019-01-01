@@ -18,6 +18,8 @@
 <div class="row">
     <div class="leftcolumn">
 
+
+
 <br/>
         <form:form action="/vyhledavani">
         <table><tr>
@@ -69,6 +71,8 @@
 
 
         </form:form>
+
+        <jsp:include page="common/message.jsp"/>
 
 
         <%

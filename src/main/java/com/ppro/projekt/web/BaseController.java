@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -30,38 +30,41 @@ public class BaseController {
     }
 
     @RequestMapping("/vypujcit")
-    @ResponseBody
-    public String vypujcka(@RequestParam int idecko, HttpSession session) {
-        if (null == session.getAttribute("email")) {
-            return "<script>alert('Pro vytvoření výpůjčky je nutné se přihlásit');window.location.replace('/login');</script>";
+    public String vypujcka(@RequestParam int idecko, HttpSession session, RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("email") == null) {
+            redirectAttributes.addFlashAttribute("message", "Pro vytvoření výpůjčky je nutné se přihlásit");
+            return "redirect:/login";
         } else {
             String email = session.getAttribute("email").toString();
             if (spravaDb.dostupnost(idecko)) {
                 uzivatelDb.nastavitVypujcku(idecko, email);
-                return "<script>alert('Právě jste si vypůjčil knihu');window.location.replace('/login');</script>";
+                redirectAttributes.addFlashAttribute("message", "Právě jste si vypůjčil knihu");
+                return "redirect:/login";
             } else {
-                return "<script>alert('Litujeme, knihu si někdo právě vypůjčil');window.location.replace('/');</script>";
+                redirectAttributes.addFlashAttribute("message", "Litujeme, knihu má někdo vypůjčenou");
+                return "redirect:/";
             }
         }
     }
 
     @RequestMapping("/rezervovat")
-    @ResponseBody
-    public String rezervace(@RequestParam int idecko, HttpSession session) {
-        if (null == session.getAttribute("email")) {
-            return "<script>alert('Pro vytvoření rezervace je nutné se přihlásit');window.location.replace('/login');</script>";
+    public String rezervace(@RequestParam int idecko, HttpSession session, RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("email") == null) {
+            redirectAttributes.addFlashAttribute("message", "Pro vytvoření rezervace je nutné se přihlásit");
+            return "redirect:/login";
         } else {
             String email = session.getAttribute("email").toString();
             uzivatelDb.nastavitRezervaci(idecko, email);
-            return "<script>alert('Právě jste si rezervoval knihu');window.location.replace('/login');</script>";
+            redirectAttributes.addFlashAttribute("message", "Právě jste si rezervoval knihu");
+            return "redirect:/login";
         }
     }
 
     @RequestMapping("/nahratdata")
-    @ResponseBody
-    public String nahratdata() {
+    public String nahratdata(RedirectAttributes redirectAttributes) {
         initDbService.initDb();
-        return "<script>alert('Data úspěšně nahrána');window.location.replace('/');</script>";
+        redirectAttributes.addFlashAttribute("message", "Data úspěšně nahrána");
+        return "redirect:/";
     }
 
     @RequestMapping("/")

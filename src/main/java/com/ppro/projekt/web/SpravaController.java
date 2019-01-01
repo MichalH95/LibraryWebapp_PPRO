@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -57,78 +58,78 @@ public class SpravaController {
 
 
     @RequestMapping(value = "/smazatrecenzi", method=RequestMethod.GET)
-    @ResponseBody
-    protected String smazatrecenzi(@RequestParam int idecko)
+    protected String smazatrecenzi(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         spravaDb.odstranRecenzi(idecko);
-        return "<script>alert('Recenze smazána');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Recenze smazána");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/smazatrezervaci", method=RequestMethod.GET)
-    @ResponseBody
-    protected String smazatrezervaci(@RequestParam int idecko)
+    protected String smazatrezervaci(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         spravaDb.odstranRezervaci(idecko);
-        return "<script>alert('Rezervace smazána');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Rezervace smazána");
+        return "redirect:/sprava";
     }
 
 
     @RequestMapping(value = "/smazatuzivatele", method=RequestMethod.GET)
-    @ResponseBody
-    protected String smazatuzivatele(@RequestParam int idecko)
+    protected String smazatuzivatele(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         uzivatelDb.odstranUzivatele(idecko);
-        return "<script>alert('Uživatel smazán');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Uživatel smazán");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/smazatvypujcku", method=RequestMethod.GET)
-    @ResponseBody
-    protected String smazatvypujcku(@RequestParam int idecko)
+    protected String smazatvypujcku(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         spravaDb.vratVypujcku(idecko);
-        return "<script>alert('Výpůjčka smazána');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Výpůjčka vrácena");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/smazatupominku", method=RequestMethod.GET)
-    @ResponseBody
-    protected String smazatupominku(@RequestParam int idecko)
+    protected String smazatupominku(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         spravaDb.odstranUpominku(idecko);
-        return "<script>alert('Upomínka smazána');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Upomínka smazána");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/vlozitknihu", method=RequestMethod.POST)
-    @ResponseBody
-    protected String editace(@RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
+    protected String editace(RedirectAttributes redirectAttributes, @RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
             ,@RequestParam int pocet_kusu, @RequestParam int pocet_stran, @RequestParam String isbn, @RequestParam String datum_vydani, @RequestParam String popis)
     {
         Kniha kniha = new Kniha(nazev,popis,zanr,datum_vydani,pocet_stran,nakladatelstvi,isbn,pocet_kusu,jazyk);
         spravaDb.vlozKnihu(kniha);
-        return "<script>alert('Kniha vložena');window.location.replace('/');</script>";
+        redirectAttributes.addFlashAttribute("message", "Kniha vložena");
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/blokovatuzivatele", method=RequestMethod.GET)
-    @ResponseBody
-    protected String blokovatuzivatele(@RequestParam int idecko)
+    protected String blokovatuzivatele(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         uzivatelDb.blokovatUzivatele(idecko);
-        return "<script>alert('Uživatel blokován');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Uživatel blokován");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/odblokovatuzivatele", method=RequestMethod.GET)
-    @ResponseBody
-    protected String odblokovatuzivatele(@RequestParam int idecko)
+    protected String odblokovatuzivatele(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         uzivatelDb.odblokovatUzivatele(idecko);
-        return "<script>alert('Uživatel odblokován');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Uživatel odblokován");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/rezervacinavypujcku", method=RequestMethod.GET)
-    @ResponseBody
-    protected String rezervacinavypujcku(@RequestParam int idecko)
+    protected String rezervacinavypujcku(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
         spravaDb.prevedRezervaciNaVypujcku(idecko);
-        return "<script>alert('Rezervace převedena na výpůjčku');window.location.replace('/sprava');</script>";
+        redirectAttributes.addFlashAttribute("message", "Rezervace převedena na výpůjčku");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/editacerezervace", method=RequestMethod.GET)
@@ -162,29 +163,28 @@ public class SpravaController {
 
     @RequestMapping(value = "/upravupominku", method=RequestMethod.GET)
     @ResponseBody
-    protected String editupo(@RequestParam int idecko,@RequestParam int pokuta,@RequestParam String popis) {
-
+    protected String editupo(RedirectAttributes redirectAttributes, @RequestParam int idecko,@RequestParam int pokuta,@RequestParam String popis) {
         spravaDb.upravUpominku(idecko,pokuta,popis);
-        return "<script>alert('Upominka upravena');window.location.replace('/sprava')</script>";
-
+        redirectAttributes.addFlashAttribute("message", "Upomínka upravena");
+        return "redirect:/sprava";
     }
 
 
 
     @RequestMapping(value = "/upravknihu", method=RequestMethod.GET)
     @ResponseBody
-    protected String editknihy(@RequestParam int idecko,@RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
+    protected String editknihy(RedirectAttributes redirectAttributes, @RequestParam int idecko,@RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
             ,@RequestParam int pocet_kusu, @RequestParam int pocet_stran, @RequestParam String isbn, @RequestParam String datum_vydani, @RequestParam String popis) {
 
         spravaDb.upravKnihu(idecko,nazev,jazyk,zanr,nakladatelstvi,datum_vydani,isbn,pocet_kusu,pocet_stran,popis);
-        return "<script>alert('Kniha upravena');window.location.replace('/')</script>";
-
+        redirectAttributes.addFlashAttribute("message", "Kniha upravena");
+        return "redirect:/";
     }
 
 
     @RequestMapping(value = "/upravvypujcku", method=RequestMethod.GET)
     @ResponseBody
-    protected String editvyp(@RequestParam(value = "vraceno", defaultValue = "false") final String vraceno,@RequestParam int idecko
+    protected String editvyp(RedirectAttributes redirectAttributes, @RequestParam(value = "vraceno", defaultValue = "false") final String vraceno,@RequestParam int idecko
     ,@RequestParam String datum_vypujceni,@RequestParam String vypujceno_do) {
 
         if(vraceno.endsWith("on"))
@@ -194,23 +194,24 @@ public class SpravaController {
             {
                 spravaDb.upravVypujcku(idecko,datum_vypujceni,vypujceno_do,false);
             }
-        return "<script>alert('Vypujcka upravena');window.location.replace('/sprava')</script>";
-
+        redirectAttributes.addFlashAttribute("message", "Výpůjčka upravena");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/upravrezervaci", method=RequestMethod.GET)
     @ResponseBody
-    protected String editrezer1(@RequestParam int idecko, @RequestParam String rezervace_od, @RequestParam String rezervace_do) {
-
+    protected String editrezer1(RedirectAttributes redirectAttributes, @RequestParam int idecko, @RequestParam String rezervace_od, @RequestParam String rezervace_do) {
         spravaDb.upravRezervaci(idecko,rezervace_od,rezervace_do);
-        return "<script>alert('Rezervace upravena');window.location.replace('/sprava')</script>";
+        redirectAttributes.addFlashAttribute("message", "Výpůjčka upravena");
+        return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/smazatknihu", method=RequestMethod.GET)
     @ResponseBody
-    protected String smazatknihu(@RequestParam int idknihy) {
+    protected String smazatknihu(RedirectAttributes redirectAttributes, @RequestParam int idknihy) {
         spravaDb.odstranKnihu(idknihy);
-        return "<script>alert('Kniha smazána');window.location.replace('/')</script>";
+        redirectAttributes.addFlashAttribute("message", "Kniha smazána");
+        return "redirect:/";
     }
 
 

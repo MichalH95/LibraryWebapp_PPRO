@@ -30,13 +30,19 @@ public class UzivatelDbJpa implements UzivatelDb {
 
     public void odstranUzivatele(int id) {
         Uzivatel uzivatel = em.getReference(Uzivatel.class, id);
-        // pokud ma vypujcene knihy, vratit je
-        List<Vypujcka> vypujcky = em.createQuery("SELECT v from Vypujcka v where v.uzivatel=:uziv").setParameter("uziv", uzivatel).getResultList();
-        vypujcky.forEach(v -> {
-            spravaDb.vratVypujcku(v.getId());
-        });
 
         if (uzivatel != null) {
+            // pokud ma vypujcene knihy, vratit je
+            List<Vypujcka> vypujcky = em.createQuery("SELECT v from Vypujcka v where v.uzivatel=:uziv").setParameter("uziv", uzivatel).getResultList();
+            vypujcky.forEach(v -> {
+                spravaDb.vratVypujcku(v.getId());
+            });
+            // pokud ma rezervace, zrus je
+            List<Rezervace> rezervace = em.createQuery("SELECT r from Rezervace r where r.uzivatel=:uziv").setParameter("uziv", uzivatel).getResultList();
+            rezervace.forEach(r -> {
+                spravaDb.odstranRezervaci(r.getId());
+            });
+
             em.remove(uzivatel);
         }
     }

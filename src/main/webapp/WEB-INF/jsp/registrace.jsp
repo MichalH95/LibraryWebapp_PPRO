@@ -22,6 +22,7 @@
         <div class="card">
             <div class="container">
 
+                <jsp:include page="common/message.jsp"/>
 
                 <h2>Registrace uživatele</h2>
 

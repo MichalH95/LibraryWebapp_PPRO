@@ -26,10 +26,22 @@ public class InitDbServiceJpa implements InitDbService {
 
         initUzivatele();
 
+        initRezervace();
+
+        initVypujcky();
+
+    }
+
+    private void initRezervace() {
+        em.createQuery("DELETE from Rezervace").executeUpdate();
+    }
+
+    private void initVypujcky() {
+        em.createQuery("DELETE from Vypujcka").executeUpdate();
     }
 
     private void initKnihy() {
-        em.createQuery("select k from Kniha k").getResultList().forEach(kniha -> em.remove(kniha));
+        em.createQuery("DELETE from Kniha").executeUpdate();
 
         List<Kniha> knihy = new ArrayList<>();
 
@@ -58,7 +70,7 @@ public class InitDbServiceJpa implements InitDbService {
     }
 
     private void initUzivatele() {
-        em.createQuery("select u from Uzivatel u").getResultList().forEach(u -> em.remove(u));
+        em.createQuery("DELETE from Uzivatel").executeUpdate();
 
         //   email: test@test.cz   heslo: test (bez privilegia)
         List<Uzivatel> uzivatele = new ArrayList<>();

@@ -21,6 +21,7 @@
         <div class="card">
             <div class="container">
 
+                <jsp:include page="common/message.jsp"/>
 
                 <%
 
@@ -105,7 +106,7 @@
 
                     </c:forEach>
                 </table>
-
+                <br>
                 <form:form action="/logout">
                     <input type="submit" name="login" value="Logout">
                 </form:form>

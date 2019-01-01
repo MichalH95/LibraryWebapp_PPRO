@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -35,12 +35,12 @@ public class RegistraceController {
 
 
     @RequestMapping(value = "/vlozituzivatele", method = RequestMethod.POST)
-    @ResponseBody
-    protected String editace(@RequestParam String jmeno, @RequestParam String prijmeni, @RequestParam String mesto, @RequestParam String ulice, @RequestParam String cpp
+    protected String editace(RedirectAttributes redirectAttributes, @RequestParam String jmeno, @RequestParam String prijmeni, @RequestParam String mesto, @RequestParam String ulice, @RequestParam String cpp
             , @RequestParam int psc, @RequestParam String email, @RequestParam String heslo1, @RequestParam String heslo2) {
         boolean uzivatelexist = uzivatelDb.existujeUzivatel(email);
         if (uzivatelexist) {
-            return "<script>alert('Email je již registrován');window.history.back();</script>";
+            redirectAttributes.addFlashAttribute("message", "Email je již registrován");
+            return "redirect:/registrace";
         } else {
             if (heslo1.equals(heslo2)) {
                 String hesloHash;
@@ -57,9 +57,11 @@ public class RegistraceController {
 
                 Uzivatel uzivatel = new Uzivatel(jmeno, prijmeni, mesto, ulice, cpp, psc, email, hesloHash, false, 0);
                 uzivatelDb.vlozUzivatele(uzivatel);
-                return "<script>alert('Uživatel vložen');window.location.replace('/login');</script>";
+                redirectAttributes.addFlashAttribute("message", "Uživatel vložen");
+                return "redirect:/login";
             }
-            return "<script>alert('Hesla se neshodují');window.history.back();</script>";
+            redirectAttributes.addFlashAttribute("message", "Hesla se neshodují");
+            return "redirect:/registrace";
         }
     }
 

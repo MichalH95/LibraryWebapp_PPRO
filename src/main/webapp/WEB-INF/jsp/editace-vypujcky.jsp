@@ -23,6 +23,9 @@
 
         <div class="card">
             <div class="container">
+
+                <jsp:include page="common/message.jsp"/>
+
                 <h2>Editace výpůjčky</h2>
                 <c:forEach var="v" items="${vypujcka}">
                     <form action="/upravvypujcku">
