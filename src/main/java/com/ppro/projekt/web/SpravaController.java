@@ -54,6 +54,7 @@ public class SpravaController {
             }
             {
                 redirectAttributes.addFlashAttribute("message", "Nemáte přístupová práva");
+                redirectAttributes.addFlashAttribute("status",0);
                 return "redirect:/login";
             }
         }
@@ -65,6 +66,7 @@ public class SpravaController {
     {
         spravaDb.odstranRecenzi(idecko);
         redirectAttributes.addFlashAttribute("message", "Recenze smazána");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -73,6 +75,7 @@ public class SpravaController {
     {
         spravaDb.odstranRezervaci(idecko);
         redirectAttributes.addFlashAttribute("message", "Rezervace smazána");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -82,6 +85,7 @@ public class SpravaController {
     {
         uzivatelDb.odstranUzivatele(idecko);
         redirectAttributes.addFlashAttribute("message", "Uživatel smazán");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -90,6 +94,7 @@ public class SpravaController {
     {
         spravaDb.vratVypujcku(idecko);
         redirectAttributes.addFlashAttribute("message", "Výpůjčka vrácena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -98,6 +103,7 @@ public class SpravaController {
     {
         spravaDb.odstranUpominku(idecko);
         redirectAttributes.addFlashAttribute("message", "Upomínka smazána");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -107,6 +113,7 @@ public class SpravaController {
     {
         uzivatelDb.vlozUpominku(iduzivatele,idknihy,pokuta,popis,idvypujcky);
         redirectAttributes.addFlashAttribute("message", "Upomínka vložena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 
@@ -115,6 +122,7 @@ public class SpravaController {
     {
         spravaDb.odstranAutora(idautora);
         redirectAttributes.addFlashAttribute("message", "Autor smazán");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 
@@ -135,6 +143,7 @@ public class SpravaController {
         Kniha kniha = new Kniha(nazev,popis,zanr,datum_vydani,pocet_stran,nakladatelstvi,isbn,pocet_kusu,jazyk);
         spravaDb.vlozKnihu(kniha);
         redirectAttributes.addFlashAttribute("message", "Kniha vložena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 
@@ -143,6 +152,7 @@ public class SpravaController {
     {
         spravaDb.vlozAutora(knihaID,jmeno,vztah);
         redirectAttributes.addFlashAttribute("message", "Autor vložen");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 
@@ -152,6 +162,7 @@ public class SpravaController {
     {
         uzivatelDb.blokovatUzivatele(idecko);
         redirectAttributes.addFlashAttribute("message", "Uživatel blokován");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -160,6 +171,7 @@ public class SpravaController {
     {
         uzivatelDb.odblokovatUzivatele(idecko);
         redirectAttributes.addFlashAttribute("message", "Uživatel odblokován");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -168,6 +180,7 @@ public class SpravaController {
     {
         spravaDb.prevedRezervaciNaVypujcku(idecko);
         redirectAttributes.addFlashAttribute("message", "Rezervace převedena na výpůjčku");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -204,6 +217,7 @@ public class SpravaController {
     protected String editupo(RedirectAttributes redirectAttributes, @RequestParam int idecko,@RequestParam int pokuta,@RequestParam String popis) {
         spravaDb.upravUpominku(idecko,pokuta,popis);
         redirectAttributes.addFlashAttribute("message", "Upomínka upravena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -215,6 +229,7 @@ public class SpravaController {
 
         spravaDb.upravKnihu(idecko,nazev,jazyk,zanr,nakladatelstvi,datum_vydani,isbn,pocet_kusu,pocet_stran,popis);
         redirectAttributes.addFlashAttribute("message", "Kniha upravena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 
@@ -231,13 +246,15 @@ public class SpravaController {
                 spravaDb.upravVypujcku(idecko,datum_vypujceni,vypujceno_do,false);
             }
         redirectAttributes.addFlashAttribute("message", "Výpůjčka upravena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/upravrezervaci", method=RequestMethod.GET)
     protected String editrezer1(RedirectAttributes redirectAttributes, @RequestParam int idecko, @RequestParam String rezervace_od, @RequestParam String rezervace_do) {
         spravaDb.upravRezervaci(idecko,rezervace_od,rezervace_do);
-        redirectAttributes.addFlashAttribute("message", "Výpůjčka upravena");
+        redirectAttributes.addFlashAttribute("message", "Rezervace upravena");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
 
@@ -245,6 +262,7 @@ public class SpravaController {
     protected String smazatknihu(RedirectAttributes redirectAttributes, @RequestParam int idknihy) {
         spravaDb.odstranKnihu(idknihy);
         redirectAttributes.addFlashAttribute("message", "Kniha smazána");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 

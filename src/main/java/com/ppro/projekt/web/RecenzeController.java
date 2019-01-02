@@ -40,6 +40,7 @@ public class RecenzeController {
         if(recenze.isEmpty())
         {
             redirectAttributes.addFlashAttribute("message", "Název neodpovídá žádné knize v databázi, nebo neexistuje recenze");
+            redirectAttributes.addFlashAttribute("status",0);
             return "redirect:/recenze";
         }else
             {
@@ -52,6 +53,7 @@ public class RecenzeController {
     ,@RequestParam String popis,@RequestParam int hodnoceni,@RequestParam String jmeno)
     {
         redirectAttributes.addFlashAttribute("message", "Děkujeme Vám za recenzi");
+        redirectAttributes.addFlashAttribute("status",1);
         session.removeAttribute("recenze");
         spravaDb.ulozitRecenzi(idknihy,emailuzivatele,popis,hodnoceni,jmeno);
         return "redirect:/";
@@ -63,6 +65,7 @@ public class RecenzeController {
             if(uzivatelDb.zjistiRecenze(session.getAttribute("email").toString(),idknihy))
             {
                 redirectAttributes.addFlashAttribute("message", "Na tuto knihu jste již recenzi napsal");
+                redirectAttributes.addFlashAttribute("status",0);
                 return "redirect:/login";
             }
             {

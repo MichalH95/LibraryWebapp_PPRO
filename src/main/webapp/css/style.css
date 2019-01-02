@@ -241,10 +241,15 @@ selected {
     background-color: #3e8e41;
 }
 
-/* The alert message box */
-.alert {
+ .alertOk {
+     padding: 20px;
+     background-color: #2d7eff;
+     color: white;
+     margin-bottom: 15px;
+ }
+.alertFail {
     padding: 20px;
-    background-color: #2d7eff;
+    background-color: red;
     color: white;
     margin-bottom: 15px;
 }

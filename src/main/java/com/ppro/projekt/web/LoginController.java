@@ -59,6 +59,7 @@ public class LoginController {
         else
         {
             redirectAttributes.addFlashAttribute("message", "Špatný email nebo heslo, pokud vše zadáváte správně, váš účet je blokován");
+            redirectAttributes.addFlashAttribute("status",0);
             return "redirect:/login";
         }
     }

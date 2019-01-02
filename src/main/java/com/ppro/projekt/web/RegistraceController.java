@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
 @Controller
 public class RegistraceController {
 
@@ -40,6 +41,7 @@ public class RegistraceController {
         boolean uzivatelexist = uzivatelDb.existujeUzivatel(email);
         if (uzivatelexist) {
             redirectAttributes.addFlashAttribute("message", "Email je již registrován");
+            redirectAttributes.addFlashAttribute("status",0);
             return "redirect:/registrace";
         } else {
             if (heslo1.equals(heslo2)) {
@@ -58,9 +60,11 @@ public class RegistraceController {
                 Uzivatel uzivatel = new Uzivatel(jmeno, prijmeni, mesto, ulice, cpp, psc, email, hesloHash, false, 0);
                 uzivatelDb.vlozUzivatele(uzivatel);
                 redirectAttributes.addFlashAttribute("message", "Uživatel vložen");
+                redirectAttributes.addFlashAttribute("status",1);
                 return "redirect:/login";
             }
             redirectAttributes.addFlashAttribute("message", "Hesla se neshodují");
+            redirectAttributes.addFlashAttribute("status",0);
             return "redirect:/registrace";
         }
     }

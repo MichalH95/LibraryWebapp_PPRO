@@ -33,15 +33,18 @@ public class BaseController {
     public String vypujcka(@RequestParam int idecko, HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("email") == null) {
             redirectAttributes.addFlashAttribute("message", "Pro vytvoření výpůjčky je nutné se přihlásit");
+            redirectAttributes.addFlashAttribute("status",0);
             return "redirect:/login";
         } else {
             String email = session.getAttribute("email").toString();
             if (spravaDb.dostupnost(idecko)) {
                 uzivatelDb.nastavitVypujcku(idecko, email);
                 redirectAttributes.addFlashAttribute("message", "Právě jste si vypůjčil knihu");
+                redirectAttributes.addFlashAttribute("status",1);
                 return "redirect:/login";
             } else {
                 redirectAttributes.addFlashAttribute("message", "Litujeme, knihu má někdo vypůjčenou");
+                redirectAttributes.addFlashAttribute("status",0);
                 return "redirect:/";
             }
         }
@@ -51,11 +54,13 @@ public class BaseController {
     public String rezervace(@RequestParam int idecko, HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("email") == null) {
             redirectAttributes.addFlashAttribute("message", "Pro vytvoření rezervace je nutné se přihlásit");
+            redirectAttributes.addFlashAttribute("status",0);
             return "redirect:/login";
         } else {
             String email = session.getAttribute("email").toString();
             uzivatelDb.nastavitRezervaci(idecko, email);
             redirectAttributes.addFlashAttribute("message", "Právě jste si rezervoval knihu");
+            redirectAttributes.addFlashAttribute("status",1);
             return "redirect:/login";
         }
     }
@@ -64,6 +69,7 @@ public class BaseController {
     public String nahratdata(RedirectAttributes redirectAttributes) {
         initDbService.initDb();
         redirectAttributes.addFlashAttribute("message", "Data úspěšně nahrána");
+        redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
 
