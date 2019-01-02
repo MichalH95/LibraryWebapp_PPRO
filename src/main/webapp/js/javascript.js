@@ -18,6 +18,7 @@ var check = function() {
     }
 }
 
+
 function skryt()
 {
     var x = document.getElementById("vlozknihu");
@@ -26,6 +27,7 @@ function skryt()
     var zz = document.getElementById("spravaupominek");
     var xy = document.getElementById("spravauzivatele");
     var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
 
 
     if (x.style.display === "none") {
@@ -38,6 +40,7 @@ function skryt()
     zz.style.display="none";
     xy.style.display="none";
     xyz.style.display="none";
+    x1.style.display="none";
 }
 
 function skryt1()
@@ -48,6 +51,7 @@ function skryt1()
     var zz = document.getElementById("spravaupominek");
     var xy = document.getElementById("spravauzivatele");
     var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
 
     if (y.style.display === "none") {
         y.style.display = "block";
@@ -59,6 +63,7 @@ function skryt1()
     zz.style.display="none";
     xy.style.display="none";
     xyz.style.display="none";
+    x1.style.display="none";
 
 }
 
@@ -70,6 +75,7 @@ function skryt2()
     var zz = document.getElementById("spravaupominek");
     var xy = document.getElementById("spravauzivatele");
     var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
 
     if (z.style.display === "none") {
         z.style.display = "block";
@@ -81,6 +87,7 @@ function skryt2()
     zz.style.display="none";
     xy.style.display="none";
     xyz.style.display="none";
+    x1.style.display="none";
 
 }
 
@@ -92,6 +99,7 @@ function skryt3()
     var zz = document.getElementById("spravaupominek");
     var xy = document.getElementById("spravauzivatele");
     var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
 
     if (zz.style.display === "none") {
         zz.style.display = "block";
@@ -103,6 +111,7 @@ function skryt3()
     x.style.display="none";
     xy.style.display="none";
     xyz.style.display="none";
+    x1.style.display="none";
 }
 
 function skryt4()
@@ -113,6 +122,7 @@ function skryt4()
     var zz = document.getElementById("spravaupominek");
     var xy = document.getElementById("spravauzivatele");
     var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
 
     if (xy.style.display === "none") {
         xy.style.display = "block";
@@ -124,6 +134,7 @@ function skryt4()
     x.style.display="none";
     zz.style.display="none";
     xyz.style.display="none";
+    x1.style.display="none";
 }
 
 function skryt5()
@@ -134,6 +145,7 @@ function skryt5()
     var zz = document.getElementById("spravaupominek");
     var xy = document.getElementById("spravauzivatele");
     var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
 
     if (xyz.style.display === "none") {
         xyz.style.display = "block";
@@ -145,4 +157,29 @@ function skryt5()
     x.style.display="none";
     zz.style.display="none";
     xy.style.display="none";
+    x1.style.display="none";
+}
+
+function skryt6()
+{
+    var x = document.getElementById("vlozknihu");
+    var y = document.getElementById("spravarezer");
+    var z = document.getElementById("spravavypujcek");
+    var zz = document.getElementById("spravaupominek");
+    var xy = document.getElementById("spravauzivatele");
+    var xyz = document.getElementById("spravarecenze");
+    var x1 = document.getElementById("vlozautora");
+
+    if (x1.style.display === "none") {
+        x1.style.display = "block";
+    }else{
+        x1.style.display = "none"
+    }
+
+    y.style.display="none";
+    z.style.display="none";
+    x.style.display="none";
+    zz.style.display="none";
+    xy.style.display="none";
+    xyz.style.display="none";
 }

@@ -66,6 +66,7 @@ public class LoginController {
     @RequestMapping("/logout")
     protected String logout(HttpSession session)
     {
+        session.removeAttribute("recenze");
         session.removeAttribute("email");
         session.removeAttribute("privilegium");
         return "/login";
@@ -82,6 +83,7 @@ public class LoginController {
             model.addAttribute("upominky", upominky);
             List<Rezervace> rezervace = uzivatelDb.vypisRezervaceProUzivatele(email);
             model.addAttribute("rezervace", rezervace);
+
         }
         return "login";
     }

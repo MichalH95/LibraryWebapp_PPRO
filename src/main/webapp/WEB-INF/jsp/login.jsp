@@ -49,10 +49,9 @@
             %>! jsi přihlášen.
 
 
-
                 <h1>Vaše výpůjčky</h1>
                 <table border="2">
-                    <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td></tr>
+                    <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td><td>Recenze</td></tr>
 
                     <c:forEach var="v" items="${vypujcky}">
 
@@ -71,7 +70,10 @@
                             </c:otherwise>
                         </c:choose>
                         <td>${v.kniha.nazev}</td>
-
+                        <form action="/napsatrecenzi">
+                        <td><input type="hidden" name="idknihy" value="${v.kniha.id}">
+                            <input style="width: 100%; margin-left:0" type="submit" value="Napsat"></td>
+                        </form>
                     </tr>
                 </c:forEach>
 

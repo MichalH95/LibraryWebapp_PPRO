@@ -22,12 +22,13 @@ public class VyhledavacController {
     }
 
     @RequestMapping(value = "/vyhledavani", method = RequestMethod.POST)
-    protected String vyhledavani(Model model, @RequestParam(value = "druhvyhledavani", required = true) int druhvyhledavani, @RequestParam(value = "zanr", required = false) String zanr, @RequestParam(value = "jazyk", required = false) String jazyk, @RequestParam(value = "nakladatelstvi", required = false) String nakladatelstvi) {
+    protected String vyhledavani(Model model, @RequestParam(value = "druhvyhledavani", required = true) int druhvyhledavani, @RequestParam(value = "zanr", required = false) String zanr, @RequestParam(value = "jazyk", required = false) String jazyk, @RequestParam(value = "nakladatelstvi", required = false) String nakladatelstvi
+            , @RequestParam(value = "hledani", required = false) String hledani) {
         List<Kniha> knihy;
         if (druhvyhledavani == 0) {
             knihy = spravaDb.najdiVsechnyKnihy();
         } else {
-            knihy = spravaDb.filtrace(zanr, jazyk, nakladatelstvi);
+            knihy = spravaDb.filtrace(zanr, jazyk, nakladatelstvi,hledani);
         }
         model.addAttribute("knihy", knihy);
         return "view";

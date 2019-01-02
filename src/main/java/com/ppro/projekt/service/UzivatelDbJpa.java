@@ -93,12 +93,25 @@ public class UzivatelDbJpa implements UzivatelDb {
         return (Uzivatel) em.createQuery("Select u from Uzivatel u where u.email=:email").setParameter("email", email).getSingleResult();
     }
 
+
+
     public void nastavitVypujcku(int idKnihy, String email) {
         em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
         Vypujcka vypujcka = new Vypujcka(new Date(), datePlusDays(new Date(), 30), false);
         vypujcka.setUzivatel(najdiUzivatele(email));
         vypujcka.setKniha(em.find(Kniha.class, idKnihy));
         em.persist(vypujcka);
+    }
+
+    public boolean zjistiRecenze(String emailUzivatele, int idKnihy)
+    {
+        String query = "select r from Recenze r inner join Kniha k on r.kniha.id=k.id inner join Uzivatel u on r.uzivatel.id=u.id where k.id=:idknihy and u.email=:email";
+        List<Recenze> r = em.createQuery(query).setParameter("idknihy", idKnihy).setParameter("email",emailUzivatele).getResultList();
+        if (r.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void nastavitRezervaci(int idKnihy, String email) {

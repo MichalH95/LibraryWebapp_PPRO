@@ -27,12 +27,12 @@
             <h2>Funkce admina</h2>
 
                 <button class="adminButton" onclick="skryt()">Vložit knihu</button>
+                <button class="adminButton" onclick="skryt6()">Vložit autora</button>
                 <button class="adminButton" onclick="skryt1()">Spravovat rezervace</button>
                 <button class="adminButton" onclick="skryt2()">Spravovat výpujčky</button>
                 <button class="adminButton" onclick="skryt3()">Spravovat upomínky</button>
                 <button class="adminButton" onclick="skryt4()">Spravovat uživatele</button>
                 <button class="adminButton" onclick="skryt5()">Spravovat recenze</button>
-
 
 
                 <div id="vlozknihu" style="display: none;">
@@ -69,8 +69,27 @@
                             <tr><td colspan="2"><input type="submit" value="Vložit knihu"></td></tr>
                         </table>
                     </form:form>
+                </div>
+
+                <div id="vlozautora" style="display: none;">
+                    <h2>Vložení autora</h2>
+                    <form:form action="/vlozautora" autocomplete="on">
+                        <table>                        <tr><td class="tabulkatd">Kniha: </td><td><select style="width: 150px" name="knihaID">
+                        <c:forEach var="n" items="${nazvyK}">
+                            <option value="<c:out value="${n.id }"/>"><c:out value="${n.nazev}" /></option>
+                        </c:forEach>
+                        </select>
+                        </td></tr>
+                        <tr><td class="tabulkatd">Jméno autora:</td><td><input type="text" name="jmeno"></td></tr>
+                        <tr><td class="tabulkatd">Vztah ke knize:</td><td><input type="text" name="vztah"></td></tr>
+                        <tr><td colspan="2"><input type="submit" value="Vložit autora"></td></tr>
+                        </table>
+                    </form:form>
 
                 </div>
+
+
+
 
                 <div id="spravarezer" style="display: none;">
                     <h2>Správa rezervací</h2>

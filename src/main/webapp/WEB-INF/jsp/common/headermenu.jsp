@@ -9,6 +9,7 @@
     <a href="/">Knihy</a>
     <a href="/registrace">Registrace</a>
     <a href="/login">Login</a>
+    <a href="/recenze">Recenze</a>
     <a href="/sprava">Správa</a>
     <a href="/" style="float:right">Domů</a>
 </div>

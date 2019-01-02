@@ -22,6 +22,12 @@ public class SpravaDbJpa implements SpravaDb {
     @Autowired
     private UzivatelDb uzivatelDb;
 
+    public void vlozAutora(int idKnihy, String jmeno, String vztah) {
+        Autor autor = new Autor(vztah,jmeno);
+        autor.setKniha(em.find(Kniha.class,idKnihy));
+        em.persist(autor);
+    }
+
     public void vlozKnihu(Kniha Kniha) {
         em.persist(Kniha);
     }
@@ -95,10 +101,9 @@ public class SpravaDbJpa implements SpravaDb {
         return em.createQuery("select v from Vypujcka v inner join Uzivatel u on v.uzivatel.id=u.id inner join Kniha k on v.kniha.id=k.id", Vypujcka.class).getResultList();
     }
 
-
-    public List<Kniha> filtrace(String zanr, String jazyk, String nakladatelstvi) {
-        return em.createQuery("SELECT k FROM Kniha k where k.zanr like :zanr and k.jazyk like :jazyk and k.nakladatelstvi like :nakladatelstvi", Kniha.class)
-                .setParameter("zanr", "%" + zanr + "%").setParameter("jazyk", "%" + jazyk + "%").setParameter("nakladatelstvi", "%" + nakladatelstvi + "%").getResultList();
+    public List<Kniha> filtrace(String zanr, String jazyk, String nakladatelstvi,String hledani) {
+        return em.createQuery("SELECT k FROM Kniha k where k.zanr like :zanr and k.jazyk like :jazyk and k.nakladatelstvi like :nakladatelstvi and k.nazev like :nazev", Kniha.class)
+                .setParameter("zanr", "%" + zanr + "%").setParameter("jazyk", "%" + jazyk + "%").setParameter("nakladatelstvi", "%" + nakladatelstvi + "%").setParameter("nazev", "%" + hledani + "%").getResultList();
 
     }
 
@@ -156,9 +161,24 @@ public class SpravaDbJpa implements SpravaDb {
         em.createQuery("UPDATE Vypujcka v SET v.datum_vypujceni =:datum_vypujceni, v.vypujceno_do =:vypujceno_do, v.vraceno=:vraceno where v.id=:idecko").setParameter("idecko", idecko).setParameter("datum_vypujceni", datum_vypujceni).setParameter("vypujceno_do", vypujceno_do).setParameter("vraceno", vraceno).executeUpdate();
     }
 
+    public Uzivatel najdiUzivatele(String email) {
+        return (Uzivatel) em.createQuery("Select u from Uzivatel u where u.email=:email").setParameter("email", email).getSingleResult();
+    }
+
+   public void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno) {
+        Recenze recenze = new Recenze(jmeno,popis,hodnoceni);
+        recenze.setKniha(em.find(Kniha.class,idknihy));
+        recenze.setUzivatel(najdiUzivatele(emailuzivatele));
+        em.persist(recenze);
+    }
+
 
     public List<Kniha> najdiVsechnyKnihy() {
         return em.createQuery("SELECT k FROM Kniha k", Kniha.class).getResultList();
+    }
+
+    public List<Recenze> najdiRecenzi(String nazevknihy) {
+        return em.createQuery("SELECT r FROM Recenze r inner join Kniha k on r.kniha.id=k.id where k.nazev=:nazev").setParameter("nazev",nazevknihy).getResultList();
     }
 
 }

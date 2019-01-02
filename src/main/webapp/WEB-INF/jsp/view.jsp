@@ -22,8 +22,9 @@
 
 <br/>
         <form:form action="/vyhledavani">
-        <table><tr>
-            <div class="dropdown">
+        <table>
+
+            <tr><div class="dropdown">
                 <button style="width:117px" class="dropbtn" type="button">Žánr</button>
                 <div class="dropdown-content">
                     <select style="padding: 0;" name="zanr" size="6">
@@ -63,13 +64,12 @@
                 </div>
             </div>
 
-
             <button class="dropbtn button" type="submit" name="druhvyhledavani" value="1">Filtrovat</button>
             <button class="dropbtn button" type="submit" name="druhvyhledavani" value="0">Zobrazit vše</button>
 
         </tr></table>
 
-
+            <td><span style="background-color: #4CAF50; color:white; padding: 12px 16px;text-decoration: none;"> Název knihy:</span></td><input style="width: 20%;margin-left: 2 ;padding: 12px 16px;text-decoration: none;" type="text" name="hledani">
         </form:form>
 
         <jsp:include page="common/message.jsp"/>
@@ -113,9 +113,31 @@
 
                                 <% }%>
                 </div>
-                <h2><c:out value="${k.nazev }" /></h2>
+                <h2><c:out value="${k.nazev }" />
 
 
+                    <c:set var="total" value="${0}"/>
+                    <c:set var="pocet" value="${0}"/>
+                    <c:forEach var="r" items="${k.recenze}">
+                        <c:set var="total" value="${total + r.hodnoceni}" />
+                        <c:set var="pocet" value="${pocet+1}"/>
+                    </c:forEach>
+                    <c:set var="total" value="${total/pocet}"/>
+
+                <span style="vertical-align: sub;color: sandybrown;font-size: 28px;">
+                     <c:choose>
+                        <c:when test="${pocet != 0}">
+                <fmt:formatNumber value="${total}" maxFractionDigits="0" var="totals"/>
+                     <c:forEach begin="1" end="${totals}">
+                    *
+                    </c:forEach></span>
+                    <form action="/zobrazrecenzi">
+                        <input type="hidden" value="${k.nazev}" name="nazevknihy">
+                            <input type="submit" style="background-color: #2d7eff; padding: 0px; margin: 0;width: 5%; float: left;" value="recenze">
+                    </form>
+                    </c:when>
+                    </c:choose>
+                </h2>
                 <c:choose>
                     <c:when test="${k.pocet_kusu>0}">
                      <span style="color: green"> Počet kusů: <c:out value="${k.pocet_kusu }" /></span>
@@ -153,9 +175,7 @@
                     </c:when>
                 </c:choose>
 
-
             </div>
-
         </c:forEach>
 
 

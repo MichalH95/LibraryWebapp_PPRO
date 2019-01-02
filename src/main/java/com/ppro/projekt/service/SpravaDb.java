@@ -18,19 +18,22 @@ public interface SpravaDb {
     void upravKnihu (int idecko,String nazev,String jazyk,String zanr,String nakladatelstvi,String datum_vydani,String isbn,int pocet_kusu, int pocet_stran,String popis);
     void odstranUpominku(int idecko);
     void odstranRecenzi(int idecko);
+    void vlozAutora(int idKnihy, String jmeno, String vztah);
+    void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno);
     boolean dostupnost(int idecko);
 
     List<Upominka> najdiUpoPodleId(int id);
     List<Rezervace> najdiRezPodleId(int id);
     List<Vypujcka> najdiVypPodleId(int id);
     List<Kniha> najdiKniPodleId(int id);
+    List<Recenze> najdiRecenzi(String nazevknihy);
 
     List<Upominka> vypisUpominky();
     List<Rezervace> vypisRezervace();
     List<Recenze> vypisRecenze();
     List<Vypujcka> najdiVypujcky(String email);
     List<Vypujcka> najdiVypujckyProSpravu();
-    List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi);
+    List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi,String hledani);
     List<Kniha> najdiVsechnyKnihy();
 
 }

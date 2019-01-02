@@ -28,7 +28,7 @@ public class SpravaController {
     }
 
     @RequestMapping(value = "/sprava",method = RequestMethod.GET)
-    public String showForm(Model model,HttpSession session)
+    public String showForm(RedirectAttributes redirectAttributes,Model model,HttpSession session)
     {
         if(null==session.getAttribute("privilegium"))
         {
@@ -48,10 +48,13 @@ public class SpravaController {
                 model.addAttribute("uzivatele", uzivatele);
                 List<Recenze> recenze = spravaDb.vypisRecenze();
                 model.addAttribute("recenze", recenze);
+                List<Kniha> nazvyknih = spravaDb.najdiVsechnyKnihy();
+                model.addAttribute("nazvyK",nazvyknih);
                 return "/sprava";
-            }else
+            }
             {
-                return "/view";
+                redirectAttributes.addFlashAttribute("message", "Nemáte přístupová práva");
+                return "redirect:/login";
             }
         }
     }
@@ -107,6 +110,15 @@ public class SpravaController {
         redirectAttributes.addFlashAttribute("message", "Kniha vložena");
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/vlozautora", method=RequestMethod.POST)
+    protected String vlozautora(RedirectAttributes redirectAttributes, @RequestParam int knihaID, @RequestParam String jmeno,@RequestParam String vztah)
+    {
+        spravaDb.vlozAutora(knihaID,jmeno,vztah);
+        redirectAttributes.addFlashAttribute("message", "Autor vložen");
+        return "redirect:/";
+    }
+
 
     @RequestMapping(value = "/blokovatuzivatele", method=RequestMethod.GET)
     protected String blokovatuzivatele(@RequestParam int idecko, RedirectAttributes redirectAttributes)

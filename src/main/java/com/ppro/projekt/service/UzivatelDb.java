@@ -22,6 +22,7 @@ public interface UzivatelDb {
     void blokovatUzivatele(int idecko);
     boolean overlogin(String email, String heslo);
     boolean privilegium(String email);
+    boolean zjistiRecenze(String emailUzivatele, int idKnihy);
 
     List<Rezervace>  vypisRezervaceProUzivatele(String email);
     List<Upominka>  vypisUpominkyProUzivatele(String email);
