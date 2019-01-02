@@ -48,7 +48,6 @@
 
             %>! jsi přihlášen.
 
-
                 <h1>Vaše výpůjčky</h1>
                 <table border="2">
                     <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td><td>Recenze</td></tr>

@@ -10,6 +10,7 @@ public interface SpravaDb {
 
     void vratVypujcku(int id);
     void odstranKnihu(int id);
+    void odstranAutora(int id);
     void odstranRezervaci(int id);
     void upravRezervaci(int idecko,String rezer_od,String rezer_do);
     void prevedRezervaciNaVypujcku(int idecko);
@@ -34,6 +35,10 @@ public interface SpravaDb {
     List<Vypujcka> najdiVypujcky(String email);
     List<Vypujcka> najdiVypujckyProSpravu();
     List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi,String hledani);
+    List<Kniha> filtraceProRez(String nazevknihy);
+    List<Vypujcka> filtraceProVyp(String nazevknihy);
+    List<Recenze> filtraceProRec(String nazevknihy);
+    List<Upominka> filtraceProUpo(String emailuzivatele);
     List<Kniha> najdiVsechnyKnihy();
 
 }

@@ -27,6 +27,14 @@ public class UzivatelDbJpa implements UzivatelDb {
     public void vlozUzivatele(Uzivatel uzivatel) {
         em.persist(uzivatel);
     }
+    public void vlozUpominku(int uzivatelid, int knihaID,int pokuta,String popis,int idvypujcky)
+    {
+        Upominka upominka = new Upominka(popis,pokuta);
+        upominka.setKniha(em.find(Kniha.class,knihaID));
+        upominka.setUzivatel(em.find(Uzivatel.class,uzivatelid));
+        upominka.setVypujcka(em.find(Vypujcka.class,idvypujcky));
+        em.persist(upominka);
+    }
 
     public void odstranUzivatele(int id) {
         Uzivatel uzivatel = em.getReference(Uzivatel.class, id);
@@ -89,11 +97,13 @@ public class UzivatelDbJpa implements UzivatelDb {
         return em.createQuery("select u from Uzivatel u").getResultList();
     }
 
+    public List<Uzivatel> filtraceProUzi(String emailuzivatele) {
+        return em.createQuery("select u from Uzivatel u where u.email like :email").setParameter("email", "%" + emailuzivatele + "%").getResultList();
+    }
+
     public Uzivatel najdiUzivatele(String email) {
         return (Uzivatel) em.createQuery("Select u from Uzivatel u where u.email=:email").setParameter("email", email).getSingleResult();
     }
-
-
 
     public void nastavitVypujcku(int idKnihy, String email) {
         em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();

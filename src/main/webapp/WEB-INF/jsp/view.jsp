@@ -163,18 +163,29 @@
                 </table>
 
                 <p><b>Popis: </b> <c:out value="${k.popis }" /></p>
+
                 <c:choose>
                     <c:when test="${k.autori != null}">
-                    <p>
+
                     <b>Autoři: </b>
+
                     <c:forEach var="a" items="${k.autori}" varStatus="loop">
                             <c:out value="${a.jmeno} (${a.vztah_ke_knize})"/>
+                        <%
+                            if(priv==1){
+                        %>
+                        <form style="display: inline" action="smazatautora">
+                        <input type="hidden" name="idautora" value="${a.id}">
+                        <input style="margin-left:0; padding: 0 0 0 0;color: red;width: 1%"  type="submit" value="X">
+                           <% } %>
                             <c:if test="${!loop.last}">,</c:if>
+                        </form>
+
                     </c:forEach>
-                    </p>
+
+
                     </c:when>
                 </c:choose>
-
             </div>
         </c:forEach>
 

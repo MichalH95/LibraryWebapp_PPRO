@@ -101,6 +101,33 @@ public class SpravaController {
         return "redirect:/sprava";
     }
 
+    @RequestMapping(value = "/vytvorupominku", method=RequestMethod.POST)
+    protected String vytvorupominku(RedirectAttributes redirectAttributes,@RequestParam int idvypujcky,@RequestParam int iduzivatele, @RequestParam int idknihy,
+                                  @RequestParam int pokuta, @RequestParam String popis)
+    {
+        uzivatelDb.vlozUpominku(iduzivatele,idknihy,pokuta,popis,idvypujcky);
+        redirectAttributes.addFlashAttribute("message", "Upomínka vložena");
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/smazatautora", method=RequestMethod.GET)
+    protected String smazatautora(RedirectAttributes redirectAttributes,@RequestParam int idautora)
+    {
+        spravaDb.odstranAutora(idautora);
+        redirectAttributes.addFlashAttribute("message", "Autor smazán");
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/vlozupominku", method=RequestMethod.GET)
+    protected String vlozupominku(Model model,RedirectAttributes redirectAttributes,@RequestParam int idvypujcky,@RequestParam int iduzivatele, @RequestParam int idknihy)
+    {
+        model.addAttribute("idknihy",idknihy);
+        model.addAttribute("idvypujcky",idvypujcky);
+        model.addAttribute("iduzivatele",iduzivatele);
+        return "upominka-form";
+    }
+
+
     @RequestMapping(value = "/vlozitknihu", method=RequestMethod.POST)
     protected String editace(RedirectAttributes redirectAttributes, @RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
             ,@RequestParam int pocet_kusu, @RequestParam int pocet_stran, @RequestParam String isbn, @RequestParam String datum_vydani, @RequestParam String popis)
@@ -174,7 +201,6 @@ public class SpravaController {
     }
 
     @RequestMapping(value = "/upravupominku", method=RequestMethod.GET)
-    @ResponseBody
     protected String editupo(RedirectAttributes redirectAttributes, @RequestParam int idecko,@RequestParam int pokuta,@RequestParam String popis) {
         spravaDb.upravUpominku(idecko,pokuta,popis);
         redirectAttributes.addFlashAttribute("message", "Upomínka upravena");
@@ -184,7 +210,6 @@ public class SpravaController {
 
 
     @RequestMapping(value = "/upravknihu", method=RequestMethod.GET)
-    @ResponseBody
     protected String editknihy(RedirectAttributes redirectAttributes, @RequestParam int idecko,@RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
             ,@RequestParam int pocet_kusu, @RequestParam int pocet_stran, @RequestParam String isbn, @RequestParam String datum_vydani, @RequestParam String popis) {
 
@@ -195,7 +220,6 @@ public class SpravaController {
 
 
     @RequestMapping(value = "/upravvypujcku", method=RequestMethod.GET)
-    @ResponseBody
     protected String editvyp(RedirectAttributes redirectAttributes, @RequestParam(value = "vraceno", defaultValue = "false") final String vraceno,@RequestParam int idecko
     ,@RequestParam String datum_vypujceni,@RequestParam String vypujceno_do) {
 
@@ -211,7 +235,6 @@ public class SpravaController {
     }
 
     @RequestMapping(value = "/upravrezervaci", method=RequestMethod.GET)
-    @ResponseBody
     protected String editrezer1(RedirectAttributes redirectAttributes, @RequestParam int idecko, @RequestParam String rezervace_od, @RequestParam String rezervace_do) {
         spravaDb.upravRezervaci(idecko,rezervace_od,rezervace_do);
         redirectAttributes.addFlashAttribute("message", "Výpůjčka upravena");
@@ -219,12 +242,39 @@ public class SpravaController {
     }
 
     @RequestMapping(value = "/smazatknihu", method=RequestMethod.GET)
-    @ResponseBody
     protected String smazatknihu(RedirectAttributes redirectAttributes, @RequestParam int idknihy) {
         spravaDb.odstranKnihu(idknihy);
         redirectAttributes.addFlashAttribute("message", "Kniha smazána");
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/filtraceSpravyRez", method=RequestMethod.GET)
+    protected String filtraceSpravyRez(Model model,@RequestParam String nazevknihy) {
+        model.addAttribute("rezervace",spravaDb.filtraceProRez(nazevknihy));
+        return "/sprava";
+    }
 
+    @RequestMapping(value = "/filtraceSpravyVyp", method=RequestMethod.GET)
+    protected String filtraceSpravyVyp(Model model,@RequestParam String nazevknihy) {
+        model.addAttribute("vypujcky",spravaDb.filtraceProVyp(nazevknihy));
+        return "/sprava";
+    }
+
+    @RequestMapping(value = "/filtraceSpravyRec", method=RequestMethod.GET)
+    protected String filtraceSpravyRec(Model model,@RequestParam String nazevknihy) {
+        model.addAttribute("recenze",spravaDb.filtraceProRec(nazevknihy));
+        return "/sprava";
+    }
+
+    @RequestMapping(value = "/filtraceSpravyUzi", method=RequestMethod.GET)
+    protected String filtraceSpravyUzi(Model model,@RequestParam String emailuzivatele) {
+        model.addAttribute("uzivatele",uzivatelDb.filtraceProUzi(emailuzivatele));
+        return "/sprava";
+    }
+
+    @RequestMapping(value = "/filtraceSpravyUpo", method=RequestMethod.GET)
+    protected String filtraceSpravyUpo(Model model,@RequestParam String emailuzivatele) {
+        model.addAttribute("upominky",spravaDb.filtraceProUpo(emailuzivatele));
+        return "/sprava";
+    }
 }

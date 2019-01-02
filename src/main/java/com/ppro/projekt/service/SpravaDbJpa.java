@@ -23,8 +23,8 @@ public class SpravaDbJpa implements SpravaDb {
     private UzivatelDb uzivatelDb;
 
     public void vlozAutora(int idKnihy, String jmeno, String vztah) {
-        Autor autor = new Autor(vztah,jmeno);
-        autor.setKniha(em.find(Kniha.class,idKnihy));
+        Autor autor = new Autor(vztah, jmeno);
+        autor.setKniha(em.find(Kniha.class, idKnihy));
         em.persist(autor);
     }
 
@@ -36,6 +36,13 @@ public class SpravaDbJpa implements SpravaDb {
         Kniha kniha = em.getReference(Kniha.class, id);
         if (kniha != null) {
             em.remove(kniha);
+        }
+    }
+
+    public void odstranAutora(int id) {
+        Autor autor = em.getReference(Autor.class, id);
+        if (autor != null) {
+            em.remove(autor);
         }
     }
 
@@ -101,10 +108,26 @@ public class SpravaDbJpa implements SpravaDb {
         return em.createQuery("select v from Vypujcka v inner join Uzivatel u on v.uzivatel.id=u.id inner join Kniha k on v.kniha.id=k.id", Vypujcka.class).getResultList();
     }
 
-    public List<Kniha> filtrace(String zanr, String jazyk, String nakladatelstvi,String hledani) {
+    public List<Kniha> filtrace(String zanr, String jazyk, String nakladatelstvi, String hledani) {
         return em.createQuery("SELECT k FROM Kniha k where k.zanr like :zanr and k.jazyk like :jazyk and k.nakladatelstvi like :nakladatelstvi and k.nazev like :nazev", Kniha.class)
                 .setParameter("zanr", "%" + zanr + "%").setParameter("jazyk", "%" + jazyk + "%").setParameter("nakladatelstvi", "%" + nakladatelstvi + "%").setParameter("nazev", "%" + hledani + "%").getResultList();
 
+    }
+
+    public List<Upominka> filtraceProUpo(String emailuzivatele) {
+        return em.createQuery("select u from Upominka u inner join Vypujcka v on u.vypujcka.id=v.id inner join Uzivatel uz on u.uzivatel.id=uz.id where uz.email like :email").setParameter("email", "%" + emailuzivatele + "%").getResultList();
+    }
+
+    public List<Recenze> filtraceProRec(String nazevknihy) {
+        return em.createQuery("select r from Recenze r inner join Kniha k on r.kniha.id=k.id where k.nazev like :nazev").setParameter("nazev", "%" + nazevknihy + "%").getResultList();
+    }
+
+    public List<Vypujcka> filtraceProVyp(String nazevknihy) {
+        return em.createQuery("select v from Vypujcka v inner join Uzivatel u on v.uzivatel.id=u.id inner join Kniha k on v.kniha.id=k.id where k.nazev like :nazev", Vypujcka.class).setParameter("nazev", "%" + nazevknihy + "%").getResultList();
+    }
+
+    public List<Kniha> filtraceProRez(String nazevknihy) {
+            return em.createQuery("select r from Rezervace r inner join Kniha k on r.kniha.id=k.id where k.nazev like :nazev").setParameter("nazev", "%" + nazevknihy + "%").getResultList();
     }
 
     public List<Upominka> najdiUpoPodleId(int id) {

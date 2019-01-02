@@ -9,7 +9,7 @@ import java.util.List;
 public interface UzivatelDb {
 
     void vlozUzivatele(Uzivatel Uzivatel);
-
+    void vlozUpominku(int uzivatelid, int knihaID,int pokuta,String popis,int idvypujcky);
     void odstranUzivatele(int idecko);
 
     boolean existujeUzivatel(String email);
@@ -27,5 +27,5 @@ public interface UzivatelDb {
     List<Rezervace>  vypisRezervaceProUzivatele(String email);
     List<Upominka>  vypisUpominkyProUzivatele(String email);
     List<Uzivatel> vypisUzivatele();
-
+    List<Uzivatel> filtraceProUzi(String emailuzivatele);
 }
