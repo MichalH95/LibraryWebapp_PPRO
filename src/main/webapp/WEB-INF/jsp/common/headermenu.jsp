@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <div class="header">
-    <img src="https://image.ibb.co/iPXvAV/header.png"
+    <img src="img/header.png"
          width="100%" height="270">
 
 </div>

@@ -5,17 +5,20 @@ import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class BaseController {
+public class BaseController implements ErrorController {
 
     private SpravaDb spravaDb;
     private UzivatelDb uzivatelDb;
@@ -27,6 +30,14 @@ public class BaseController {
         this.spravaDb = spravaDb;
         this.uzivatelDb = uzivatelDb;
         this.initDbService = initDbService;
+    }
+
+    @RequestMapping("/error")
+    @ResponseBody
+    public String handleError(HttpServletRequest request) {
+        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+        return "<h1>Na stránce nastala chyba</h1><img src=\"img/error.png\"\n" +
+                "         width=\"10%\" height=\"10%\"> <br>Omlouvám se, pracujeme na odstranění<br> Status code: "+statusCode;
     }
 
     @RequestMapping("/vypujcit")
@@ -80,4 +91,8 @@ public class BaseController {
         return "view";
     }
 
+    @Override
+    public String getErrorPath() {
+        return null;
+    }
 }
