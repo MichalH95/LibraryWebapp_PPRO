@@ -184,14 +184,10 @@ public class SpravaDbJpa implements SpravaDb {
         em.createQuery("UPDATE Vypujcka v SET v.datum_vypujceni =:datum_vypujceni, v.vypujceno_do =:vypujceno_do, v.vraceno=:vraceno where v.id=:idecko").setParameter("idecko", idecko).setParameter("datum_vypujceni", datum_vypujceni).setParameter("vypujceno_do", vypujceno_do).setParameter("vraceno", vraceno).executeUpdate();
     }
 
-    public Uzivatel najdiUzivatele(String email) {
-        return (Uzivatel) em.createQuery("Select u from Uzivatel u where u.email=:email").setParameter("email", email).getSingleResult();
-    }
-
    public void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno) {
         Recenze recenze = new Recenze(jmeno,popis,hodnoceni);
         recenze.setKniha(em.find(Kniha.class,idknihy));
-        recenze.setUzivatel(najdiUzivatele(emailuzivatele));
+        recenze.setUzivatel(uzivatelDb.najdiUzivatele(emailuzivatele));
         em.persist(recenze);
     }
 

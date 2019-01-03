@@ -1,6 +1,7 @@
 package com.ppro.projekt.web;
 
 import com.ppro.projekt.entity.Kniha;
+import com.ppro.projekt.service.EmailService;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
@@ -23,6 +24,9 @@ public class BaseController implements ErrorController {
     private SpravaDb spravaDb;
     private UzivatelDb uzivatelDb;
     private InitDbService initDbService;
+
+    @Autowired
+    private EmailService emailService;
 
     public BaseController(@Autowired SpravaDb spravaDb,
                           @Autowired UzivatelDb uzivatelDb,
@@ -88,6 +92,9 @@ public class BaseController implements ErrorController {
     public String zobrazeni(Model model) {
         List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
+
+        emailService.sendSimpleMessage("dominik.spinka@uhk.cz", "Test", "Testovaci email.");
+
         return "view";
     }
 

@@ -27,8 +27,8 @@ public class UzivatelDbJpa implements UzivatelDb {
     public void vlozUzivatele(Uzivatel uzivatel) {
         em.persist(uzivatel);
     }
-    public void vlozUpominku(int uzivatelid, int knihaID,int pokuta,String popis,int idvypujcky)
-    {
+
+    public void vlozUpominku(int uzivatelid, int knihaID,int pokuta,String popis,int idvypujcky) {
         Upominka upominka = new Upominka(popis,pokuta);
         upominka.setKniha(em.find(Kniha.class,knihaID));
         upominka.setUzivatel(em.find(Uzivatel.class,uzivatelid));
