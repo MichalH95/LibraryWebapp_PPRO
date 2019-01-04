@@ -9,10 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -193,8 +195,8 @@ public class SpravaController {
 
     @RequestMapping(value = "/editacevypujcky", method=RequestMethod.GET)
     protected String editvypujcky(@RequestParam int idecko, Model model) {
-        List<Vypujcka> vypujcky = spravaDb.najdiVypPodleId(idecko);
-        model.addAttribute("vypujcky", vypujcky);
+        List<Vypujcka> vypujcka = spravaDb.najdiVypPodleId(idecko);
+        model.addAttribute("vypujcka", vypujcka);
         return "editace-vypujcky";
     }
 
@@ -238,23 +240,41 @@ public class SpravaController {
     protected String editvyp(RedirectAttributes redirectAttributes, @RequestParam(value = "vraceno", defaultValue = "false") final String vraceno,@RequestParam int idecko
     ,@RequestParam String datum_vypujceni,@RequestParam String vypujceno_do) {
 
-        if(vraceno.endsWith("on"))
-        {
-            spravaDb.upravVypujcku(idecko,datum_vypujceni,vypujceno_do,true);
-        }else
-            {
-                spravaDb.upravVypujcku(idecko,datum_vypujceni,vypujceno_do,false);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        try {
+            Date datum_vyp = dateFormat.parse(datum_vypujceni);
+            Date vyp_do = dateFormat.parse(vypujceno_do);
+            if (vraceno.endsWith("on")) {
+                spravaDb.upravVypujcku(idecko, datum_vyp, vyp_do, true);
+            } else {
+                spravaDb.upravVypujcku(idecko, datum_vyp, vyp_do, false);
             }
+        } catch (ParseException e) {
+            redirectAttributes.addFlashAttribute("message", "Výpůjčka neupravena, špatné formátování data");
+            redirectAttributes.addFlashAttribute("status",0);
+            return "redirect:/sprava";
+        }
+
         redirectAttributes.addFlashAttribute("message", "Výpůjčka upravena");
-        redirectAttributes.addFlashAttribute("status",1);
+        redirectAttributes.addFlashAttribute("status", 1);
         return "redirect:/sprava";
     }
 
     @RequestMapping(value = "/upravrezervaci", method=RequestMethod.GET)
     protected String editrezer1(RedirectAttributes redirectAttributes, @RequestParam int idecko, @RequestParam String rezervace_od, @RequestParam String rezervace_do) {
-        spravaDb.upravRezervaci(idecko,rezervace_od,rezervace_do);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        try {
+            Date rez_od = dateFormat.parse(rezervace_od);
+            Date rez_do = dateFormat.parse(rezervace_do);
+            spravaDb.upravRezervaci(idecko,rez_od,rez_do);
+        } catch (ParseException e) {
+            redirectAttributes.addFlashAttribute("message", "Rezervace neupravena, špatné formátování data");
+            redirectAttributes.addFlashAttribute("status",0);
+            return "redirect:/sprava";
+        }
         redirectAttributes.addFlashAttribute("message", "Rezervace upravena");
         redirectAttributes.addFlashAttribute("status",1);
+
         return "redirect:/sprava";
     }
 

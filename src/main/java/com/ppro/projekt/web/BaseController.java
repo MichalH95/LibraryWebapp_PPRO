@@ -1,7 +1,6 @@
 package com.ppro.projekt.web;
 
 import com.ppro.projekt.entity.Kniha;
-import com.ppro.projekt.service.EmailService;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
@@ -25,9 +24,6 @@ public class BaseController implements ErrorController {
     private UzivatelDb uzivatelDb;
     private InitDbService initDbService;
 
-    @Autowired
-    private EmailService emailService;
-
     public BaseController(@Autowired SpravaDb spravaDb,
                           @Autowired UzivatelDb uzivatelDb,
                           @Autowired InitDbService initDbService) {
@@ -41,7 +37,8 @@ public class BaseController implements ErrorController {
     public String handleError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         return "<h1>Na stránce nastala chyba</h1><img src=\"img/error.png\"\n" +
-                "         width=\"10%\" height=\"10%\"> <br>Omlouvám se, pracujeme na odstranění<br> Status code: "+statusCode;
+                "         width=\"128" +
+                "\" height=\"128\"> <br>Omlouváme se, pracujeme na odstranění<br> Status code: "+statusCode;
     }
 
     @RequestMapping("/vypujcit")
@@ -93,7 +90,8 @@ public class BaseController implements ErrorController {
         List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
 
-        emailService.sendSimpleMessage("dominik.spinka@uhk.cz", "Test", "Testovaci email.");
+        spravaDb.vytvorNoveUpominky();
+        spravaDb.smazStareRezervace();
 
         return "view";
     }

@@ -32,6 +32,10 @@
                         <table>
 
                             <tr>
+                                <td>Pořadí:</td>
+                                <td><input type="text" required name="poradi" value="${r.poradi}"></td>
+                            </tr>
+                            <tr>
                                 <td>Rezervace od:</td>
                                 <td><input type="text" required name="rezervace_od" value="${r.rezervace_od}"></td>
                                 <input type="hidden" name="idecko" value="${r.id}">

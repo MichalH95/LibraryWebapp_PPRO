@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
-import static com.ppro.projekt.ProjektTools.datePlusDays;
+import static com.ppro.projekt.ProjektTools.*;
 
 @Repository
 @Transactional
@@ -23,6 +23,9 @@ public class UzivatelDbJpa implements UzivatelDb {
     @Autowired
     @Lazy
     private SpravaDb spravaDb;
+
+    @Autowired
+    private EmailService emailService;
 
     public void vlozUzivatele(Uzivatel uzivatel) {
         em.persist(uzivatel);
@@ -50,6 +53,8 @@ public class UzivatelDbJpa implements UzivatelDb {
             rezervace.forEach(r -> {
                 spravaDb.odstranRezervaci(r.getId());
             });
+            // smaz upominky uzivatele
+            em.createQuery("DELETE from Upominka u where u.uzivatel=:uziv").setParameter("uziv", uzivatel).executeUpdate();
 
             em.remove(uzivatel);
         }
@@ -58,31 +63,19 @@ public class UzivatelDbJpa implements UzivatelDb {
     public boolean existujeUzivatel(String email) {
         String query = "Select u from Uzivatel u where u.email =:email";
         List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
-        if (u.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !u.isEmpty();
     }
 
     public boolean overlogin(String email, String heslo) {
         String query = "Select u from Uzivatel u where u.email =:email AND u.heslo =:heslo AND u.blokace=false";
         List<Uzivatel> u = em.createQuery(query).setParameter("email", email).setParameter("heslo", heslo).getResultList();
-        if (u.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !u.isEmpty();
     }
 
     public boolean privilegium(String email) {
         String query = "Select u.privilegia from Uzivatel u where u.email =:email AND u.privilegia=1";
         List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
-        if (u.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !u.isEmpty();
     }
 
     public List<Rezervace> vypisRezervaceProUzivatele(String email) {
@@ -117,19 +110,36 @@ public class UzivatelDbJpa implements UzivatelDb {
     {
         String query = "select r from Recenze r inner join Kniha k on r.kniha.id=k.id inner join Uzivatel u on r.uzivatel.id=u.id where k.id=:idknihy and u.email=:email";
         List<Recenze> r = em.createQuery(query).setParameter("idknihy", idKnihy).setParameter("email",emailUzivatele).getResultList();
-        if (r.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !r.isEmpty();
     }
 
     public void nastavitRezervaci(int idKnihy, String email) {
+        Kniha k = em.find(Kniha.class, idKnihy);
+        Uzivatel u = najdiUzivatele(email);
+
+        if ( k.getPocet_kusu() > 0 ) {
+            // pokud je kniha dostupna, nastavime vypujcku a rovnou posilame email
+            Vypujcka vypujcka = new Vypujcka(new Date(), datePlusDays(new Date(), 30), false);
+            vypujcka.setUzivatel(najdiUzivatele(email));
+            vypujcka.setKniha(em.find(Kniha.class, idKnihy));
+            em.persist(vypujcka);
+            emailService.sendSimpleMessage(email, email_rezervace_pripravena_subject, email_rezervace_pripravena(k.getNazev()));
+        } else {
+            // pokud kniha neni dostupna, vytvorime rezervaci s poradim
+            List<Rezervace> rezervaceKeKnize = em.createQuery("SELECT r from Rezervace r where r.kniha=:k").setParameter("k", k).getResultList();
+            long maxPoradi = 0;
+            for (Rezervace r : rezervaceKeKnize) {
+                if (r.getPoradi() > maxPoradi) {
+                    maxPoradi = r.getPoradi();
+                }
+            }
+            Rezervace rezervace = new Rezervace(maxPoradi+1, new Date(), datePlusDays(new Date(), 7));
+            rezervace.setUzivatel(u);
+            rezervace.setKniha(k);
+            em.persist(rezervace);
+        }
+
         em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
-        Rezervace rezervace = new Rezervace(new Date().toString(), datePlusDays(new Date(), 7).toString());
-        rezervace.setUzivatel(najdiUzivatele(email));
-        rezervace.setKniha(em.find(Kniha.class, idKnihy));
-        em.persist(rezervace);
     }
 
     public void blokovatUzivatele(int idecko) {

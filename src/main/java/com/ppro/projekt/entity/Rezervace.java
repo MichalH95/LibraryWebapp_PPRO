@@ -1,14 +1,16 @@
 package com.ppro.projekt.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Rezervace {
     @Id
     @GeneratedValue
     private int id;
-    private String rezervace_od;
-    private String rezervace_do;
+    private long poradi;
+    private Date rezervace_od;
+    private Date rezervace_do;
 
     @ManyToOne
     @JoinColumn(name="kniha_id",referencedColumnName = "id")
@@ -38,7 +40,8 @@ public class Rezervace {
         return uzivatel;
     }
 
-    public Rezervace(String rezervace_od, String rezervace_do) {
+    public Rezervace(long poradi, Date rezervace_od, Date rezervace_do) {
+        this.poradi = poradi;
         this.rezervace_od = rezervace_od;
         this.rezervace_do = rezervace_do;
     }
@@ -47,11 +50,11 @@ public class Rezervace {
         this.id = id;
     }
 
-    public void setRezervace_od(String rezervace_od) {
+    public void setRezervace_od(Date rezervace_od) {
         this.rezervace_od = rezervace_od;
     }
 
-    public void setRezervace_do(String rezervace_do) {
+    public void setRezervace_do(Date rezervace_do) {
         this.rezervace_do = rezervace_do;
     }
 
@@ -59,18 +62,27 @@ public class Rezervace {
         return id;
     }
 
-    public String getRezervace_od() {
+    public Date getRezervace_od() {
         return rezervace_od;
     }
 
-    public String getRezervace_do() {
+    public Date getRezervace_do() {
         return rezervace_do;
+    }
+
+    public long getPoradi() {
+        return poradi;
+    }
+
+    public void setPoradi(long poradi) {
+        this.poradi = poradi;
     }
 
     @Override
     public String toString() {
         return "Rezervace{" +
                 "id=" + id +
+                ", poradi='" + poradi + '\'' +
                 ", rezervace_od='" + rezervace_od + '\'' +
                 ", rezervace_do='" + rezervace_do + '\'' +
                 ", kniha=" + kniha +

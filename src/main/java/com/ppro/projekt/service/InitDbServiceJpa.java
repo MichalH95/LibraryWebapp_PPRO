@@ -30,6 +30,18 @@ public class InitDbServiceJpa implements InitDbService {
 
         initVypujcky();
 
+        initUpominky();
+
+        initRecenze();
+
+    }
+
+    private void initRecenze() {
+        em.createQuery("DELETE from Recenze ").executeUpdate();
+    }
+
+    private void initUpominky() {
+        em.createQuery("DELETE from Upominka").executeUpdate();
     }
 
     private void initRezervace() {
@@ -74,11 +86,11 @@ public class InitDbServiceJpa implements InitDbService {
 
         //   email: test@test.cz   heslo: test (bez privilegia)
         List<Uzivatel> uzivatele = new ArrayList<>();
-        uzivatele.add(new Uzivatel("Honza", "Admin", "Praha", "Prazska", "52", 10010, "test@test.cz",
+        uzivatele.add(new Uzivatel("Honza", "Uzivatel", "Praha", "Prazska", "52", 10010, "test@test.cz",
                 "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", false,0));
 
         //    email: testpriv@test.cz  heslo: test (s privilegii)
-        uzivatele.add(new Uzivatel("Honza", "Admin", "Praha", "Prazska", "52", 10010, "testpriv@test.cz",
+        uzivatele.add(new Uzivatel("Pepa", "Admin", "Praha", "Pricna", "13", 40511, "testpriv@test.cz",
                 "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", false,1));
 
         uzivatele.forEach(uzivatel -> em.persist(uzivatel));
