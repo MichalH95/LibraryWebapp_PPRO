@@ -33,6 +33,9 @@ public interface SpravaDb {
     List<Vypujcka> najdiVypPodleId(int id);
     List<Kniha> najdiKniPodleId(int id);
     List<Recenze> najdiRecenzi(String nazevknihy);
+    Kniha najdiKnihu(String nazev);
+
+
 
     List<Upominka> vypisUpominky();
     List<Rezervace> vypisRezervace();

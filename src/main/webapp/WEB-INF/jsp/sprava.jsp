@@ -93,7 +93,7 @@
                     <form action="filtraceSpravyRez"><tr><td>Název knihy: </td><td><input style="width: 20%" type="text" name="nazevknihy"></td><td><input style="width:20%;margin-left: 2" type="submit" value="Vyhledat"></td></tr></form>
 
                     <table border="1">
-                        <tr><td>Rezervováno od</td><td>Rezervováno do</td><td>Název knihy</td><td colspan="3">Akce</td></tr>
+                        <tr><th>Rezervováno od</th><th>Rezervováno do</th><th>Název knihy</th><th colspan="3">Akce</th></tr>
                     <c:forEach var="r" items="${rezervace}">
                         <br>
                             <tr>
@@ -114,7 +114,7 @@
                     <form action="filtraceSpravyVyp"><tr><td>Název knihy: </td><td><input style="width: 20%" type="text" name="nazevknihy"></td><td><input style="width:20%;margin-left: 2" type="submit" value="Vyhledat"></td></tr></form>
 
                     <table border="1">
-                        <tr><td>Datum vypůjčení</td><td>Vypůjčeno do</td><td>Vráceno</td><td>Název knihy</td><td>Uživatel</td><td colspan="3">Akce</td></tr>
+                        <tr><th>Datum vypůjčení</th><th>Vypůjčeno do</th><th>Vráceno</th><th>Název knihy</th><th>Uživatel</th><th colspan="3">Akce</th></tr>
                         <c:forEach var="v" items="${vypujcky}">
                             <br>
                             <tr>
@@ -140,7 +140,7 @@
                     <form action="filtraceSpravyUpo"><tr><td>Email uživatele: </td><td><input style="width: 20%" type="text" name="emailuzivatele"></td><td><input style="width:20%;margin-left: 2" type="submit" value="Vyhledat"></td></tr></form>
 
                     <table border="1">
-                        <tr><td>Pokuta</td><td>Uživatel</td><td>Datum vrácení</td><td>Popis</td><td colspan="2">Akce</td></tr>
+                        <tr><th>Pokuta</th><th>Uživatel</th><th>Datum vrácení</th><th>Popis</th><th colspan="2">Akce</th></tr>
                         <c:forEach var="u" items="${upominky}">
                             <br>
                             <tr>
@@ -164,15 +164,20 @@
                     <form action="filtraceSpravyUzi"><tr><td>Email uživatele: </td><td><input style="width: 20%" type="text" name="emailuzivatele"></td><td><input style="width:20%;margin-left: 2" type="submit" value="Vyhledat"></td></tr></form>
 
                     <table border="1">
-                        <tr><td>Uživatel</td><td>blokace</td><td colspan="3">Akce</td></tr>
+                        <tr><th>Uživatel</th><th>blokace</th><th colspan="3">Akce</th></tr>
                         <c:forEach var="u" items="${uzivatele}">
 
                             <tr>
                                 <td>   <c:out value="${u.email }" /></td>
                                                           <td>${u.blokace}</td>
-                                <td><form action="/smazatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0; color: red" value="X" type="submit"></form></td>
-                                <td><form action="/blokovatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Blokovat" type="submit"></form></td>
-                                <td><form action="/odblokovatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Odblokovat" type="submit"></form></td>
+
+                               <c:choose>
+                                   <c:when test="${u.privilegia!=1}">
+                                   <td><form action="/smazatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0; color: red" value="X" type="submit"></form></td>
+                                   <td><form action="/blokovatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Blokovat" type="submit"></form></td>
+                                   <td><form action="/odblokovatuzivatele"><input type="hidden" name="idecko" value="${u.id}" /><input  style="width: 100%; margin-left: 0;margin-bottom: 0" value="Odblokovat" type="submit"></form></td>
+                                   </c:when>
+                               </c:choose>
 
                             </tr>
                         </c:forEach>
@@ -186,7 +191,7 @@
                     <form action="filtraceSpravyRec"><tr><td>Název knihy: </td><td><input style="width: 20%" type="text" name="nazevknihy"></td><td><input style="width:20%;margin-left: 2" type="submit" value="Vyhledat"></td></tr></form>
 
                     <table border="1">
-                        <tr><td>Uživatel</td><td>Hodnocení</td><td>Recenze</td><td>Kniha</td><td>Akce</td></tr>
+                        <tr><th>Uživatel</th><th>Hodnocení</th><th>Recenze</th><th>Kniha</th><th>Akce</th></tr>
                         <c:forEach var="r" items="${recenze}">
 
                             <tr>
@@ -205,7 +210,7 @@
 
 <hr>
                 <form:form action="/logout">
-                    <input type="submit" name="login" value="Logout">
+                    <input style="background-color: red" type="submit" name="login" value="Logout">
                 </form:form>
 
 

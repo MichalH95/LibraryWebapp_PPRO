@@ -24,7 +24,7 @@
         <p>Dominik Špinka</p>
         <p>Michal Húževka</p>
         <form action="/nahratdata">
-            <input class="data" type="submit" value="Nahrát data DB">
+            <input style="width: 50%" class="data" type="submit" value="Nahrát data DB">
         </form>
     </div>
 </div>

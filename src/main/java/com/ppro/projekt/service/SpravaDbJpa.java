@@ -74,6 +74,10 @@ public class SpravaDbJpa implements SpravaDb {
         if (kniha != null) {
             em.remove(kniha);
         }
+        em.createQuery("DELETE from Recenze r where r.kniha.id=:id").setParameter("id",id).executeUpdate();
+        em.createQuery("DELETE from Rezervace r where r.kniha.id=:id").setParameter("id",id).executeUpdate();
+        em.createQuery("DELETE from Autor r where r.kniha.id=:id").setParameter("id",id).executeUpdate();
+        em.createQuery("DELETE from Vypujcka r where r.kniha.id=:id").setParameter("id",id).executeUpdate();
     }
 
     public void odstranAutora(int id) {
@@ -241,6 +245,9 @@ public class SpravaDbJpa implements SpravaDb {
         em.persist(recenze);
     }
 
+    public Kniha najdiKnihu(String nazev) {
+        return (Kniha) em.createQuery("Select k from Kniha k where k.nazev=:nazev").setParameter("nazev", nazev).getSingleResult();
+    }
 
     public List<Kniha> najdiVsechnyKnihy() {
         return em.createQuery("SELECT k FROM Kniha k", Kniha.class).getResultList();

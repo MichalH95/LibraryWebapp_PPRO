@@ -4,6 +4,7 @@ import com.ppro.projekt.entity.Kniha;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;

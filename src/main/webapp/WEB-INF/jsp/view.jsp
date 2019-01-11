@@ -14,7 +14,11 @@
 
 
 <jsp:include page="common/headermenu.jsp"/>
-
+<style>
+    tr{
+    background-color: gainsboro;
+    }
+</style>
 <div class="row">
     <div class="leftcolumn">
 
@@ -69,7 +73,7 @@
 
         </tr></table>
 
-            <td><span style="background-color: #4CAF50; color:white; padding: 12px 16px;text-decoration: none;"> Název knihy:</span></td><input style="width: 20%;margin-left: 2 ;padding: 12px 16px;text-decoration: none;" type="text" name="hledani">
+            <td><span style="background-color: #4CAF50; color:white; padding: 12px 16px;text-decoration: none;"> Název knihy:</span></td><input style="width: 20%;margin-left: 2;padding: 12px 16px;text-decoration: none;" type="text" name="hledani">
         </form:form>
 
         <jsp:include page="common/message.jsp"/>
@@ -131,6 +135,8 @@
                      <c:forEach begin="1" end="${totals}">
                     *
                     </c:forEach></span>
+
+
                     <form action="/zobrazrecenzi">
                         <input type="hidden" value="${k.nazev}" name="nazevknihy">
                             <input type="submit" style="background-color: #2d7eff; padding: 0px; margin: 0;width: 5%; float: left;" value="recenze">
@@ -143,7 +149,17 @@
                      <span style="color: green"> Počet kusů: <c:out value="${k.pocet_kusu }" /></span>
                     </c:when>
                     <c:otherwise>
-                        <span style="color: red"> Počet kusů: <c:out value="${k.pocet_kusu }" /></span>
+                        <span style="color: red"> Počet kusů: 0</span>
+                    </c:otherwise>
+                </c:choose>
+                <br/>
+                <c:choose>
+                    <c:when test="${k.pocet_kusu>0}">
+                        <span style="color: green"> Počet rezervací: 0</span>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="rez" value="${k.pocet_kusu*-1}"/>
+                        <span style="color: red"> Počet rezervací: ${rez}</span>
                     </c:otherwise>
                 </c:choose>
 
@@ -163,6 +179,7 @@
                 </table>
 
                 <p><b>Popis: </b> <c:out value="${k.popis }" /></p>
+
 
                 <c:choose>
                     <c:when test="${k.autori != null}">

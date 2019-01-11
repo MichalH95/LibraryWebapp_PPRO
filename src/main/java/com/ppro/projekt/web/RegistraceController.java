@@ -4,6 +4,7 @@ import com.ppro.projekt.ProjektTools;
 import com.ppro.projekt.entity.Uzivatel;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 
 @Controller

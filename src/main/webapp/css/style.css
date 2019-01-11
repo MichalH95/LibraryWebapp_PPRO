@@ -60,8 +60,13 @@ select,option{
 }
 
 table {
-    width: 90%;
+    width: 100%;
+    border-collapse: collapse;
     padding: 5px;
+}
+
+tr:hover{
+    background-color: gainsboro;
 }
 
 input[type=submit] {
@@ -185,7 +190,17 @@ textarea {
 td{
     padding-left: 5px;
 }
-
+.upominky{
+    background-color: orangered;
+}
+.rezervace{
+    background-color: darkorange;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid black;
+}
 
 .dropbtn {
     background-color: #4CAF50;

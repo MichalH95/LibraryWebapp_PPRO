@@ -28,8 +28,7 @@ public class UzivatelDbJpa implements UzivatelDb {
     private EmailService emailService;
 
     public void vlozUzivatele(Uzivatel uzivatel) {
-        em.persist(uzivatel);
-    }
+        em.persist(uzivatel); }
 
     public void vlozUpominku(int uzivatelid, int knihaID,int pokuta,String popis,int idvypujcky) {
         Upominka upominka = new Upominka(popis,pokuta);

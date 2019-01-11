@@ -14,7 +14,14 @@
 
 
 <jsp:include page="common/headermenu.jsp"/>
-
+<style>
+    td{
+    border: 1px solid black;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size:15px;
+    }
+</style>
 <div class="row">
     <div class="leftcolumn">
 
@@ -32,9 +39,9 @@
 
                 <form:form action="/overlogin" autocomplete="on">
                     <table>
-                        <tr><td class="tabulkatd" >Email: </td><td><input required type="email" name="email" maxlength="50"></td></tr>
-                        <tr><td class="tabulkatd" >Heslo: </td><td><input required type="password" maxlength="40" name="heslo" ></td></tr>
-                        <tr><td colspan="3"><input type="submit" name="login" value="Login"></td></tr>
+                        <tr><td class="tabulkatd" style="border: none" >Email: </td><td style="border: none"><input style="width: 50%" required type="email" name="email" maxlength="50"></td></tr>
+                        <tr><td class="tabulkatd" style="border: none">Heslo: </td><td style="border: none"><input style="width: 50%;" required type="password" maxlength="40" name="heslo" ></td></tr>
+                        <tr><td colspan="3" style="border: none"><input type="submit" name="login" value="Login"></td></tr>
                     </table>
                 </form:form>
          <%
@@ -49,67 +56,90 @@
             %>! jsi přihlášen.
 
                 <h1>Vaše výpůjčky</h1>
-                <table border="2">
-                    <tr><td>Datum vypůjčení</td><td> Vypůjčeno do</td><td> Vráceno</td> <td>Název knihy</td><td>Recenze</td></tr>
+                <c:choose>
+                    <c:when test="${not empty vypujcky}">
+                        <table>
+                            <tr><th>Datum vypůjčení</th><th> Vypůjčeno do</th><th> Vráceno</th> <th>Název knihy</th><th>Recenze</th></tr>
 
-                    <c:forEach var="v" items="${vypujcky}">
+                            <c:forEach var="v" items="${vypujcky}">
 
-                    <tr>
-                        <td>    <c:out value="${v.datum_vypujceni }" /></td>
-                        <td>    <c:out value="${v.vypujceno_do }" /></td>
+                                <tr>
+                                    <td>    <c:out value="${v.datum_vypujceni }" /></td>
+                                    <td>    <c:out value="${v.vypujceno_do }" /></td>
 
-                        <c:choose>
-                            <c:when test="${v.vraceno==true}">
-                                <td>Ano</td>
-                                <br />
-                            </c:when>
-                            <c:otherwise>
-                                <td>Ne</td>
-                                <br />
-                            </c:otherwise>
-                        </c:choose>
-                        <td>${v.kniha.nazev}</td>
-                        <form action="/napsatrecenzi">
-                        <td><input type="hidden" name="idknihy" value="${v.kniha.id}">
-                            <input style="width: 100%; margin-left:0" type="submit" value="Napsat"></td>
-                        </form>
-                    </tr>
-                </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${v.vraceno==true}">
+                                            <td>Ano</td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>Ne</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <td>${v.kniha.nazev}</td>
+                                    <form action="/napsatrecenzi">
+                                        <td style="padding:0 0 0 0;background-color: #4CAF50"><input type="hidden" name="idknihy" value="${v.kniha.id}">
+                                            <input style="width: 100%;height: 10%; margin-left: 0" type="submit" value="Napsat"></td>
+                                    </form>
+                                </tr>
+                            </c:forEach>
+                        </table>
 
-                </table>
+                    </c:when>
+                    <c:otherwise>
+                        <td>Doposud jste si nevypůjčil žádnou knihu.</td>
+                    </c:otherwise>
+                </c:choose>
+
+
                 <h1>Vaše upomínky</h1>
-                <table border="2">
-                    <tr><td>Pokuta</td><td>Popis</td><td>Název knihy</td><td>Datum vrácení</td></tr>
-                    <c:forEach var="u" items="${upominky}">
-                    <tr>
+                <c:choose>
+                    <c:when test="${not empty upominky}">
+                        <table>
+                            <tr><th class="upominky">Pokuta</th><th class="upominky">Popis</th><th class="upominky">Název knihy</th><th class="upominky">Datum vrácení</th></tr>
+                            <c:forEach var="u" items="${upominky}">
+                                <tr>
 
-                        <td>    <c:out value="${u.pokuta }" /> Kč</td>
-                        <td>    <c:out value="${u.popis }" /></td>
-                        <td>    <c:out value="${u.kniha.nazev }" /></td>
-                        <td>    <c:out value="${u.vypujcka.vypujceno_do }" /></td>
-                    </tr>
+                                    <td>    <c:out value="${u.pokuta }" /> Kč</td>
+                                    <td>    <c:out value="${u.popis }" /></td>
+                                    <td>    <c:out value="${u.kniha.nazev }" /></td>
+                                    <td>    <c:out value="${u.vypujcka.vypujceno_do }" /></td>
+                                </tr>
 
 
-                </c:forEach>
-                </table>
+                            </c:forEach>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <td>Na Váš účet nebyla doposud uložena upomínka.</td>
+                    </c:otherwise>
+                </c:choose>
 
                 <h1>Vaše rezervace</h1>
-                <table border="2">
-                    <tr><td>Rezervace do</td><td>Název knihy</td></tr>
-                    <c:forEach var="r" items="${rezervace}">
+                <c:choose>
+                    <c:when test="${not empty rezervace}">
+                        <table>
+                            <tr><th class="rezervace">Rezervace do</th><th class="rezervace">Název knihy</th></tr>
+                            <c:forEach var="r" items="${rezervace}">
 
-                        <tr>
+                                <tr>
 
-                            <td>    <c:out value="${r.rezervace_do }" /></td>
-                            <td>    <c:out value="${r.kniha.nazev }" /></td>
-                           </tr>
+                                    <td>    <c:out value="${r.rezervace_do }" /></td>
+                                    <td>    <c:out value="${r.kniha.nazev }" /></td>
+                                </tr>
 
 
-                    </c:forEach>
-                </table>
+                            </c:forEach>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <td>Nemáte žádné rezervace.</td>
+                    </c:otherwise>
+                </c:choose>
+
+
                 <br>
                 <form:form action="/logout">
-                    <input type="submit" name="login" value="Logout">
+                    <input style="background-color: red" type="submit" name="login" value="Logout">
                 </form:form>
 
                     <%}

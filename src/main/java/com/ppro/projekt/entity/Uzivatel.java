@@ -170,18 +170,6 @@ public class Uzivatel {
         return blokace;
     }
 
-    public Uzivatel(String jmeno, String prijmeni, String mesto, String ulice, String c_popisne, int psc, String email, String heslo, boolean blokace) {
-        this.jmeno = jmeno;
-        this.prijmeni = prijmeni;
-        this.mesto = mesto;
-        this.ulice = ulice;
-        this.c_popisne = c_popisne;
-        this.psc = psc;
-        this.email = email;
-        this.heslo = heslo;
-        this.blokace = blokace;
-    }
-
     @Override
     public String toString() {
         return "Uzivatel{" +

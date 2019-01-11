@@ -2,7 +2,9 @@ package com.ppro.projekt.service;
 
 import com.ppro.projekt.entity.Autor;
 import com.ppro.projekt.entity.Kniha;
+import com.ppro.projekt.entity.Recenze;
 import com.ppro.projekt.entity.Uzivatel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -19,8 +21,19 @@ public class InitDbServiceJpa implements InitDbService {
     @PersistenceContext
     private EntityManager em;
 
+    private UzivatelDb uzivatelDb;
+    private SpravaDb spravaDb;
+
+
+    public InitDbServiceJpa(@Autowired UzivatelDb uzivatelDb,@Autowired SpravaDb spravadb) {
+        this.uzivatelDb = uzivatelDb;
+        this.spravaDb=spravadb;
+    }
+
     @Override
     public void initDb() {
+
+        initAutori();
 
         initKnihy();
 
@@ -36,8 +49,24 @@ public class InitDbServiceJpa implements InitDbService {
 
     }
 
+    private void initAutori() {
+        em.createQuery("DELETE from Autor ").executeUpdate();
+    }
+
     private void initRecenze() {
         em.createQuery("DELETE from Recenze ").executeUpdate();
+
+        //Recenze od uzivatele Honza - 5 hvězd - kniha Malý princ
+        Recenze recenze = new Recenze("Honza","Opravdu dobrá kniha. Všem doporučuji.",5);
+        recenze.setUzivatel(uzivatelDb.najdiUzivatele("test@test.cz"));
+        recenze.setKniha(spravaDb.najdiKnihu("Malý princ"));
+        em.persist(recenze);
+
+        //Recenze od uzivatele Pepa - 1 hvězda - kniha Karkulka
+        Recenze recenze1 = new Recenze("Pepa","Špatná kniha. Určite nedoporučuji.",1);
+        recenze1.setUzivatel(uzivatelDb.najdiUzivatele("testpriv@test.cz"));
+        recenze1.setKniha(spravaDb.najdiKnihu("Karkulka"));
+        em.persist(recenze1);
     }
 
     private void initUpominky() {
@@ -66,8 +95,9 @@ public class InitDbServiceJpa implements InitDbService {
         kniha1.setAutori(Arrays.asList(autor1, autor2));
         knihy.add(kniha1);
 
+
         Kniha kniha2 = new Kniha("Karkulka", "Červená karkulka je známá pohádka o setkání mladé dívky s vlkem. Tento příběh se během své historie velmi měnil a stal se předlohou pro obrovské množství moderních adaptací. Nejstarší psaná verze pochází z pera Charlese Perraulta, dnes asi nejrozšířenější verze je založena na zpracování bratří Grimmů. Slovo karkulka pochází z latinského slova carracalla a znamená čepeček, čapku, či pokrývku hlavy. Poznámka k pravopisu: V souladu s Pravidly českého pravopisu se jméno dívky píše jako „Červená karkulka“ nebo jen „Karkulka“. V některých překladech se ale objevuje i verze „červená Karkulka“. Obě možnosti lze považovat za správné.", "Pohádka",
-                "2005-03-07", 104, "Albatros", "3564583115", 3, "Čeština");
+                "2005-03-07", 104, "Prometheus", "3564583115", 3, "Čeština");
         Autor autor3 = new Autor("spisovatel", "Bratři Grimmové");
         autor3.setKniha(kniha2);
         kniha2.setAutori(Arrays.asList(autor3));
@@ -92,8 +122,8 @@ public class InitDbServiceJpa implements InitDbService {
         //    email: testpriv@test.cz  heslo: test (s privilegii)
         uzivatele.add(new Uzivatel("Pepa", "Admin", "Praha", "Pricna", "13", 40511, "testpriv@test.cz",
                 "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", false,1));
-
         uzivatele.forEach(uzivatel -> em.persist(uzivatel));
+
     }
 
 }

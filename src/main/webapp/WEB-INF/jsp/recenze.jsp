@@ -60,7 +60,7 @@
                 <form action="/zobrazrecenzi">
                     <table>
 
-                    <tr><td class="tabulkatd">Přesný název knihy:</td><td><input type="text" name="nazevknihy"></td></tr>
+                    <tr><td class="tabulkatd">Přesný název knihy:</td><td><input style="width: 40%" type="text" name="nazevknihy"></td></tr>
                         <tr><td colspan="2"><input type="submit" value="Najít recenzi"></td></tr>
                     </table>
                 </form>
