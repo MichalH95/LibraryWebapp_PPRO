@@ -90,17 +90,18 @@
             <div class="card">
                 <div class="btn-group">
 
-                    <form action="/rezervovat">
-                    <button class="button" value="${k.id}" name="idecko">Rezervovat</button>
-                    </form>
                     <c:choose>
                         <c:when test="${k.pocet_kusu>0}">
                             <form action="/vypujcit">
                             <button class="button" value="${k.id}" name="idecko">Vypůjčit</button>
                             </form>
                         </c:when>
+                        <c:otherwise>
+                            <form action="/rezervovat">
+                                <button class="button" value="${k.id}" name="idecko">Rezervovat</button>
+                            </form>
+                        </c:otherwise>
                     </c:choose>
-
 
 
                     <%
@@ -147,24 +148,18 @@
                 <c:choose>
                     <c:when test="${k.pocet_kusu>0}">
                      <span style="color: green"> Počet kusů: <c:out value="${k.pocet_kusu }" /></span>
-                    </c:when>
-                    <c:otherwise>
-                        <span style="color: red"> Počet kusů: 0</span>
-                    </c:otherwise>
-                </c:choose>
-                <br/>
-                <c:choose>
-                    <c:when test="${k.pocet_kusu>0}">
+                        <br/>
                         <span style="color: green"> Počet rezervací: 0</span>
                     </c:when>
                     <c:otherwise>
+                        <span style="color: red"> Počet kusů: 0</span>
+                        <br/>
                         <c:set var="rez" value="${k.pocet_kusu*-1}"/>
                         <span style="color: red"> Počet rezervací: ${rez}</span>
                     </c:otherwise>
                 </c:choose>
-
-
-
+                <br/>
+                
 
                 <table>
                     <tr>

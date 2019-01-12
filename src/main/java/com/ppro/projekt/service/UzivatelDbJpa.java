@@ -125,7 +125,7 @@ public class UzivatelDbJpa implements UzivatelDb {
             emailService.sendSimpleMessage(email, email_rezervace_pripravena_subject, email_rezervace_pripravena(k.getNazev()));
         } else {
             // pokud kniha neni dostupna, vytvorime rezervaci s poradim
-            List<Rezervace> rezervaceKeKnize = em.createQuery("SELECT r from Rezervace r where r.kniha=:k").setParameter("k", k).getResultList();
+            List<Rezervace> rezervaceKeKnize = em.createQuery("SELECT r from Rezervace r where r.kniha.id=:kid").setParameter("kid", k.getId()).getResultList();
             long maxPoradi = 0;
             for (Rezervace r : rezervaceKeKnize) {
                 if (r.getPoradi() > maxPoradi) {
