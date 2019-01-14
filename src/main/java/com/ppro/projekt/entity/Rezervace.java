@@ -20,7 +20,11 @@ public class Rezervace {
     @JoinColumn(name="uzivatel_id",referencedColumnName = "id")
     private Uzivatel uzivatel;
 
-    public Rezervace() {
+    public Rezervace(){
+
+    }
+
+    public Rezervace(int poradi, String s, String s1) {
     }
 
     public Kniha getKniha() {

@@ -212,6 +212,12 @@ public class SpravaDbJpa implements SpravaDb {
         em.createQuery("UPDATE Rezervace r SET r.rezervace_od =:rezer_od, r.rezervace_do =:rezer_do where r.id=:idecko").setParameter("idecko", idecko).setParameter("rezer_od", rezer_od).setParameter("rezer_do", rezer_do).executeUpdate();
     }
 
+    public boolean existujeKniha(String nazev) {
+        String query = "Select k from Kniha k where k.nazev =:nazev";
+        List<Uzivatel> u = em.createQuery(query).setParameter("nazev", nazev).getResultList();
+        return !u.isEmpty();
+    }
+
     public void prevedRezervaciNaVypujcku(int idecko) {
         Rezervace rezervace = em.getReference(Rezervace.class, idecko);
         if (rezervace != null) {
@@ -223,6 +229,11 @@ public class SpravaDbJpa implements SpravaDb {
             em.persist(vypujcka);
             em.remove(rezervace);
         }
+    }
+
+    public void vlozRezervaci(Rezervace rezervace)
+    {
+        em.persist(rezervace);
     }
 
     public void upravKnihu(int idecko, String nazev, String jazyk, String zanr, String nakladatelstvi, String datum_vydani, String isbn, int pocet_kusu, int pocet_stran, String popis) {

@@ -119,6 +119,7 @@ public class InitDbServiceJpa implements InitDbService {
         List<Uzivatel> uzivatele = new ArrayList<>();
         uzivatele.add(new Uzivatel("Honza", "Uzivatel", "Praha", "Prazska", "52", 10010, "test@test.cz",
                 "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", false,0));
+        uzivatele.add(new Uzivatel());
 
         //    email: testpriv@test.cz  heslo: test (s privilegii)
         uzivatele.add(new Uzivatel("Pepa", "Admin", "Praha", "Pricna", "13", 40511, "testpriv@test.cz",

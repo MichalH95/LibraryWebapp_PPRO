@@ -1,6 +1,7 @@
 package com.ppro.projekt.test;
 
 import com.ppro.projekt.ProjektApplication;
+import com.ppro.projekt.entity.Kniha;
 import com.ppro.projekt.entity.Uzivatel;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.UzivatelDb;
@@ -38,9 +39,32 @@ public class UzivatelDbTest {
 
     @Test
     public void testVlozUzivatele() {
-        uzivatelDb.vlozUzivatele(new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",false,0));
+        uzivatelDb.vlozUzivatele(new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",true,0));
         Assert.assertTrue(uzivatelDb.existujeUzivatel("a@test.cz"));
     }
+
+    @Test
+    public void testAutorizace(){
+        uzivatelDb.vlozUzivatele(new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",false,0));
+        Assert.assertTrue(uzivatelDb.overlogin("a@test.cz","a"));
+    }
+
+    @Test
+    public void testOdstranUzivatele(){
+        Uzivatel uzivatel = new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",true,0);
+        uzivatelDb.vlozUzivatele(uzivatel);
+        uzivatelDb.odstranUzivatele(uzivatel.getId());
+        Assert.assertFalse(uzivatelDb.existujeUzivatel("a@test.cz"));
+    }
+
+    @Test
+    public void testUlozBlokace(){
+        Uzivatel uzivatel = new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",true,0);
+        uzivatelDb.vlozUzivatele(uzivatel);
+        uzivatelDb.blokovatUzivatele(uzivatel.getId());
+        Assert.assertTrue(uzivatel.getBlokace());
+    }
+
 
 
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface SpravaDb {
 
     void vlozKnihu(Kniha Kniha);
-
+    void vlozRezervaci(Rezervace rezervace);
     void vytvorNoveUpominky();
     void smazStareRezervace();
 
@@ -27,6 +27,7 @@ public interface SpravaDb {
     void vlozAutora(int idKnihy, String jmeno, String vztah);
     void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno);
     boolean dostupnost(int idecko);
+    boolean existujeKniha(String nazev);
 
     List<Upominka> najdiUpoPodleId(int id);
     List<Rezervace> najdiRezPodleId(int id);

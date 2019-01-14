@@ -86,7 +86,9 @@
             }
         %>
 
-        <c:forEach var="k" items="${knihy}">
+<c:choose>
+        <c:when test="${!empty knihy}">
+    <c:forEach var="k" items="${knihy}">
             <div class="card">
                 <div class="btn-group">
 
@@ -205,7 +207,9 @@
                 </c:choose>
             </div>
         </c:forEach>
-
+        </c:when>
+    <c:otherwise>Omlouváme se, ale nemůžeme vám nabídnout žádnou knihu</c:otherwise>
+</c:choose>
 
     </div>
     <jsp:include page="common/rightcolumn.jsp"/>

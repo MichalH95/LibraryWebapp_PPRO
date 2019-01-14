@@ -22,6 +22,8 @@ public class Uzivatel {
     private boolean blokace;
     private int privilegia;
 
+
+
     @OneToMany(mappedBy="uzivatel")
     private List<Vypujcka> vypujcky;
 
@@ -166,7 +168,7 @@ public class Uzivatel {
         return heslo;
     }
 
-    public boolean isBlokace() {
+    public boolean getBlokace() {
         return blokace;
     }
 
