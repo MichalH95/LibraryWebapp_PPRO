@@ -56,13 +56,13 @@ public class Kniha {
     private List<Autor> autori;
 
     @OneToMany(mappedBy="kniha")
-    private List<Autor> upominky;
+    private List<Upominka> upominky;
 
-    public List<Autor> getUpominky() {
+    public List<Upominka> getUpominky() {
         return upominky;
     }
 
-    public void setUpominky(List<Autor> upominky) {
+    public void setUpominky(List<Upominka> upominky) {
         this.upominky = upominky;
     }
 

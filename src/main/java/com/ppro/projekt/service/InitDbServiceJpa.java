@@ -82,6 +82,7 @@ public class InitDbServiceJpa implements InitDbService {
     }
 
     private void initKnihy() {
+        em.createQuery("DELETE from Recenze").executeUpdate();
         em.createQuery("DELETE from Kniha").executeUpdate();
 
         List<Kniha> knihy = new ArrayList<>();
