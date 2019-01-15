@@ -41,7 +41,7 @@ public class KnihaDbTest {
     public void testOdstranKnihu() {
         Kniha kniha = new Kniha("Test knihy", "Pouze pro testování", "test", "14.01.2019", 155, "Albatros", "11", 1, "CZ");
         spravaDb.vlozKnihu(kniha);
-        spravaDb.odstranKnihu(kniha.getId());
+        spravaDb.odstranKnihu(spravaDb.najdiKnihu("Test knihy").getId());
         Assert.assertFalse(spravaDb.existujeKniha("Test knihy"));
     }
 
