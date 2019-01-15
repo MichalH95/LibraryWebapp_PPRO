@@ -50,11 +50,11 @@ public class InitDbServiceJpa implements InitDbService {
     }
 
     private void initAutori() {
-        em.createQuery("DELETE from Autor ").executeUpdate();
+        em.createQuery("DELETE from Autor").executeUpdate();
     }
 
     private void initRecenze() {
-        em.createQuery("DELETE from Recenze ").executeUpdate();
+        em.createQuery("DELETE from Recenze").executeUpdate();
 
         //Recenze od uzivatele Honza - 5 hvězd - kniha Malý princ
         Recenze recenze = new Recenze("Honza","Opravdu dobrá kniha. Všem doporučuji.",5);
@@ -83,6 +83,7 @@ public class InitDbServiceJpa implements InitDbService {
 
     private void initKnihy() {
         em.createQuery("DELETE from Recenze").executeUpdate();
+        em.createQuery("DELETE from Vypujcka").executeUpdate();
         em.createQuery("DELETE from Kniha").executeUpdate();
 
         List<Kniha> knihy = new ArrayList<>();
