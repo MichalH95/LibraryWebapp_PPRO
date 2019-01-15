@@ -4,6 +4,7 @@ import com.ppro.projekt.ProjektApplication;
 import com.ppro.projekt.entity.Kniha;
 import com.ppro.projekt.entity.Rezervace;
 import com.ppro.projekt.entity.Uzivatel;
+import com.ppro.projekt.entity.Vypujcka;
 import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
@@ -31,39 +32,11 @@ public class VypujckaDbTest {
     @Autowired
     private SpravaDb spravaDb;
 
-    @Autowired
-    private InitDbService initDbService;
-
-    @Before
-    public void initDb() {
-        initDbService.initDb();
-    }
-
-
-
     @Test
-    public void testRezervace(){
-        Kniha kniha = new Kniha("Test knihy","Pouze pro testování","test","14.01.2019",155,"Albatros","11",0,"cz");
+    public void testVypujcky() {
+        Kniha kniha = new Kniha("Test knihy", "Pouze pro testování", "test", "14.01.2019", 155, "Albatros", "11", 1, "CZ");
         spravaDb.vlozKnihu(kniha);
-        Uzivatel uzivatel = new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",false,0);
-        uzivatelDb.vlozUzivatele(uzivatel);
-        Rezervace rezervace = new Rezervace(1,new Date(),new Date());
-        rezervace.setKniha(kniha);
-        rezervace.setUzivatel(uzivatel);
-        spravaDb.vlozRezervaci(rezervace);
-        Assert.assertNotNull(uzivatelDb.vypisRezervaceProUzivatele("a@test.cz"));
+        uzivatelDb.nastavitVypujcku(kniha.getId(), "test@test.cz");
+        Assert.assertTrue(uzivatelDb.existujeVypujcka("test@test.cz"));
     }
-
-    @Test
-    public void testVypujcky(){
-        Kniha kniha = new Kniha("Test knihy","Pouze pro testování","test","14.01.2019",155,"Albatros","11",1,"CZ");
-        spravaDb.vlozKnihu(kniha);
-        uzivatelDb.nastavitVypujcku(kniha.getId(),"test@test.cz");
-        Assert.assertNotNull(uzivatelDb.najdiUzivatele("test@test.cz").getVypujcky());
-
-    }
-
-
-
-
 }

@@ -59,10 +59,10 @@ public class UzivatelDbTest {
 
     @Test
     public void testUlozBlokace(){
-        Uzivatel uzivatel = new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",true,0);
+        Uzivatel uzivatel = new Uzivatel("a","a","a","a","a",3,"a@test.cz","a",false,0);
         uzivatelDb.vlozUzivatele(uzivatel);
         uzivatelDb.blokovatUzivatele(uzivatel.getId());
-        Assert.assertTrue(uzivatel.getBlokace());
+        Assert.assertTrue(uzivatelDb.najdiUzivatele("a@test.cz").getBlokace());
     }
 
 

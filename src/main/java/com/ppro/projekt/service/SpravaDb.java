@@ -28,6 +28,7 @@ public interface SpravaDb {
     void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno);
     boolean dostupnost(int idecko);
     boolean existujeKniha(String nazev);
+    boolean existujeAutor(String jmeno);
 
     List<Upominka> najdiUpoPodleId(int id);
     List<Rezervace> najdiRezPodleId(int id);

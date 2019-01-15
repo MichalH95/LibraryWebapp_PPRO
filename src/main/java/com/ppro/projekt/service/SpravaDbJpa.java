@@ -218,6 +218,12 @@ public class SpravaDbJpa implements SpravaDb {
         return !u.isEmpty();
     }
 
+    public boolean existujeAutor(String jmeno) {
+        String query = "Select a from Autor a where a.jmeno =:jmeno";
+        List<Uzivatel> u = em.createQuery(query).setParameter("jmeno", jmeno).getResultList();
+        return !u.isEmpty();
+    }
+
     public void prevedRezervaciNaVypujcku(int idecko) {
         Rezervace rezervace = em.getReference(Rezervace.class, idecko);
         if (rezervace != null) {

@@ -65,6 +65,18 @@ public class UzivatelDbJpa implements UzivatelDb {
         return !u.isEmpty();
     }
 
+    public boolean existujeVypujcka(String email) {
+        String query = "Select v from Vypujcka v inner join Uzivatel u on v.uzivatel.id=u.id where u.email =:email";
+        List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
+        return !u.isEmpty();
+    }
+
+    public boolean existujeRezervace(String email) {
+        String query = "Select r from Rezervace r inner join Uzivatel u on r.uzivatel.id=u.id where u.email =:email";
+        List<Uzivatel> u = em.createQuery(query).setParameter("email", email).getResultList();
+        return !u.isEmpty();
+    }
+
     public boolean overlogin(String email, String heslo) {
         String query = "Select u from Uzivatel u where u.email =:email AND u.heslo =:heslo AND u.blokace=false";
         List<Uzivatel> u = em.createQuery(query).setParameter("email", email).setParameter("heslo", heslo).getResultList();

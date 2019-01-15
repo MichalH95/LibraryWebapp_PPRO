@@ -12,7 +12,9 @@ public interface UzivatelDb {
     void vlozUpominku(int uzivatelid, int knihaID,int pokuta,String popis,int idvypujcky);
     void odstranUzivatele(int idecko);
 
+    boolean existujeVypujcka(String email);
     boolean existujeUzivatel(String email);
+    boolean existujeRezervace(String email);
 
     Uzivatel najdiUzivatele(String email);
 
