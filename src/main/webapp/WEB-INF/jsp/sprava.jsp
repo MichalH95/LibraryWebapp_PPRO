@@ -80,8 +80,8 @@
                         </c:forEach>
                         </select>
                         </td></tr>
-                        <tr><td class="tabulkatd">Jméno autora:</td><td><input type="text" name="jmeno"></td></tr>
-                        <tr><td class="tabulkatd">Vztah ke knize:</td><td><input type="text" name="vztah"></td></tr>
+                        <tr><td class="tabulkatd">Jméno autora:</td><td><input required type="text" name="jmeno"></td></tr>
+                        <tr><td class="tabulkatd">Vztah ke knize:</td><td><input required type="text" name="vztah"></td></tr>
                         <tr><td colspan="2"><input type="submit" value="Vložit autora"></td></tr>
                         </table>
                     </form:form>

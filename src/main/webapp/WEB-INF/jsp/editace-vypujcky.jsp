@@ -15,6 +15,11 @@
 </head>
 <body>
 
+<style>
+    input[type=checkbox] {
+        transform: scale(2);
+    }
+</style>
 
 <jsp:include page="common/headermenu.jsp"/>
 
@@ -43,32 +48,16 @@
                             <tr>
                                 <td>Vráceno:</td>
                                 <td>
-
-                                    <style>
-                                        input[type=checkbox] {
-                                            transform: scale(2);
-                                        }
-                                    </style>
                                     <c:choose>
-
                                         <c:when test = "${v.vraceno == true}">
                                             <input style="height: 20px;" type="checkbox" name="vraceno" checked>
                                         </c:when>
-
                                         <c:when test = "${v.vraceno == false}">
                                             <input style="height: 20px;" type="checkbox"  name="vraceno">
                                         </c:when>
-
-
                                     </c:choose>
-
-
-
-
                                 </td>
-
                             </tr>
-
                             <tr>
                                 <td><input type="submit" value="Editovat"></td>
                             </tr>

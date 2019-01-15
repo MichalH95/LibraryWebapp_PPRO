@@ -117,13 +117,6 @@ public class UzivatelDbJpa implements UzivatelDb {
         em.persist(vypujcka);
     }
 
-    public boolean zjistiRecenze(String emailUzivatele, int idKnihy)
-    {
-        String query = "select r from Recenze r inner join Kniha k on r.kniha.id=k.id inner join Uzivatel u on r.uzivatel.id=u.id where k.id=:idknihy and u.email=:email";
-        List<Recenze> r = em.createQuery(query).setParameter("idknihy", idKnihy).setParameter("email",emailUzivatele).getResultList();
-        return !r.isEmpty();
-    }
-
     public void nastavitRezervaci(int idKnihy, String email) {
         Kniha k = em.find(Kniha.class, idKnihy);
         Uzivatel u = najdiUzivatele(email);
@@ -151,6 +144,14 @@ public class UzivatelDbJpa implements UzivatelDb {
         }
 
         em.createQuery("UPDATE Kniha k SET k.pocet_kusu =k.pocet_kusu-1 where k.id=:idKnihy").setParameter("idKnihy", idKnihy).executeUpdate();
+    }
+
+
+    public boolean zjistiRecenze(String emailUzivatele, int idKnihy)
+    {
+        String query = "select r from Recenze r inner join Kniha k on r.kniha.id=k.id inner join Uzivatel u on r.uzivatel.id=u.id where k.id=:idknihy and u.email=:email";
+        List<Recenze> r = em.createQuery(query).setParameter("idknihy", idKnihy).setParameter("email",emailUzivatele).getResultList();
+        return !r.isEmpty();
     }
 
     public void blokovatUzivatele(int idecko) {

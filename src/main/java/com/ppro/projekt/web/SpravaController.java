@@ -62,7 +62,6 @@ public class SpravaController {
         }
     }
 
-
     @RequestMapping(value = "/smazatrecenzi", method=RequestMethod.GET)
     protected String smazatrecenzi(@RequestParam int idecko, RedirectAttributes redirectAttributes)
     {
@@ -80,7 +79,6 @@ public class SpravaController {
         redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/sprava";
     }
-
 
     @RequestMapping(value = "/smazatuzivatele", method=RequestMethod.GET)
     protected String smazatuzivatele(@RequestParam int idecko, RedirectAttributes redirectAttributes)
@@ -109,21 +107,29 @@ public class SpravaController {
         return "redirect:/sprava";
     }
 
+    @RequestMapping(value = "/smazatautora", method=RequestMethod.GET)
+    protected String smazatautora(RedirectAttributes redirectAttributes,@RequestParam int idautora)
+    {
+        spravaDb.odstranAutora(idautora);
+        redirectAttributes.addFlashAttribute("message", "Autor smazán");
+        redirectAttributes.addFlashAttribute("status",1);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/smazatknihu", method=RequestMethod.GET)
+    protected String smazatknihu(RedirectAttributes redirectAttributes, @RequestParam int idknihy) {
+        spravaDb.odstranKnihu(idknihy);
+        redirectAttributes.addFlashAttribute("message", "Kniha smazána");
+        redirectAttributes.addFlashAttribute("status",1);
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/vytvorupominku", method=RequestMethod.POST)
     protected String vytvorupominku(RedirectAttributes redirectAttributes,@RequestParam int idvypujcky,@RequestParam int iduzivatele, @RequestParam int idknihy,
                                   @RequestParam int pokuta, @RequestParam String popis)
     {
         uzivatelDb.vlozUpominku(iduzivatele,idknihy,pokuta,popis,idvypujcky);
         redirectAttributes.addFlashAttribute("message", "Upomínka vložena");
-        redirectAttributes.addFlashAttribute("status",1);
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/smazatautora", method=RequestMethod.GET)
-    protected String smazatautora(RedirectAttributes redirectAttributes,@RequestParam int idautora)
-    {
-        spravaDb.odstranAutora(idautora);
-        redirectAttributes.addFlashAttribute("message", "Autor smazán");
         redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
@@ -136,7 +142,6 @@ public class SpravaController {
         model.addAttribute("iduzivatele",iduzivatele);
         return "upominka-form";
     }
-
 
     @RequestMapping(value = "/vlozitknihu", method=RequestMethod.POST)
     protected String editace(RedirectAttributes redirectAttributes, @RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
@@ -157,7 +162,6 @@ public class SpravaController {
         redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
-
 
     @RequestMapping(value = "/blokovatuzivatele", method=RequestMethod.GET)
     protected String blokovatuzivatele(@RequestParam int idecko, RedirectAttributes redirectAttributes)
@@ -207,7 +211,6 @@ public class SpravaController {
         return "editace-upominky";
     }
 
-
     @RequestMapping(value = "/editovatknihu", method=RequestMethod.GET)
     protected String editovatknihu(@RequestParam int idecko, Model model) {
         List<Kniha> kniha = spravaDb.najdiKniPodleId(idecko);
@@ -223,8 +226,6 @@ public class SpravaController {
         return "redirect:/sprava";
     }
 
-
-
     @RequestMapping(value = "/upravknihu", method=RequestMethod.GET)
     protected String editknihy(RedirectAttributes redirectAttributes, @RequestParam int idecko,@RequestParam String nazev, @RequestParam String jazyk, @RequestParam String zanr, @RequestParam String nakladatelstvi
             ,@RequestParam int pocet_kusu, @RequestParam int pocet_stran, @RequestParam String isbn, @RequestParam String datum_vydani, @RequestParam String popis) {
@@ -234,7 +235,6 @@ public class SpravaController {
         redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
     }
-
 
     @RequestMapping(value = "/upravvypujcku", method=RequestMethod.GET)
     protected String editvyp(RedirectAttributes redirectAttributes, @RequestParam(value = "vraceno", defaultValue = "false") final String vraceno,@RequestParam int idecko
@@ -276,14 +276,6 @@ public class SpravaController {
         redirectAttributes.addFlashAttribute("status",1);
 
         return "redirect:/sprava";
-    }
-
-    @RequestMapping(value = "/smazatknihu", method=RequestMethod.GET)
-    protected String smazatknihu(RedirectAttributes redirectAttributes, @RequestParam int idknihy) {
-        spravaDb.odstranKnihu(idknihy);
-        redirectAttributes.addFlashAttribute("message", "Kniha smazána");
-        redirectAttributes.addFlashAttribute("status",1);
-        return "redirect:/";
     }
 
     @RequestMapping(value = "/filtraceSpravyRez", method=RequestMethod.GET)

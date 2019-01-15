@@ -2,8 +2,10 @@ package com.ppro.projekt.test;
 
 import com.ppro.projekt.ProjektApplication;
 import com.ppro.projekt.entity.Kniha;
+import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,14 @@ import org.springframework.test.context.junit4.SpringRunner;
         H2TestProfileJPAConfig.class})
 @ActiveProfiles("test")
 public class KnihaDbTest {
+
+    @Autowired
+    private InitDbService initDbService;
+
+    @Before
+    public void initDb() {
+        initDbService.initDb();
+    }
 
     @Autowired
     private SpravaDb spravaDb;

@@ -11,8 +11,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Knihy</title>
 
-
-
 </head>
 <body>
 
@@ -62,7 +60,6 @@
                                 <tr><td class="tabulkatd">Počet stran: </td><td><input required value="${k.pocet_stran}" type="text" onkeypress="return onlyNumbers();" name="pocet_stran"></td></tr>
                                 <tr><td class="tabulkatd">Popis: </td><td><textarea required name="popis" maxlength="2550" rows="7" cols="30">${k.popis}</textarea></td></tr>
                             </table>
-
 
                             <tr>
                                 <td><input type="submit" value="Editovat"></td>

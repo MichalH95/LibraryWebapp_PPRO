@@ -10,22 +10,27 @@ public interface SpravaDb {
     void vlozKnihu(Kniha Kniha);
     void vlozRezervaci(Rezervace rezervace);
     void vytvorNoveUpominky();
-    void smazStareRezervace();
+    void vlozAutora(int idKnihy, String jmeno, String vztah);
+    void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno);
+
+    void prevedRezervaciNaVypujcku(int idecko);
 
     void vratVypujcku(int id);
     void zkontrolujRezervace(int idKnihy);
+
     void odstranKnihu(int id);
     void odstranAutora(int id);
     void odstranRezervaci(int id);
+    void odstranUpominku(int idecko);
+    void odstranRecenzi(int idecko);
+    void smazStareRezervace();
+
     void upravRezervaci(int idecko, Date rezer_od, Date rezer_do);
-    void prevedRezervaciNaVypujcku(int idecko);
     void upravVypujcku(int idecko, Date datum_vypujceni, Date vypujceno_do, Boolean vraceno);
     void upravUpominku (int idecko,int pokuta,String popis);
     void upravKnihu (int idecko,String nazev,String jazyk,String zanr,String nakladatelstvi,String datum_vydani,String isbn,int pocet_kusu, int pocet_stran,String popis);
-    void odstranUpominku(int idecko);
-    void odstranRecenzi(int idecko);
-    void vlozAutora(int idKnihy, String jmeno, String vztah);
-    void ulozitRecenzi(int idknihy,String emailuzivatele,String popis,int hodnoceni, String jmeno);
+
+
     boolean dostupnost(int idecko);
     boolean existujeKniha(String nazev);
     boolean existujeAutor(String jmeno);
@@ -36,19 +41,18 @@ public interface SpravaDb {
     List<Kniha> najdiKniPodleId(int id);
     List<Recenze> najdiRecenzi(String nazevknihy);
     Kniha najdiKnihu(String nazev);
-
-
+    List<Vypujcka> najdiVypujcky(String email);
+    List<Vypujcka> najdiVypujckyProSpravu();
+    List<Kniha> najdiVsechnyKnihy();
 
     List<Upominka> vypisUpominky();
     List<Rezervace> vypisRezervace();
     List<Recenze> vypisRecenze();
-    List<Vypujcka> najdiVypujcky(String email);
-    List<Vypujcka> najdiVypujckyProSpravu();
+
     List<Kniha> filtrace(String zanr,String jazyk,String nakladatelstvi,String hledani);
     List<Kniha> filtraceProRez(String nazevknihy);
     List<Vypujcka> filtraceProVyp(String nazevknihy);
     List<Recenze> filtraceProRec(String nazevknihy);
     List<Upominka> filtraceProUpo(String emailuzivatele);
-    List<Kniha> najdiVsechnyKnihy();
 
 }

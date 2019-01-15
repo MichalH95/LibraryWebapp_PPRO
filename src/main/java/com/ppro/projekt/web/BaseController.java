@@ -79,8 +79,11 @@ public class BaseController implements ErrorController {
     }
 
     @RequestMapping("/nahratdata")
-    public String nahratdata(RedirectAttributes redirectAttributes) {
+    public String nahratdata(RedirectAttributes redirectAttributes, HttpSession session) {
         initDbService.initDb();
+        session.removeAttribute("recenze");
+        session.removeAttribute("email");
+        session.removeAttribute("privilegium");
         redirectAttributes.addFlashAttribute("message", "Data úspěšně nahrána");
         redirectAttributes.addFlashAttribute("status",1);
         return "redirect:/";
@@ -90,7 +93,6 @@ public class BaseController implements ErrorController {
     public String zobrazeni(Model model) {
         List<Kniha> knihy = spravaDb.najdiVsechnyKnihy();
         model.addAttribute("knihy", knihy);
-
         spravaDb.vytvorNoveUpominky();
         spravaDb.smazStareRezervace();
 

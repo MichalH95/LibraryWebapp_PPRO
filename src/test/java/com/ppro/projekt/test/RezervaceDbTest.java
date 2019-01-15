@@ -4,9 +4,11 @@ import com.ppro.projekt.ProjektApplication;
 import com.ppro.projekt.entity.Kniha;
 import com.ppro.projekt.entity.Rezervace;
 import com.ppro.projekt.entity.Uzivatel;
+import com.ppro.projekt.service.InitDbService;
 import com.ppro.projekt.service.SpravaDb;
 import com.ppro.projekt.service.UzivatelDb;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,14 @@ import java.util.Date;
         H2TestProfileJPAConfig.class})
 @ActiveProfiles("test")
 public class RezervaceDbTest {
+
+    @Autowired
+    private InitDbService initDbService;
+
+    @Before
+    public void initDb() {
+        initDbService.initDb();
+    }
 
     @Autowired
     private UzivatelDb uzivatelDb;

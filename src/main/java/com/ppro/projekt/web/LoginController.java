@@ -84,7 +84,6 @@ public class LoginController {
             model.addAttribute("upominky", upominky);
             List<Rezervace> rezervace = uzivatelDb.vypisRezervaceProUzivatele(email);
             model.addAttribute("rezervace", rezervace);
-
         }
         return "login";
     }

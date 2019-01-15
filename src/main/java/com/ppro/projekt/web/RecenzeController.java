@@ -26,7 +26,6 @@ public class RecenzeController {
         this.uzivatelDb = uzivatelDb;
     }
 
-
     @RequestMapping("/recenze")
     public String zobrazeni(Model model) {
         return "recenze";

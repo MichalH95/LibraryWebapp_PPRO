@@ -205,10 +205,20 @@
 
                     </c:when>
                 </c:choose>
+
+
             </div>
         </c:forEach>
         </c:when>
-    <c:otherwise>Omlouváme se, ale nemůžeme vám nabídnout žádnou knihu</c:otherwise>
+    <c:otherwise>
+        <div class="card"> Omlouváme se, ale nemůžeme vám nabídnout žádnou knihu </div>
+    <br/><hr><h3><span style="color: red">Info:<br/>Při prvním zapnutí stiskněte tlačítko "Nahrát data DB" - dolní pravá část stránky.
+    <br/> </span>
+        Existují 2 uživ. účty.
+        <br/> S privilegii email: testpriv@test.cz heslo: test
+        <br/> Bez privilegii email: test@test.cz heslo: test
+   </h3>
+    </c:otherwise>
 </c:choose>
 
     </div>

@@ -7,6 +7,7 @@ public class Upominka {
     @Id
     @GeneratedValue
     private int id;
+    @Column(length = 2550)
     private String popis;
     private int pokuta;
 
