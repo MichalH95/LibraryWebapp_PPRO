@@ -214,13 +214,13 @@ public class SpravaDbJpa implements SpravaDb {
 
     public boolean existujeKniha(String nazev) {
         String query = "Select k from Kniha k where k.nazev =:nazev";
-        List<Uzivatel> u = em.createQuery(query).setParameter("nazev", nazev).getResultList();
+        List<Kniha> u = em.createQuery(query).setParameter("nazev", nazev).getResultList();
         return !u.isEmpty();
     }
 
     public boolean existujeAutor(String jmeno) {
         String query = "Select a from Autor a where a.jmeno =:jmeno";
-        List<Uzivatel> u = em.createQuery(query).setParameter("jmeno", jmeno).getResultList();
+        List<Autor> u = em.createQuery(query).setParameter("jmeno", jmeno).getResultList();
         return !u.isEmpty();
     }
 
