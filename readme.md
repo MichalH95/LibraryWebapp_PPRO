@@ -1,6 +1,7 @@
-School project for the course PPRO (Advanced programming) at the University of Hradec Králové.
 
-A basic web application for a library. It can display books in the library and information about them, allows client login and book reservations, loan extensions etc. Sends email notifications about late book returns using Spring's JavaMailSender. Allows administrator login with the ability to cancel loans, delete books and accounts and other functionalities.
+## School project for the course PPRO (Advanced Programming) at the University of Hradec Králové.
+
+A basic web application for a library. It can display books in the library and information about them, allows client login and book reservations, loan extensions etc. Sends email notifications about late book returns using Spring's `JavaMailSender`. Allows administrator login with the ability to cancel loans, delete books and accounts and other functionalities.
 
 Second author was my schoolmate Dominik Špinka.
 
