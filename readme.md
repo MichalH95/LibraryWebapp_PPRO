@@ -7,7 +7,7 @@ Second author is my former schoolmate Dominik Špinka.
 
 Unfortunately, the code is mostly in Czech language.
 
-This project is made in IntelliJ IDEA.
+The project can be opened in IntelliJ IDEA.
 
 ### To start the database:
 
@@ -31,4 +31,4 @@ This project is made in IntelliJ IDEA.
 
 ### To make email notifications work:
 
-In file `/src/main/resources/application.properties` on lines 16-22 enter credentials for an email address which will be used to send the notifications.
+In the file `/src/main/resources/application.properties` on lines 16-22 enter credentials for an email address which will be used to send the notifications.
