@@ -9,7 +9,7 @@ Unfortunately, the code is mostly in Czech language.
 
 This project is made in IntelliJ IDEA.
 
-To start the database:
+### To start the database:
 
 1. Download and install Docker Toolbox from https://download.docker.com/win/stable/DockerToolbox.exe
 
@@ -28,3 +28,7 @@ To start the database:
 		Password: my-secret-pw
 
 	And in the Schemas tab, check All schemas.
+
+### To make email notifications work:
+
+In file `/src/main/resources/application.properties` on lines 16-22 enter credentials for an email address which will be used to send the notifications.
